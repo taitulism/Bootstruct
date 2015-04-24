@@ -1,0 +1,18 @@
+{
+	"name" : "bootstruct",
+	"version" : "1.0.0",
+	"description" : "Routing by structure",
+	"main" : "index.js",
+	"author" : "Taitu Lizenbaum taitulism@gmail.com",
+	"keywords" : [
+		"bootstruct",
+		"route",
+		"rounting",
+		"structure",
+		"folder",
+		"app",
+		"restful",
+		"framework"
+	],
+	"license" : "ISC"
+}
