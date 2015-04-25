@@ -1,18 +1,22 @@
 {
-  "name": "bootstruct",
-  "version": "1.0.1",
-  "description": "Routing by structure",
-  "main": "index.js",
-  "author": "Taitu Lizenbaum taitulism@gmail.com",
-  "keywords": [
-    "bootstruct",
-    "route",
-    "rounting",
-    "structure",
-    "folder",
-    "app",
-    "restful",
-    "framework"
-  ],
-  "license": "ISC"
+	"name" : "bootstruct",
+	"version" : "1.0.1",
+	"description" : "Routing by structure",
+	"main" : "index.js",
+	"author" : "Taitu Lizenbaum taitulism@gmail.com",
+	"repository" : {
+		"type" : "git",
+		"url" : "https://github.com/taitulism/Bootstruct"
+	},
+	"keywords" : [
+		"bootstruct",
+		"route",
+		"rounting",
+		"structure",
+		"folder",
+		"app",
+		"restful",
+		"framework"
+	],
+	"license" : "ISC"
 }
