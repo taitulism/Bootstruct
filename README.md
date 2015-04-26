@@ -19,13 +19,14 @@ Structure your folders like:
 >NOTE: Square brackets for folders.
 
 To handle requests of different kinds of HTTP verbs, add verb files. add a `get.js` file for `GET` requests:
+```
 [app]
 	get.js
 	[foo]
 		get.js
 		[bar]
 			get.js
-
+```
 >NOTE: You can use `post`, `put` and `delete` (.js) as well. They are all reserved names for files and folders in Bootstruct.
 
 With Bootstruct you structure your files and folders in a certain way to get a certain behavior.
@@ -34,6 +35,7 @@ With Bootstruct you structure your files and folders in a certain way to get a c
 
 If you're familiar with express/connect, the equivalent would be:
 ```js
+// express/connect equivalent:
 app.get('/', function () {
 	// ...
 });
