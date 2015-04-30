@@ -18,5 +18,8 @@
     "restful",
     "framework"
   ],
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "request": "^2.55.0"
+  }
 }
