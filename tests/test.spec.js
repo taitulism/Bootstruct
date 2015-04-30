@@ -1,7 +1,7 @@
 var request = require('request');
 var http = require('http');
 var bts = require('../');
-var app = bts.start('tests/app');
+var app = bts.start('./tests/app');
 
 http.createServer(app).listen(1001, '127.0.0.1');
 
