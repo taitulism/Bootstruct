@@ -1,28 +1,28 @@
 {
-	"name" : "bootstruct",
-	"version" : "1.0.2",
-	"description" : "Routing by structure",
-	"main" : "index.js",
-	"author" : "Taitu Lizenbaum taitulism@gmail.com",
-	"repository" : {
-		"type" : "git",
-		"url" : "https://github.com/taitulism/Bootstruct"
-	},
-	"scripts" : {
-		"test" : "jasmine-node --forceexit ./tests/test.spec.js"
-	},
-	"keywords" : [
-		"bootstruct",
-		"route",
-		"rounting",
-		"structure",
-		"folder",
-		"app",
-		"restful",
-		"framework"
-	],
-	"license" : "ISC",
-	"devDependencies" : {
-		"request" : "^2.55.0"
-	}
+  "name": "bootstruct",
+  "version": "1.1.0",
+  "description": "Routing by structure",
+  "main": "index.js",
+  "author": "Taitu Lizenbaum taitulism@gmail.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/taitulism/Bootstruct"
+  },
+  "scripts": {
+    "test": "jasmine-node --forceexit ./tests/test.spec.js"
+  },
+  "keywords": [
+    "bootstruct",
+    "route",
+    "rounting",
+    "structure",
+    "folder",
+    "app",
+    "restful",
+    "framework"
+  ],
+  "license": "ISC",
+  "devDependencies": {
+    "request": "^2.55.0"
+  }
 }
