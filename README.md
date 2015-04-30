@@ -330,12 +330,14 @@ module.exports = function (io) {
 	io.res.end();
 };
 ```
-and run the following GET requests:	
+and run the following GET requests:  
+
 1. /
 2. /foo
 3. /foo/bar
 
-You should get these logs:
+You should get these logs:  
+
 1. .../app/get.js
 2. .../app/foo/get.js
 3. .../app/foo/get.js
