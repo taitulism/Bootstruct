@@ -6,31 +6,32 @@ A name-convention framework for Node.js
 
 Get started
 -----------
-	0. Start a new project: Create a folder with a special name.
 
-	1. Install Bootstruct: 
-	```sh
-		$ npm install bootstruct
-	```
-	2. In your project's folder, create a `server.js` file with the following content:  
-	```js
-		var http = require('http');
-		var bts  = require('bootstruct');
+0. Start a new project: Create a folder with a special name.
 
-		http.createServer(bts).listen(8080, '127.0.0.1');
-	```
-	3. Create a folder named `app` in your project's folder. The name "app" is a must.
+1. Install Bootstruct: 
+```sh
+	$ npm install bootstruct
+```
+2. In your project's folder, create a `server.js` file with the following content:  
+```js
+	var http = require('http');
+	var bts  = require('bootstruct');
 
-	4. Inside `app`, create a file named `get.js` and make it export a single function that accepts a single argument:
-	```js
-		module.exports = function (io) {
-			io.res.end('hello beautiful world');
-		};
-	```
-	5. Start your server up:
-	```sh
-	$ node server.js
-	```
+	http.createServer(bts).listen(8080, '127.0.0.1');
+```
+3. Create a folder named `app` in your project's folder. The name "app" is a must.
+
+4. Inside `app`, create a file named `get.js` and make it export a single function that accepts a single argument:
+```js
+	module.exports = function (io) {
+		io.res.end('hello beautiful world');
+	};
+```
+5. Start your server up:
+```sh
+$ node server.js
+```
 
 **You're now ready for GET requests to yourdomain.com:8080/**
 
