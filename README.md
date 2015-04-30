@@ -84,27 +84,27 @@ app.get('/foo/bar', function () {
 
 Example explained
 -----------------
-	1. If `npm install bootstruct` means nothing to you, welcome to Node!  
-	2. When Bootstruct is required it initializes and returns a function to the `bts` variable.
-		 We pass this function to be used as the server's callback to run on every incoming request.
-		 For every request the callback function gets called with the `request` and the `response` as arguments.
-	```js		
-			// Pseudo code
-			http.createSrever( fn(request, response){...} )
-	```
-	3. When Bootstruct initializes, it looks for a folder named `app` in your project's folder and parses it.  
-		 Bootstruct counts this folder as your main router or the root-controller that handles all requests.
-		 
-	4. When you've created that `get.js` file, you've actually binded its exported function to run on HTTP GET requests only. By placing it under the `app` folder (the root-controller) you make it the handler of all GET requests sent to yourdomain.com/.
-	The function that `get.js` file exports is called when a GET request is made to `yourdomain.com` (or `'/'` in common Nodish).
-	When called, it accepts a single argument `(io)`. This io holds the native request/response as properties:  
-		io.req  
-	    io.res  
-	Both by reference, untouched.
-	If you used Node before, the `io.res.end` part should be very clear now.
+1. If `npm install bootstruct` means nothing to you, welcome to Node!  
+2. When Bootstruct is required it initializes and returns a function to the `bts` variable.
+	 We pass this function to be used as the server's callback to run on every incoming request.
+	 For every request the callback function gets called with the `request` and the `response` as arguments.
+```js		
+		// Pseudo code
+		http.createSrever( fn(request, response){...} )
+```
+3. When Bootstruct initializes, it looks for a folder named `app` in your project's folder and parses it.  
+	 Bootstruct counts this folder as your main router or the root-controller that handles all requests.
+	 
+4. When you've created that `get.js` file, you've actually binded its exported function to run on HTTP GET requests only. By placing it under the `app` folder (the root-controller) you make it the handler of all GET requests sent to yourdomain.com/.
+The function that `get.js` file exports is called when a GET request is made to `yourdomain.com` (or `'/'` in common Nodish).
+When called, it accepts a single argument `(io)`. This io holds the native request/response as properties:  
+	io.req  
+    io.res  
+Both by reference, untouched.
+If you used Node before, the `io.res.end` part should be very clear now.
 
-	5. Your app can now accept requests to `'/'`.  
-		 You should get `hello beautiful world` in response.
+5. Your app can now accept requests to `'/'`.  
+	 You should get `hello beautiful world` in response.
 
 
 >NOTE: The following is more about file-names, folder-names and folder-structure than code and syntax.
