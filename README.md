@@ -16,11 +16,13 @@ Get started
 2. In your project's folder, create a `server.js` file with the following content:  
 ```js
 	var http = require('http');
-	var bts  = require('bootstruct');
+	var bts = require('bootstruct');
+	var app = bts.start('app');
 
-	http.createServer(bts).listen(8080, '127.0.0.1');
+	http.createServer(app).listen(8080, '127.0.0.1');
+
 ```
-3. Create a folder named `app` in your project's folder. The name "app" is a must.
+3. Create a folder named `app` in your project's folder.
 
 4. Inside `app`, create a file named `get.js` and make it export a single function that accepts a single argument:
 ```js
@@ -92,7 +94,7 @@ Example explained
 		// Pseudo code
 		http.createSrever( fn(request, response){...} )
 ```
-3. When Bootstruct initializes, it looks for a folder named `app` in your project's folder and parses it.  
+3. When Bootstruct initializes, it looks for a folder named `app` (or whatever name you pass to bts.start) in your project's folder and parses it.  
 	 Bootstruct counts this folder as your main router or the root-controller that handles all requests.
 	 
 4. When you've created that `get.js` file, you've actually binded its exported function to run on HTTP GET requests only. By placing it under the `app` folder (the root-controller) you make it the handler of all GET requests sent to yourdomain.com/.
