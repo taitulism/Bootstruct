@@ -116,50 +116,36 @@ Reserved Entry Names
 --------------------
 Bootstruct has a few reserved meaningful names for files and folders (or "entries").
 
-1. app
-2. first
-3. all
-4. verbs
-5. get
-6. post
-7. put
-8. delete
-9. last
+1. first
+2. all
+3. verbs
+4. get
+5. post
+6. put
+7. delete
+8. last
 
 >NOTE: We've already covered 5 of them.
 
 These names, when given to an entry (a file or a folder) plays a certain roll in your app's flow.
 
 
-app
----
-
-`app` is reserved only in your project's folder. The folder named `app` in project's folder is what Bootstruct creates its root-controller from.
-
-Example structure:
-```
-[my_special_project] 
-	[app]            ===> root-controller
-	server.js
-	package.json
-```
-
 get, post, put, delete
 ----------------------
-
 These 4 verb names are reserved for entries that exports functions, like in the get-started example.
 These are some of the methods a controller can have.
 For code separation you could use folders with these names as well, just make sure to export your function from an `index.js` file within.
 
 Example structure:
 ```
-[app]
-	get.js
-	[post]
-		module.js
-		index.js
-	put.js
-	delete.js
+.
+├── app
+    ├── get.js
+    ├── post
+    │   ├── module.js
+    │   └── index.js
+	├── put.js
+	└── delete.js
 ```
 
 Example file:
@@ -177,10 +163,11 @@ all
 
 Example structure:
 ```
-[app]
-	all.js
-	get.js
-	post.js
+.
+├── app
+    ├── all.js
+    ├── get.js
+    └── post.js
 ```
 
 `all.js` contents:
@@ -228,11 +215,12 @@ These, as their names suggest, will be called before and after the `all` and the
 
 Example structure:
 ```
-[app]
-	first.js
-	all.js
-	get.js
-	last.js
+.
+├── app
+    ├── first.js
+    ├── all.js
+    ├── get.js
+    └── last.js
 ```
 
 Export the same function in all files:
@@ -240,17 +228,6 @@ Export the same function in all files:
 module.exports = function (io) {
 	console.log(__filename);
 	io.next();
-};
-```
-
-Your `last` will run last (of course) so there's no need to call `io.next` from there.
-Instead, end the response:
-
-`last.js` contents:
-```js
-module.exports = function (io) {
-	console.log(__filename);
-	io.res.end();
 };
 ```
 On a GET request to '/' you'll get the following logs, in this order:
@@ -269,17 +246,20 @@ When you'll have sub-controllers in the same containing folder, adding a `verbs`
 
 Example structure:
 ```
-[app]
-	[verbs]
-		[post]
-		[put]
-		[get]
-		[delete]
-		all.js
-	[foo]
-		...
-	[bar]
-		...
+.
+├── app
+    ├── verbs
+	│	├── all.js
+	│	├── get.js
+	│	├── post.js
+	│	├── put.js
+	│	└── delete.js
+	├── foo
+	│   ├── ...
+	│   └── ...
+	├── bar
+	│   ├── ...
+	│   └── ...
 ```
 
 Controllers
@@ -305,10 +285,11 @@ Controllers can have sub-controllers as folders can have sub-folders.
 
 Example structure:
 ```
-[app]
-	get.js
-	[foo]
-		get.js
+.
+├── app
+	├── get.js
+	└── foo
+		└── get.js
 ```
 
 In a "let's-say" code:
@@ -377,10 +358,11 @@ Then the controller (starting with the RC) checks the first item:
 
 Example structure (same as the last one):
 ```
-[app]
-	get.js
-	[foo]
-		get.js
+.
+├── app
+	├── get.js
+	└── foo
+		└── get.js
 ```
 
 Run these 2 requests:
@@ -434,21 +416,22 @@ misc
 #Summary
 Consider a structure:
 ```
-[app]
-	first.js
-	all.js
-	get.js
-	last.js
-	[foo]
-		first.js
-		all.js
-		get.js
-		last.js
-		[bar]
-			first.js
-			all.js
-			get.js
-			last.js
+.
+├── app
+	├── first.js
+	├── all.js
+	├── get.js
+	├── last.js
+	└── foo
+		├── first.js
+		├── all.js
+		├── get.js
+		├── last.js
+		└── bar
+			├── first.js
+			├── all.js
+			├── get.js
+			└── last.js
 ```
 
 >NOTE: This is a full use case. You don't have to use all of the controller's possible methods for every folder.
