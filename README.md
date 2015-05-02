@@ -19,7 +19,7 @@ Get started
 	var bts = require('bootstruct');
 	var app = bts.start('app');
 
-	http.createServer(app).listen(8080, '127.0.0.1');
+	http.createServer(app).listen(1001, '127.0.0.1');
 
 ```
 3. Create a folder named `app` in your project's folder.
@@ -34,39 +34,38 @@ Get started
 ```sh
 $ node server.js
 ```
+***********************************************************
+You're now ready for GET requests to `yourdomain.com:1001/`
+***********************************************************
 
-**You're now ready for GET requests to yourdomain.com:8080/**
 
 
 General
 -------
-To support routes like:
+With Bootstruct you structure your files and folders in a certain way to get a certain behavior.
+To handle different verbs of HTTP requests (GET, POST etc.) and support routes like:
 
 	domain.com/
 	domain.com/foo
 	domain.com/foo/bar
 
-you don't need to write any code, just structure your folders like:
-
+you don't need to write any code, just structure your files and folders like this:
 ```js
-[app]
-	[foo]
-		[bar]
+.
+├── node_modules
+├── app            «───
+│   ├── get.js
+│   └── foo
+│       ├── get.js
+│       └── baz
+│           └── get.js
+│
+├── index.js 
+└── package.json
 ```
->NOTE: Square brackets stand for folders.
 
-To handle requests of different kinds of HTTP verbs, add verb files. add a `get.js` file for `GET` requests:
-```
-[app]
-	get.js
-	[foo]
-		get.js
-		[bar]
-			get.js
-```
 >NOTE: You can use `post`, `put` and `delete` (.js) as well. They are all reserved names for files and folders in Bootstruct.
 
-With Bootstruct you structure your files and folders in a certain way to get a certain behavior.
 
 ```js
 // NOT Bootstruct.
