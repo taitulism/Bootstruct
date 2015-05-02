@@ -99,8 +99,8 @@ Example explained
 4. When you've created that `get.js` file, you've actually binded its exported function to run on HTTP GET requests only. By placing it under the `app` folder (the root-controller) you make it the handler of all GET requests sent to yourdomain.com/.
 The function that `get.js` file exports is called when a GET request is made to `yourdomain.com` (or `'/'` in common Nodish).
 When called, it accepts a single argument `(io)`. This io holds the native request/response as properties:  
-&nbsp;&nbsp;&nbsp; io.req  
-&nbsp;&nbsp;&nbsp; io.res  
+&nbsp; &nbsp; &nbsp; `io.req`  
+&nbsp; &nbsp; &nbsp; `io.res`  
 Both by reference, untouched.
 If you used Node before, the `io.res.end` part should be very clear now.
 
@@ -116,13 +116,21 @@ Reserved Entry Names
 --------------------
 Bootstruct has a few reserved meaningful names for files and folders (or "entries").  
 1. app
+
 2. first
+
 3. all
+
 4. verbs
+
 5. get
+
 6. post
+
 7. put
+
 8. delete
+
 9. last
 
 >NOTE: We've already covered 5 of them.
