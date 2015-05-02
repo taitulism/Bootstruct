@@ -10,30 +10,31 @@ Get started
 0. Start a new project: Create a folder with a special name.
 
 1. Install Bootstruct: 
-```sh
-	$ npm install bootstruct
-```
+	```sh
+		$ npm install bootstruct
+	```
 2. In your project's folder, create a `server.js` file with the following content:  
-```js
-	var http = require('http');
-	var bts = require('bootstruct');
-	var app = bts.start('app');
+	```js
+		var http = require('http');
+		var bts = require('bootstruct');
+		var app = bts.start('app');
 
-	http.createServer(app).listen(1001, '127.0.0.1');
-
-```
+		http.createServer(app).listen(1001, '127.0.0.1');
+		console.log('Listening on port 1001');
+	```
 3. Create a folder named `app` in your project's folder.
 
 4. Inside `app`, create a file named `get.js` and make it export a single function that accepts a single argument:
-```js
-	module.exports = function (io) {
-		io.res.end('hello beautiful world');
-	};
-```
+	```js
+		module.exports = function (io) {
+			io.res.end('hello beautiful world');
+		};
+	```
 5. Start your server up:
-```sh
-$ node server.js
-```
+	```sh
+		$ node server.js
+	```
+
 ***********************************************************
 You're now ready for GET requests to `yourdomain.com:1001/`
 ***********************************************************
