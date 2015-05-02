@@ -518,8 +518,8 @@ This is what happens for every request. Mind the loop:
 
 1. Check-in: Controllers run their `first` method.
 2. Controllers check the next URL part. Is there a matching sub-controller?  
-	If so, the controller passes the io to that sub-controller for a check-in. **Back to 1**.  
-	If not, current controller is the target-controller. It will run its `all` method and then its `verb` method.
+	&nbsp; &nbsp; &nbsp; If so, the controller passes the io to that sub-controller for a check-in. **Back to 1**.  
+	&nbsp; &nbsp; &nbsp; If not, current controller is the target-controller. It will run its `all` method and then its `verb` method.
 3. Check-out: Controllers run their `last` method.
 4. Controllers pass the io back to their parent controller for a check-out. **Back to 3**.
 
