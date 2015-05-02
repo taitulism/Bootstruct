@@ -114,23 +114,16 @@ If you used Node before, the `io.res.end` part should be very clear now.
 
 Reserved Entry Names
 --------------------
-Bootstruct has a few reserved meaningful names for files and folders (or "entries").  
+Bootstruct has a few reserved meaningful names for files and folders (or "entries").
+
 1. app
-
 2. first
-
 3. all
-
 4. verbs
-
 5. get
-
 6. post
-
 7. put
-
 8. delete
-
 9. last
 
 >NOTE: We've already covered 5 of them.
