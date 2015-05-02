@@ -341,7 +341,7 @@ When request.url is:
 /foo/bar/baz
 ```
 
-io.params will hold 3 items:
+`io.params` will hold 3 items:
 ```
 [foo, bar, baz]
 ```
@@ -379,7 +379,7 @@ You should get:
 
 io.urlObj
 ---------
-The io also holds a `urlObj` property which is and object, the result of Node's native url.parse() of the current URL.
+The `io` also holds a `urlObj` property which is and object, the result of Node's native url.parse() of the current URL.
 
 >NOTE: url.parse() returns an object that is similar to the window.location object. It's called with a `true` flag what makes the query-string parsed as a key-value object. 
 
@@ -403,9 +403,9 @@ On request to:
 
 io.urlObj.split equals to:`['aaa', 'bbb']`
 
-misc
-----
-* io.method   - Lowercased request method (e.g. `get`)
+io other props
+--------------
+* io.method   - lowercased request method (e.g. `get`)
 * io.VERB     - Uppercased request method (e.g. `GET`)
 * io.ctrl     - (internal) The current handler
 * io.profiles - (internal) io's state in all controllers
@@ -443,7 +443,7 @@ module.exports = function (io) {
 	io.next();
 };
 ```
-All functions logs the filename they're exported from and moves on, except for `app/last.js`. This is the last method to run so it doesn't need to call `io.next`. Instead, it should end the response with `io.res.end()`.
+All functions logs the filename they're exported from and moves on.
 
 The following are examples of requested URLs (GET requests) and their expected logs given the above structure:
 ```
@@ -515,9 +515,10 @@ RC = {
 The Shorter Version
 -------------------
 This is what happens for every request. Mind the loop:
+
 	1. Check-in: Controllers run their `first` method.
-	2. Controllers check the next URL part. Is there a matching sub-controller?  
-		If so, the controller passes the io to that sub-controller for a check-in. **Back to 1**.  
+	2. Controllers check the next URL part. Is there a matching sub-controller?
+		If so, the controller passes the io to that sub-controller for a check-in. **Back to 1**.
 		If not, current controller is the target-controller. It will run its `all` method and then its `verb` method.
 	3. Check-out: Controllers run their `last` method.
 	4. Controllers pass the io back to their parent controller for a check-out. **Back to 3**.
