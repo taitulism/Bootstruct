@@ -31,7 +31,7 @@ Get started
 		};
 	```
 5. Start your server up:  
-	```sh
+	```
 		$ node server.js
 	```
 
