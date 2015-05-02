@@ -532,7 +532,8 @@ Important notes:
 * You can use the io to hold different properties throgh its cycle.
 * The context of the `this` keyword inside method functions refers to the current controller object.
   Each controller has a name (like `bar`) and a unique ID which is its folder path (e.g. `app/foo/bar`).  
-  Try to log `this.name` and `this.id` in your different methods.  
+  Try to log `this.name` and `this.id` in your different methods.
+* Bootstruct haven't been tested for production environment. Yet.
 
 More to come.
 
@@ -540,7 +541,3 @@ More to come.
 Questions, suggestions, bugs, hugs, criticism or kudos are all welcome.
 
 *taitulism(at)gmail(dot)com*
-
-
-`DISCLAIMER`: Bootstruct haven't been tested for production environment. Yet.
-
