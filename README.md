@@ -13,7 +13,7 @@ Get started
 	```sh
 		$ npm install bootstruct
 	```
-2. In your project's folder, create a `server.js` file with the following content:  
+2. In your project's folder, create a `server.js` file with the following content:
 	```js
 		var http = require('http');
 		var bts = require('bootstruct');
@@ -30,7 +30,7 @@ Get started
 			io.res.end('hello beautiful world');
 		};
 	```
-5. Start your server up:
+5. Start your server up:  
 	```sh
 		$ node server.js
 	```
