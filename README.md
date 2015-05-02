@@ -66,10 +66,9 @@ you don't need to write any code, just structure your files and folders like thi
 
 >NOTE: You can use `post`, `put` and `delete` (.js) as well. They are all reserved names for files and folders in Bootstruct.
 
-
+If you're familiar with express/connect, the equivalent would be:
 ```js
-// NOT Bootstruct.
-// express/connect equivalent:
+// NOT Bootstruct! express/connect equivalent:
 app.get('/', function () {
 	// ...
 });
