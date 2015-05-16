@@ -4,6 +4,28 @@ Bootstruct
 >*"Routing by structure"*
 A name-convention framework for Node.js
 
+Table of contents
+-----------------
+
+  * [Get started](#get-started)
+  * [Overview](#overview)
+  * [Example explained](#example-explained)
+  * [Reserved-Entry-Names](#reserved-entry-names)
+  	* [get, post, put, delete](#get-post-put-delete)
+  	* [all](#all)
+  	* [first & last](#first--last)
+  	* [verbs](#verbs)
+  * [Controllers](#controllers)
+  * io
+  	* [io.params](#ioparams)
+  	* [io.urlObj](#iourlobj)
+  		* [io.urlObj.split](#iourlobjsplit)
+  	* [io other props](#io-other-props)
+  * [Summary](#summary)
+  	* [The Shorter Version](#the-shorter-version)
+  	* [Important notes](#important-notes)
+
+
 Get started
 -----------
 
@@ -42,8 +64,8 @@ You're now ready for GET requests to `yourdomain.com:1001/`
 
 
 
-General
--------
+Overview
+--------
 With Bootstruct you structure your files and folders in a certain way to get a certain behavior.
 To handle different verbs of HTTP requests (GET, POST etc.) and support routes like:
 
