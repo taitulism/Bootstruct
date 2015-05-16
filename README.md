@@ -19,8 +19,9 @@ Get started
 		var bts = require('bootstruct');
 		var app = bts.start('app');
 
-		http.createServer(app).listen(1001, '127.0.0.1');
-		console.log('Listening on port 1001');
+		http.createServer(app).listen(1001, function(){
+			console.log('Listening on port 1001');
+		});
 	```
 3. Create a folder named `app` in your project's folder.
 
@@ -249,11 +250,11 @@ Example structure:
 .
 ├── app
     ├── verbs
-	│	├── all.js
-	│	├── get.js
-	│	├── post.js
-	│	├── put.js
-	│	└── delete.js
+	│   ├── all.js
+	│   ├── get.js
+	│   ├── post.js
+	│   ├── put.js
+	│   └── delete.js
 	├── foo
 	│   ├── ...
 	│   └── ...
@@ -518,10 +519,10 @@ This is what happens for every request. Mind the loop:
 
 1. Check-in: Controllers run their `first` method.
 2. Controllers check the next URL part. Is there a matching sub-controller?  
-	&nbsp; &nbsp; &nbsp; If so, the controller passes the io to that sub-controller for a check-in. **Back to 1**.  
+	&nbsp; &nbsp; &nbsp; If so, the controller passes the `io` to that sub-controller for a check-in. **Back to 1**.  
 	&nbsp; &nbsp; &nbsp; If not, current controller is the target-controller. It will run its `all` method and then its `verb` method.
 3. Check-out: Controllers run their `last` method.
-4. Controllers pass the io back to their parent controller for a check-out. **Back to 3**.
+4. Controllers pass the `io` back to their parent controller for a check-out. **Back to 3**.
 
 
 Important notes:
