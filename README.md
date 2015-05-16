@@ -530,7 +530,7 @@ Important notes:
 * Bootstruct is CaSe-InSeNsItIvE when it comes to URLs and file names.
 * Bootstruct ignores trailing slashes in URLs.
 * Bootstruct ignores entries that their names start with an underscore and doesn't parse them (e.g. `_ignored.js`).
-* You can use the io to hold different properties throgh its cycle.
+* You can use the `io` to hold different properties through its cycle.
 * The context of the `this` keyword inside method functions refers to the current controller object.
   Each controller has a name (like `bar`) and a unique ID which is its folder path (e.g. `app/foo/bar`).  
   Try to log `this.name` and `this.id` in your different methods.
