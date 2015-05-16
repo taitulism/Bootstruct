@@ -4,6 +4,28 @@ Bootstruct
 >*"Routing by structure"*
 A name-convention framework for Node.js
 
+Table of contents
+-----------------
+
+  * [Get started](#get-started)
+  * [Overview](#overview)
+  * [Example explained](#example-explained)
+  * [Reserved-Entry-Names](#reserved-entry-names)
+  	* [get, post, put, delete](#get-post-put-delete)
+  	* [all](#all)
+  	* [first & last](#first--last)
+  	* [verbs](#verbs)
+  * [Controllers](#controllers)
+  * io
+  	* [io.params](#ioparams)
+  	* [io.urlObj](#iourlobj)
+  		* [io.urlObj.split](#iourlobjsplit)
+  	* [io other props](#io-other-props)
+  * [Summary](#summary)
+  	* [The Shorter Version](#the-shorter-version)
+  	* [Important notes](#important-notes)
+
+
 Get started
 -----------
 
@@ -19,8 +41,9 @@ Get started
 		var bts = require('bootstruct');
 		var app = bts.start('app');
 
-		http.createServer(app).listen(1001, '127.0.0.1');
-		console.log('Listening on port 1001');
+		http.createServer(app).listen(1001, function(){
+			console.log('Listening on port 1001');
+		});
 	```
 3. Create a folder named `app` in your project's folder.
 
@@ -41,8 +64,8 @@ You're now ready for GET requests to `yourdomain.com:1001/`
 
 
 
-General
--------
+Overview
+--------
 With Bootstruct you structure your files and folders in a certain way to get a certain behavior.
 To handle different verbs of HTTP requests (GET, POST etc.) and support routes like:
 
@@ -249,11 +272,11 @@ Example structure:
 .
 ├── app
     ├── verbs
-	│	├── all.js
-	│	├── get.js
-	│	├── post.js
-	│	├── put.js
-	│	└── delete.js
+	│   ├── all.js
+	│   ├── get.js
+	│   ├── post.js
+	│   ├── put.js
+	│   └── delete.js
 	├── foo
 	│   ├── ...
 	│   └── ...
@@ -518,10 +541,10 @@ This is what happens for every request. Mind the loop:
 
 1. Check-in: Controllers run their `first` method.
 2. Controllers check the next URL part. Is there a matching sub-controller?  
-	&nbsp; &nbsp; &nbsp; If so, the controller passes the io to that sub-controller for a check-in. **Back to 1**.  
+	&nbsp; &nbsp; &nbsp; If so, the controller passes the `io` to that sub-controller for a check-in. **Back to 1**.  
 	&nbsp; &nbsp; &nbsp; If not, current controller is the target-controller. It will run its `all` method and then its `verb` method.
 3. Check-out: Controllers run their `last` method.
-4. Controllers pass the io back to their parent controller for a check-out. **Back to 3**.
+4. Controllers pass the `io` back to their parent controller for a check-out. **Back to 3**.
 
 
 Important notes:
@@ -529,7 +552,7 @@ Important notes:
 * Bootstruct is CaSe-InSeNsItIvE when it comes to URLs and file names.
 * Bootstruct ignores trailing slashes in URLs.
 * Bootstruct ignores entries that their names start with an underscore and doesn't parse them (e.g. `_ignored.js`).
-* You can use the io to hold different properties throgh its cycle.
+* You can use the `io` to hold different properties through its cycle.
 * The context of the `this` keyword inside method functions refers to the current controller object.
   Each controller has a name (like `bar`) and a unique ID which is its folder path (e.g. `app/foo/bar`).  
   Try to log `this.name` and `this.id` in your different methods.
