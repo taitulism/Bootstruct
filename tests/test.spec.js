@@ -37,7 +37,11 @@ describe('Bootstruct', function() {
 			var server = http.createServer(app).listen(1001, '127.0.0.1');
 
 			// request
-			request('http://localhost:1001' + url, function(error, response, body) {
+			request('http://localhost:1001' + url, function(err, response, body) {
+				if (err) {
+					console.log('request-module error:\n',err);
+					return;
+				}
 				expect(body).toEqual(expectedStr);
 
 				// stop server
