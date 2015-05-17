@@ -361,7 +361,7 @@ Bootstruct splits the URL (the pathname) by slashes and stores the returned arra
 On request to: 
 `yourdomain.com/aaa/bbb/?aaa=111&bbb=222`
 
-io._params equals to:`['aaa', 'bbb']`.
+`io._params` equals to:`['aaa', 'bbb']`.
 
 It also:  
 * merges repeating slashes  
