@@ -3,7 +3,7 @@ var request = require('request');
 var http    = require('http');
 var sep     = require('path').sep;
 var bts     = require('../');
-var app     = bts.start('./tests/app');
+var app     = bts('./tests/app');
 
 /* 
  * key   = url to test
