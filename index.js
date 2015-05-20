@@ -1,7 +1,7 @@
 'use strict';
 
-var Ctrl    = require('./lib/constructors/ctrl');
-var IO      = require('./lib/constructors/io');
+var Ctrl    = require('./lib/ctrl');
+var IO      = require('./lib/io');
 var map     = require('./lib/utils/f2j');
 var resolve = require('path').resolve;
 
