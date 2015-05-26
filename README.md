@@ -18,7 +18,6 @@ Table of contents
   * [Controllers](#controllers)
   * io
 	* [io._params](#io_params)
-  	* [io.params](#ioparams)
   	* [io other props](#io-other-props)
   * [Summary](#summary)
   	* [The Shorter Version](#the-shorter-version)
@@ -356,46 +355,26 @@ When addressing a `bar` (which doesn't exist), `get` will run in the last contro
 #io
 ***
 
-io._params
-----------
-Bootstruct splits the URL (the pathname) by slashes and stores the returned array as `io._params`.
+io.params
+---------
+Bootstruct refers the different URL parts as parameters so it splits the URL (pathname only, not the queryString) by slashes and stores the returned array in `io.params`.
 
-On request to: 
-`yourdomain.com/aaa/bbb/?aaa=111&bbb=222`
-
-`io._params` equals to:`['aaa', 'bbb']`.
-
-It also:  
+Bootstruct also:  
 * merges repeating slashes  
 * trims slashes (preceding & trailing)
 
+On request to: 
+`http://yourdomain.com/aaa/bbb/ccc?flag=1&type=normal`
 
-io.params
----------
-On request, this prop starts as a copy of `io._params` (mind the _). While "checking-in" at different controllers, each controller removes its name from `io.params` array. The current handling controller will always be the first item.
+it'll be equal to: `['aaa', 'bbb', 'ccc']`.
+
+Then Bootstruct checks the first parameter and if you have a controller with that name (e.g. `aaa`), it will handle the request only after removing its name from `io.params`. At this stage `io.params = ['bbb', 'ccc']`. Then the next param is being checked against an existing sub-controller (e.g. is there a folder name `bbb` inside `aaa`).
 
 
-When request.url is:
-```
-/foo/bar/baz
-```
-
-`io.params` starts as:
-```
-[foo, bar, baz]
-```
-
-but if a `foo` controller exists `io.params` would changed into:
-```
-[bar, baz]
-```
-
->NOTE: Bootstruct uses io.params itself so treat io.params as "read-only".
-
-Considering Bootstruct's nature, this is how Bootstruct routes the io through your different folders/controllers structure: It always checks the next item in io.params for a matching controller's name.
+Considering Bootstruct's nature, this is how Bootstruct routes the io through your different folders/controllers structure: It always checks the next item in `io.params` for a matching controller's name.
 
 Every time an io "checks-in" at a controller (with RC as an exception), the controller removes its name from the `io.params` array. It's always the first item.
-On `foo` controller check-in io.params changes: `[foo, bar, baz] ===> [bar, baz]`.  
+On `foo` controller check-in, io.params changes: `[foo, bar, baz] ===> [bar, baz]`.  
 Then the controller (starting with the RC) checks the first item:  
 * If it has a sub-controller with a matching name (e.g. `foo`), it will pass the io to that sub-controller for another "check-in".  
 * if there is no sub-controller with that name (e.g. `bar`), what's left in io.params is for you to handle as requests' parameters.
@@ -431,7 +410,7 @@ io other props
 
 
 
-********
+
 #Summary
 ********
 Consider a structure:
