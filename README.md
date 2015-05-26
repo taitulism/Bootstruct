@@ -16,7 +16,7 @@ Table of contents
   	* [first & last](#first--last)
   	* [verbs](#verbs)
   * [Controllers](#controllers)
-  * io
+  * [io](#io)
 	* [io.params](#ioparams)
   	* [io other props](#io-other-props)
   * [Summary](#summary)
@@ -354,6 +354,25 @@ When addressing a `bar` (which doesn't exist), `get` will run in the last contro
 
 #io
 ***
+`io` is an object that is being created on each request and being passed through your app's routes.
+It holds the `request` and the `resonse` objects (`io.req` and `io.res`) and a `.next()` method to pass it to its next checkpoint.
+Think of a flow chart that describes your app different possible routes. `io` is the object that walks along those routes.
+
+```
+	   (request,response)
+		    └──┬──┘
+		       │
+function root (io) {
+		   ┌───┘
+	first(io)
+		   │
+	GET  (io)
+		   │
+	last (io)
+}	       │
+		   │
+
+```
 
 io.params
 ---------
