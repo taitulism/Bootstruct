@@ -63,8 +63,8 @@ You're now ready for GET requests to `yourdomain.com:1001/`
 
 
 
-Overview
---------
+#Overview
+---------
 With Bootstruct you structure your files and folders in a certain way to get a certain behavior.
 To handle different verbs of HTTP requests (GET, POST etc.) and support routes like:
 
@@ -134,8 +134,8 @@ If you used Node before, the `io.res.end` part should be very clear now.
 
 
 
-Reserved Entry Names
---------------------
+#Reserved Entry Names
+*********************
 Bootstruct has a few reserved meaningful names for files and folders (or "entries").
 
 1. first
@@ -284,8 +284,8 @@ Example structure:
 	│   └── ...
 ```
 
-Controllers
------------
+#Controllers
+------------
 A controller is an object that is parsed out from a folder. You can say it's a kind of a representation of a folder.
 Folder's entries become controller's sub-controllers and methods.
 Bootstruct builds its controller objects when it initializes (on require).
@@ -353,6 +353,8 @@ When addressing a `bar` (which doesn't exist), `get` will run in the last contro
 
 >__IMPORTANT NOTE__: The last controller found in the URL parts is the only controller that also runs its `all` and verb methods. All of its parent-controllers only run their wrapping methods, `first` and `last`.
 
+#io
+***
 
 io._params
 ----------
@@ -431,6 +433,7 @@ io other props
 
 ********
 #Summary
+********
 Consider a structure:
 ```
 .
