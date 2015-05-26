@@ -17,7 +17,7 @@ Table of contents
   	* [verbs](#verbs)
   * [Controllers](#controllers)
   * io
-	* [io._params](#io_params)
+	* [io.params](#ioparams)
   	* [io other props](#io-other-props)
   * [Summary](#summary)
   	* [The Shorter Version](#the-shorter-version)
