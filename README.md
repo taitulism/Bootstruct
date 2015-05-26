@@ -16,7 +16,7 @@ Table of contents
   	* [first & last](#first--last)
   	* [verbs](#verbs)
   * [Controllers](#controllers)
-  * io
+  * [io](#io)
 	* [io.params](#ioparams)
   	* [io other props](#io-other-props)
   * [Summary](#summary)
@@ -359,7 +359,8 @@ It holds the `request` and the `resonse` objects (`io.req` and `io.res`) and a `
 Think of a flow chart that describes your app different possible routes. `io` is the object that walks along those routes.
 
 ```
-		       │
+	   (request,response)
+		    └──┬──┘
 		       │
 function root (io) {
 		   ┌───┘
