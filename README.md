@@ -403,8 +403,6 @@ You should get:
 
 io other props
 --------------
-* io.method    - lowercased request method (e.g. `get`)
-* io.VERB      - Uppercased request method (e.g. `GET`)
 * io._ctrl     - (internal) The current handler
 * io._profiles - (internal) io's state in all controllers
 
