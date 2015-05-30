@@ -1,7 +1,7 @@
 
 Bootstruct
 ==========
->*"Routing by structure"*
+>*"Routing by structure"*  
 A name-convention framework for Node.js
 
 Table of contents
@@ -9,13 +9,11 @@ Table of contents
 
   * [Get started](#get-started)
   * [Overview](#overview)
-  * [Example explained](#example-explained)
-  * [Reserved-Entry-Names](#reserved-entry-names)
-  	* [get, post, put, delete](#get-post-put-delete)
-  	* [all](#all)
+  * [Controllers](#controllers)
+	* [get, post, put, delete](#get-post-put-delete)
+  	* [index](#index)
   	* [first & last](#first--last)
   	* [verbs](#verbs)
-  * [Controllers](#controllers)
   * [io](#io)
 	* [io.params](#ioparams)
   	* [io other props](#io-other-props)
@@ -27,264 +25,132 @@ Table of contents
 Get started
 -----------
 
-0. Start a new project: Create a folder with a special name.
+1. Start a new project: Create a folder with an extra ordinary name like: "myApp".
 
-1. Install Bootstruct: 
+2. Install Bootstruct: 
 	```sh
 		$ npm install bootstruct
 	```
-2. In your project's folder, create a `server.js` file with the following content:
+	If this means nothing to you, welcome to Node!
+3. In your project's folder, create a `server.js` file with the following content:
 	```js
 		var http = require('http');
-		var bts = require('bootstruct');
-		var app = bts.start('app');
+		var bts  = require('bootstruct');
 
+
+		// create a new Bootstruct app from `myApp` folder 
+		var app = bts('myApp');
+
+
+		// create a server and use `app` as its handler function
 		http.createServer(app).listen(1001, function(){
 			console.log('Listening on port 1001');
 		});
 	```
-3. Create a folder named `app` in your project's folder.
+4. Create a folder named `app` in your project's folder.
 
-4. Inside `app`, create a file named `get.js` and make it export a single function that accepts a single argument:
+5. Inside `app`, create a file named `get.js` and make it export a single function that accepts a single argument:
 	```js
 		module.exports = function (io) {
 			io.res.end('hello beautiful world');
 		};
 	```
-5. Start your server up:  
+	`io` is an object that holds the native request/response as properties:  
+	&nbsp; &nbsp; &nbsp; `io.req`  
+	&nbsp; &nbsp; &nbsp; `io.res`  
+	Both by reference, untouched.  
+	If you used Node before, the `io.res.end` part should be very clear now.
+
+6. Start your server up:  
 	```
 		$ node server.js
 	```
 
-***********************************************************
-You're now ready for GET requests to `yourdomain.com:1001/`
-***********************************************************
+** You're now ready for GET requests to `yourdomain.com:1001/` **
+
+>NOTE: You can use `post`, `put` and `delete` (.js) as well. They are all reserved names for files and folders in Bootstruct.
+
 
 
 
 #Overview
 ---------
 With Bootstruct you structure your files and folders in a certain way to get a certain behavior.
-To handle different verbs of HTTP requests (GET, POST etc.) and support routes like:
+To support routes like:
 
 	domain.com/
 	domain.com/foo
 	domain.com/foo/bar
 
-you don't need to write any code, just structure your files and folders like this:
+you don't need to learn any new syntax, just structure your files and folders like this:
 ```js
 .
 ├── node_modules
-├── app            «───
-│   ├── get.js
+├── app            <──
+│   ├── index.js
 │   └── foo
-│       ├── get.js
-│       └── baz
-│           └── get.js
+│       ├── index.js
+│       └── bar
+│           └── index.js
 │
 ├── index.js 
 └── package.json
 ```
 
->NOTE: You can use `post`, `put` and `delete` (.js) as well. They are all reserved names for files and folders in Bootstruct.
+**The `index.js` file will run only in the requested folder.**
+
 
 If you're familiar with express/connect, the equivalent would be:
+
 ```js
 // NOT Bootstruct! express/connect equivalent:
-app.get('/', function () {
+app.all('/', function () {
 	// ...
 });
 
-app.get('/foo', function () {
+app.all('/foo', function () {
 	// ...
 });
 
-app.get('/foo/bar', function () {
+app.all('/foo/bar', function () {
 	// ...
 });
+
 ```
 
-Example explained
------------------
-1. If `npm install bootstruct` means nothing to you, welcome to Node!  
-2. When Bootstruct is required it initializes and returns a function to the `bts` variable.
-	 We pass this function to be used as the server's callback to run on every incoming request.
-	 For every request the callback function gets called with the `request` and the `response` as arguments.
-	```js		
-			// Pseudo code
-			http.createSrever( fn(request, response){...} )
-	```
-3. When Bootstruct initializes, it looks for a folder named `app` (or whatever name you pass to bts.start) in your project's folder and parses it.  
-	 Bootstruct counts this folder as your main router or the root-controller that handles all requests.
-	 
-4. When you've created that `get.js` file, you've actually binded its exported function to run on HTTP GET requests only. By placing it under the `app` folder (the root-controller) you make it the handler of all GET requests sent to yourdomain.com/.
-The function that `get.js` file exports is called when a GET request is made to `yourdomain.com` (or `'/'` in common Nodish).
-When called, it accepts a single argument `(io)`. This io holds the native request/response as properties:  
-&nbsp; &nbsp; &nbsp; `io.req`  
-&nbsp; &nbsp; &nbsp; `io.res`  
-Both by reference, untouched.
-If you used Node before, the `io.res.end` part should be very clear now.
+"Coding by convention" or "configuration over code" or whatever. They are all fine and it's all a matter of personal taste and project's needs.  
+Bootstruct does it with names convention. "Routing by structure" if you'd like.
 
-5. Your app can now accept requests to `'/'`.  
-	 You should get `hello beautiful world` in response.
+As such, learning Bootstruct is more about file-names, folder-names and folder-structure than code and syntax. Understand Bootstruct's flow.
 
 
->NOTE: The following is more about file-names, folder-names and folder-structure than code and syntax.
+As your app scales up, you can turn your files into folders. If the `get.js` file from the [Get started](#get-started) example would get bigger, you could replace it with a `get` folder containing an `index.js` file with whatever contents the original `get.js` file had. Anyway this is going to be "require"d as the folder's `get` method.
 
+>NOTE: This is why Bootstruct doesn't matter if it's a file or a folder and in these docs files and folders are referred as **"entries"**.
 
+You probably want to support different types of request methods individually, don't you?
+Well, just add verb-entries where you need them (for example a `get.js` file or a `post` folder).
 
-#Reserved Entry Names
-*********************
-Bootstruct has a few reserved meaningful names for files and folders (or "entries").
+>NOTE: `index.js` is called before all verbs (when exists).
 
-1. first
-2. all
-3. verbs
-4. get
-5. post
-6. put
-7. delete
-8. last
+Bootstruct provides you with an even greater controll on requests' flow. The `index` and the verb entries only run for the requested folder (or the target folder). On a request to `/foo/bar`, `bar` is the target folder and requests are just "passing by" its parent folders `app` and `app/foo`.
 
->NOTE: We've already covered 5 of them.
+If you want a folder to do something even if it's not the target folder, create a `first` entry in it. It will run for every request this folder was called in, even if it's not the target folder.
 
-These names, when given to an entry (a file or a folder) plays a certain roll in your app's flow.
+`first` is called in a folder when a request comes in whether or not this folder is the target folder or should the request be passed on. `first` is called when a request "checks-in" at a folder and `last` is called when it "checks-out", after the target folder is done with its `index` and verb files.
 
+All of these special names we give our entries are reserved entry names in Bootstruct and play a cretain roll in your app's flow.
 
+###Reserved Entry Names:
+	1. first
+	2. index
+	3. get
+	4. post
+	5. put
+	6. delete
+	7. last
 
-get, post, put, delete
-----------------------
-These 4 verb names are reserved for entries that exports functions, like in the get-started example.
-These are some of the methods a controller can have.
-For code separation you could use folders with these names as well, just make sure to export your function from an `index.js` file within.
-
-Example structure:
-```
-.
-├── app
-    ├── get.js
-    ├── post
-    │   ├── module.js
-    │   └── index.js
-	├── put.js
-	└── delete.js
-```
-
-Example file:
-```js
-module.exports = function (io){
-	// do your thing...
-
-	io.res.end();
-};
-```
-
-all
----
-`all` works the same and should also export a function. Controllers run their `all` method before any kind of verb.
-
-Example structure:
-```
-.
-├── app
-    ├── all.js
-    ├── get.js
-    └── post.js
-```
-
-`all.js` contents:
-```js
-module.exports = function (io) {
-	io.res.write('from all \n');
-
-	// explained later but might ring a bell
-	io.next();
-};
-```
-
-`get.js` contents:
-```js
-module.exports = function (io) {
-	io.res.end('from get');
-};
-```
-
-`post.js` contents:
-```js
-module.exports = function (io) {
-	io.res.end('from post');
-};
-```
-
-On a `GET` request to `'/'` the response would be:
-```
-from all
-from get
-```
-On a `POST` request it would be:
-```
-from all
-from post
-```
-
-The `all` method runs before any verb does. When you're done in `all` you use `io.next` to make Bootstruct call the next method in line: the verb method.
-
-
-
-first & last
-------------
-These, as their names suggest, will be called before and after the `all` and the verb methods as intuitively expected. `first` runs before the `all`.  
-`last` runs after the verb.
-
-Example structure:
-```
-.
-├── app
-    ├── first.js
-    ├── all.js
-    ├── get.js
-    └── last.js
-```
-
-Export the same function in all files:
-```js
-module.exports = function (io) {
-	console.log(__filename);
-	io.next();
-};
-```
-On a GET request to '/' you'll get the following logs, in this order:
-	path/.../app/first.js
-	path/.../app/all.js
-	path/.../app/get.js
-	path/.../app/last.js
-
-
-
-verbs
------
-For an even better code separation, you could move all of your verbs into a `verbs` folder.  
-When you'll have sub-controllers in the same containing folder, adding a `verbs` folder would be more easy on the eye. `verbs` is only a namespace for verb files so it should always be a folder.
-
->NOTE: The `all` method can also be in the `verbs` folder.
-
-Example structure:
-```
-.
-├── app
-    ├── verbs
-	│   ├── all.js
-	│   ├── get.js
-	│   ├── post.js
-	│   ├── put.js
-	│   └── delete.js
-	├── foo
-	│   ├── ...
-	│   └── ...
-	├── bar
-	│   ├── ...
-	│   └── ...
-```
+Entries with custom names (e.g. `foo`, `bar`) are parsed as Bootstruct controllers.
 
 
 
@@ -299,10 +165,10 @@ Let's say that when the `app` folder is empty - RC is empty:
 RC = {} // empty object
 ```
 
-and when we create `all` and `get` entries inside it:
+and when we create `index` and `get` entries inside it:
 ```js
 RC = {
-	all: fn
+	index: fn
 	get: fn
 }
 ```
@@ -355,7 +221,163 @@ When addressing the root, the RC's `get` will run.
 When addressing `foo`, foo's `get` will run.
 When addressing a `bar` (which doesn't exist), `get` will run in the last controller found (`foo`).
 
->__IMPORTANT NOTE__: The last controller found in the URL parts is the only controller that also runs its `all` and verb methods. All of its parent-controllers only run their wrapping methods, `first` and `last`.
+>__IMPORTANT NOTE__: The last controller found in the URL parts is the only controller that also runs its `index` and verb methods. All of its parent-controllers only run their wrapping methods, `first` and `last`.
+
+
+
+
+get, post, put, delete
+----------------------
+These 4 verb names are reserved for entries that exports functions, like in the get-started example.
+These are some of the methods a controller can have.
+For code separation you could use folders with these names as well, just make sure to export your function from an `index.js` file within.
+
+Example structure:
+```
+.
+├── app
+    ├── get.js
+    ├── post
+    │   ├── module.js
+    │   └── index.js
+	├── put.js
+	└── delete.js
+```
+
+Example file:
+```js
+module.exports = function (io){
+	// do your thing...
+
+	io.res.end();
+};
+```
+
+
+
+index
+-----
+`index` works the same and should also export a function. Controllers run their `index` method before any kind of verb.
+
+Example structure:
+```
+.
+├── app
+    ├── index.js
+    ├── get.js
+    └── post.js
+```
+
+`index.js` contents:
+```js
+module.exports = function (io) {
+	io.res.write('from index \n');
+
+	// explained later but might ring a bell
+	io.next();
+};
+```
+
+`get.js` contents:
+```js
+module.exports = function (io) {
+	io.res.end('from get');
+};
+```
+
+`post.js` contents:
+```js
+module.exports = function (io) {
+	io.res.end('from post');
+};
+```
+
+On a `GET` request to `'/'` the response would be:
+```
+from index
+from get
+```
+On a `POST` request it would be:
+```
+from index
+from post
+```
+
+The `index` method runs before any verb does. When you're done in `index` you use `io.next` to make Bootstruct call the next method in line: the verb method.
+
+
+
+
+first & last
+------------
+These, as their names suggest, will be called before and after the `index` and the verb methods as intuitively expected. `first` runs before the `index`.  
+`last` runs after the verb.
+
+Example structure:
+```
+.
+├── app
+    ├── first.js
+    ├── index.js
+    ├── get.js
+    └── last.js
+```
+
+Export the same function in all files:
+```js
+module.exports = function (io) {
+	console.log(__filename);
+	io.next();
+};
+```
+On a GET request to '/' you'll get the following logs, in this order:
+	path/.../app/first.js
+	path/.../app/index.js
+	path/.../app/get.js
+	path/.../app/last.js
+
+
+
+
+verbs
+-----
+For an even better code separation, you could move all of your verbs into a `verbs` folder.  
+When you'll have sub-controllers in the same containing folder, adding a `verbs` folder would be more easy on the eye. `verbs` is only a namespace for verb files so it should always be a folder.
+
+Example structure:
+```
+.
+├── app
+    ├── verbs
+	│   ├── index.js
+	│   ├── get.js
+	│   ├── post.js
+	│   ├── put.js
+	│   └── delete.js
+	├── foo
+	│   ├── ...
+	│   └── ...
+	├── bar
+	│   ├── ...
+	│   └── ...
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -397,6 +419,7 @@ you'll see these logs:
 
 
 
+
 #io
 ***
 `io` is an object that is being created on each request and being passed through your app's routes.
@@ -418,6 +441,9 @@ function root (io) {
 		   │
 
 ```
+
+
+
 
 io.params
 ---------
@@ -465,6 +491,7 @@ You should get:
 
 
 
+
 io other props
 --------------
 * io._ctrl     - (internal) The current handler
@@ -480,17 +507,17 @@ Consider a structure:
 .
 ├── app
 	├── first.js
-	├── all.js
+	├── index.js
 	├── get.js
 	├── last.js
 	└── foo
 		├── first.js
-		├── all.js
+		├── index.js
 		├── get.js
 		├── last.js
 		└── bar
 			├── first.js
-			├── all.js
+			├── index.js
 			├── get.js
 			└── last.js
 ```
@@ -511,7 +538,7 @@ The following are examples of requested URLs (GET requests) and their expected l
 url: /
 logs: 
     app/first
-	app/all
+	app/index
 	app/get
 	app/last
 ```
@@ -520,7 +547,7 @@ url: /foo
 logs:
     app/first
 	app/foo/first
-	app/foo/all
+	app/foo/index
 	app/foo/get
 	app/foo/last
 	app/last
@@ -531,7 +558,7 @@ logs:
     app/first
 	app/foo/first
 	app/foo/bar/first
-	app/foo/bar/all
+	app/foo/bar/index
 	app/foo/bar/get
 	app/foo/bar/last
 	app/foo/last
@@ -552,26 +579,29 @@ RC = {
 					first: fn,
 					sub_controllers: {},
 					verbs: {
-						all: fn,
+						index: fn,
 						get: fn
 					},
 					last : fn
 				}
 			}
 			verbs: {
-				all: fn,
+				index: fn,
 				get: fn
 			},
 			last : fn
 		}
 	},
 	verbs: {
-		all: fn,
+		index: fn,
 		get: fn
 	},
 	last : fn
 }
 ```
+
+
+
 
 The Shorter Version
 -------------------
@@ -580,9 +610,12 @@ This is what happens for every request. Mind the loop:
 1. Check-in: Controllers run their `first` method.
 2. Controllers check the next URL part. Is there a matching sub-controller?  
 	&nbsp; &nbsp; &nbsp; If so, the controller passes the `io` to that sub-controller for a check-in. **Back to 1**.  
-	&nbsp; &nbsp; &nbsp; If not, current controller is the target-controller. It will run its `all` method and then its `verb` method.
+	&nbsp; &nbsp; &nbsp; If not, current controller is the target-controller. It will run its `index` method and then its `verb` method.
 3. Check-out: Controllers run their `last` method.
 4. Controllers pass the `io` back to their parent controller for a check-out. **Back to 3**.
+
+
+
 
 
 Important notes:

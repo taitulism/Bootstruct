@@ -10,9 +10,9 @@ var app     = bts('./tests/app');
  * value = the expected string, as array
  */
 var testsObj = {
-	'/'        : ['app/first.js', 'app/all.js', 'app/get.js', 'app/last.js'],
-	'/foo'     : ['app/first.js', 'app/foo/first.js', 'app/foo/verbs/all.js', 'app/foo/verbs/get.js', 'app/foo/last.js', 'app/last.js'],
-	'/foo/bar' : ['app/first.js', 'app/foo/first.js', 'app/foo/bar/first.js', 'app/foo/bar/all.js', 'app/foo/bar/get.js', 'app/foo/bar/last.js', 'app/foo/last.js', 'app/last.js'],
+	'/'        : ['app/first.js', 'app/index.js', 'app/get.js', 'app/last.js'],
+	'/foo'     : ['app/first.js', 'app/foo/first.js', 'app/foo/index.js', 'app/foo/verbs/get.js', 'app/foo/last.js', 'app/last.js'],
+	'/foo/bar' : ['app/first.js', 'app/foo/first.js', 'app/foo/bar/first.js', 'app/foo/bar/index.js', 'app/foo/bar/get.js', 'app/foo/bar/last.js', 'app/foo/last.js', 'app/last.js'],
 	'/baz'     : ['app/first.js', 'app/baz.js', 'app/last.js']
 };
 
@@ -23,7 +23,7 @@ function resolveExpected (url, flowArry) {
 		return item.replace(/\//g, sep);
 	});
 
-	// returned example: "app\first.js>app\all.js>app\get.js>app\last.js"
+	// returned example: "app\first.js>app\index.js>app\get.js>app\last.js"
 	return resolved.join('>');
 }
 
