@@ -133,7 +133,7 @@ Well, just add verb-entries where you need them (for example a `get.js` file or 
 
 >NOTE: `index.js` is called before all verbs (when exists).
 
-Bootstruct provides you with an even greater controll on requests' flow. The `index` and the verb entries only run for the requested folder (or the target folder). On a request to `/foo/bar`, `bar` is the target folder and requests are just "passing by" its parent folders `app` and `app/foo`.
+Bootstruct provides you with an even greater control on requests' flow. The `index` and the verb entries only run for the requested folder (or the target folder). On a request to `/foo/bar`, `bar` is the target folder and requests are just "passing by" its parent folders `app` and `app/foo`.
 
 If you want a folder to do something even if it's not the target folder, create a `first` entry in it. It will run for every request this folder was called in, even if it's not the target folder.
 

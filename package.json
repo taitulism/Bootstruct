@@ -1,6 +1,6 @@
 {
   "name": "bootstruct",
-  "version": "1.2.1",
+  "version": "1.2.4",
   "description": "Routing by structure",
   "main": "index.js",
   "author": "Taitu Lizenbaum taitulism@gmail.com",
@@ -14,7 +14,7 @@
   "keywords": [
     "bootstruct",
     "route",
-    "rounting",
+    "routing",
     "structure",
     "folder",
     "app",
