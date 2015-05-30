@@ -151,6 +151,7 @@ Bootstruct has a few reserved meaningful names for files and folders (or "entrie
 These names, when given to an entry (a file or a folder) plays a certain roll in your app's flow.
 
 
+
 get, post, put, delete
 ----------------------
 These 4 verb names are reserved for entries that exports functions, like in the get-started example.
@@ -229,6 +230,7 @@ from post
 The `all` method runs before any verb does. When you're done in `all` you use `io.next` to make Bootstruct call the next method in line: the verb method.
 
 
+
 first & last
 ------------
 These, as their names suggest, will be called before and after the `all` and the verb methods as intuitively expected. `first` runs before the `all`.  
@@ -258,6 +260,7 @@ On a GET request to '/' you'll get the following logs, in this order:
 	path/.../app/last.js
 
 
+
 verbs
 -----
 For an even better code separation, you could move all of your verbs into a `verbs` folder.  
@@ -282,6 +285,8 @@ Example structure:
 	│   ├── ...
 	│   └── ...
 ```
+
+
 
 #Controllers
 ------------
@@ -351,6 +356,46 @@ When addressing `foo`, foo's `get` will run.
 When addressing a `bar` (which doesn't exist), `get` will run in the last controller found (`foo`).
 
 >__IMPORTANT NOTE__: The last controller found in the URL parts is the only controller that also runs its `all` and verb methods. All of its parent-controllers only run their wrapping methods, `first` and `last`.
+
+
+
+#methods
+********
+Excluding `verbs`, entries with **reserved** names being translated into Bootstruct's **known methods** and Bootstruct runs them in a certain order (`first`, `last` etc.).
+Bootstruct treats entries with **NON-reserved** names as sub-controllers or **custom methods** of the current controller.
+Methods are just functions that handle the `io`. They could be a file or a folder (with an `index.js` file). Anyways, you should export that function because it's gonna be `require`d by a controller.
+Methods in Bootstruct are like single-method-controllers, the `index` and they also have no sub-controllers.
+
+>NOTE: if a folder contains an `index.js` file, or in other words: if a controller has an `.index` method, it will be the only method to run the `io`. Reserved entry names means nothing to Bootstruct when an `index.js` is found in the same folder.
+
+
+Example structure:
+```
+.
+├── app
+	├── first.js
+	├── foo
+	│	└── get.js
+	├── bar.js
+	└── last.js
+```
+
+`bar.js` is a non-reserved name file so it should export a function that handles an io.
+
+Let's say this function also logs the file's path, same as before.
+So on request to:
+	/bar
+
+you'll see these logs:
+
+	.../app/first.js
+	.../app/bar.js
+	.../app/last.js
+
+
+>NOTE: You might want to use custom method files (e.g. `bar`) for simple stuff like handling a simple "about" page (`about.js`).
+
+
 
 #io
 ***
