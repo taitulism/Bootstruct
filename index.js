@@ -16,14 +16,14 @@ var resolve = require('path').resolve;
  │  	appRoot [str] - The folder name to be parse as the app's root-controller
  │  
  │  returns:
- │  	middleware [fn] - To be called with: request, response.
+ │  	handler [fn] - To be called with: request, response.
  │  
  │	code stroy:
  │		* Bootstruct Fn is called with a folder name and resolves it. default: 'app'.
  │		* Next Bts maps this folder (if exists).
  │		* create the root controller (RC):
  │			new Ctrl(folderMap, id, owner);
- │		* returns the final middleware function 
+ │		* returns the final handler function 
  │
 */
 function bootstruct (appRoot) {
@@ -37,7 +37,7 @@ function bootstruct (appRoot) {
 
 	RC = new Ctrl(rootMap, 'RC', null);
 	
-	return function middleware (req, res) {
+	return function handler (req, res) {
 		var io = new IO(req, res);
 
 		return RC.checkIn(io);
