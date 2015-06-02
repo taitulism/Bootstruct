@@ -400,7 +400,8 @@ On request to: `/foo/bar/aaa/bbb`
 
 Starting at your `app` folder, Bootstruct uses `io.params` to check if `app` folder is the target-folder by checking the first item for an existing sub-folder. If the first item (e.g. `foo`) is a sub-folder, `app` is not the target. Next, `foo` removes its name from `io.params` (always the first item) and checks the new first item (e.g. `bar`) for a sub-folder and so on. This way the target-folder (`bar`) is left with the params that are not controllers in your app (e.g. `['aaa', 'bbb']`).
 
-Request to: `/foo/bar/john` with **express/connect**:
+A Request to: `/foo/bar/john`:  
+with **express/connect**:
 ```js
 // NOT Bootstruct!
 app.get('/foo/bar/:name', function(req, res, next){
@@ -452,7 +453,8 @@ Consider a structure:
 │           └── last.js
 ```
 There are 3 levels of nested folders as before: `app/foo/bar`.
-Each has the following methods:  
+Each has the following methods:
+
 	* `first`
 	* `index`
 	* a verb (`get`)
