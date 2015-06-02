@@ -1,7 +1,54 @@
 Bootstruct
 ==========
 
->*Routing by structure. A name-convention framework for Node.js*
+>*Routing by structure.*
+
+A name-convention framework for Node.js
+
+Get started
+-----------
+
+1. Install Bootstruct in a new folder: 
+	```sh
+		$ npm install bootstruct
+	```
+
+2. Create an `index.js` file and an `app` folder.
+
+3. Copy the following to your `index.js` file:
+	```js
+		var http = require('http');
+		var bts  = require('bootstruct');
+
+
+		// this creates a new Bootstruct app from `app` folder 
+		var app = bts('app');
+
+
+		// create a server and use `app` as its handler function
+		http.createServer(app).listen(1001, function(){
+			console.log('Listening on port 1001');
+		});
+	```
+
+4. Inside `app` folder, create a `get.js` file with the following content:
+	```js
+		module.exports = function (io) {
+			io.res.end('hello beautiful world');
+		};
+	```
+
+5. Start your server up:  
+	```
+		$ node index.js
+	```
+
+**You're now ready for GET requests to `yourdomain.com:1001/`**
+
+>NOTE: You can use `post`, `put` and `delete` (.js) as well. They are all reserved names for files and folders in Bootstruct.
+
+
+
 
 Table of contents
 -----------------
@@ -11,7 +58,7 @@ Table of contents
   * [get, post, put, delete](#get-post-put-delete)
   * [A "stale" folder](#a-stale-folder)
   * [Scale It Up](#scale-it-up)
-  * [verbs folder](#verbs-folder)
+  * ['verbs' folder](#verbs-folder)
   * [first & last](#first--last)
   * [Reserved Entry Names](#reserved-entry-names)
   * [io](#io)
@@ -22,47 +69,6 @@ Table of contents
   * [Important notes](#important-notes)
 
 
-Get started
------------
-
-1. Start a new project: Create a folder with an extra ordinary name like: "myProject".
-
-2. Install Bootstruct in your project: 
-	```sh
-		$ npm install bootstruct
-	```
-
-3. In your project's folder, create an `index.js` file with the following content:
-	```js
-		var http = require('http');
-		var bts  = require('bootstruct');
-
-
-		// create a new Bootstruct app from `app` folder 
-		var app = bts('app');
-
-
-		// create a server and use `app` as its handler function
-		http.createServer(app).listen(1001, function(){
-			console.log('Listening on port 1001');
-		});
-	```
-4. Create a folder named `app` in your project's folder.
-
-5. Inside `app`, create a `get.js` file and make it export a single function that accepts a single argument:
-	```js
-		module.exports = function (io) {
-			io.res.end('hello beautiful world');
-		};
-	```
-6. Start your server up:  
-	```
-		$ node index.js
-	```
-
-** You're now ready for GET requests to `yourdomain.com:1001/` **
-
->NOTE: You can use `post`, `put` and `delete` (.js) as well. They are all reserved names for files and folders in Bootstruct.
 
 
 intro
@@ -70,7 +76,7 @@ intro
 "Coding by convention" or "configuration over code" or whatever. They are all fine and it's all a matter of personal taste and project's needs.  
 Bootstruct does it with names convention. "Routing by structure" if you'd like.
 
-As such, learning Bootstruct is more about understanding how Bootstruct reads your folder-structure and behave based on this structure than code and syntax.
+As such, learning Bootstruct is more about understanding how it reads your folder-structure and behave based on this structure than code and syntax.
 
 
 
@@ -91,7 +97,7 @@ To support routes like:
 	domain.com/foo
 	domain.com/foo/bar
 
-you don't have to write any code but the handler functions themselves. Just structure your app folder like the following example structure and export your handlers from the `index.js` files like in the [Get started](#get-started) example above:
+you don't have to write any code but the handler functions themselves. Just structure your app folder like the following and export your handlers from the `index.js` files like in the [Get started](#get-started) example above:
 ```
 ├── app
 │   ├── index.js           <── called for all requests to: '/'
@@ -104,7 +110,7 @@ you don't have to write any code but the handler functions themselves. Just stru
 If you're familiar with express/connect, the equivalent would be:
 
 ```js
-// NOT Bootstruct! express/connect equivalent:
+// NOT Bootstruct! **express/connect** equivalent:
 app.all('/', function () {
 	// ...
 });
@@ -141,16 +147,17 @@ You probably want to be more specific about different types of request methods. 
 You don't have to use an `index.js`:
 ```
 ├── app
-│   ├── get.js             <── called for GET  requests to: '/'
-│   ├── post.js            <── called for POST requests to: '/'
+│   ├── get.js            <── called for GET  requests to: '/'
 │   └── foo
-│       ├── get.js         <── called for GET  requests to: '/foo'
-│       └── post.js        <── called for POST requests to: '/foo'
+│       ├── get.js        <── called for GET  requests to: '/foo'
+│       ├── post.js       <── called for POST requests to: '/foo'
+│       └── bar
+│           └── get.js    <── called for GET  requests to: '/foo/bar'
 ```
 
 If an `index.js` exists it will run before the verb and they are both called only for the target folder. The target folder is the last folder whose name found in the request pathname (e.g. `bar` on request to: `/foo/bar`).
 
-express/connect equivalent would be:
+**express/connect** equivalent would be:
 
 ```js
 // NOT Bootstruct! express/connect equivalent:
@@ -185,7 +192,7 @@ app.all('/foo/bar', function () {
 
 A "stale" folder
 ----------------
-If `bar`, for example, is a "stale" folder (has no sub-folders, no other methods but `index`), you can cut the overhead of a folder and turn it into a file:
+If `bar`, for example, is a "stale" folder (has no sub-folders and no other methods but `index`), you can cut the overhead of a folder and turn it into a file:
 
 Before:
 ```
@@ -193,7 +200,7 @@ Before:
 │   ├── index.js
 │   └── foo
 │       ├── index.js
-│       └── bar          <──
+│       └── bar          <── folder
 │           └── index.js
 ```
 
@@ -203,7 +210,7 @@ After:
 │   ├── index.js
 │   └── foo
 │       ├── index.js
-│       └── bar.js       <── 
+│       └── bar.js       <── file
 ```
 
 
@@ -218,7 +225,7 @@ Before:
 ├── app
 │   ├── index.js
 │   ├── get.js
-│   ├── post.js     <──
+│   ├── post.js     <── file
 │   ├── put.js
 │   └── delete.js
 ```
@@ -228,7 +235,7 @@ After:
 ├── app
 │   ├── index.js
 │   ├── get.js
-│   ├── post        <──
+│   ├── post        <── folder
 │   │   ├── index.js
 │   │   ├── dependency_1.js
 │   │   └── dependency_2.js
@@ -239,8 +246,8 @@ After:
 
 
 
-verbs folder
-------------
+'verbs' folder
+--------------
 If you use all verbs, having multiple sub-folders can hurt your eyes:
 ```
 ├── app
@@ -275,9 +282,9 @@ For the sake of your eyes, you can use a `verbs` folder, just as a namespace to 
 
 first & last
 ------------
-As we saw earlier, the `index` and the verb entries (files or folders) only run for the target folder.
+As we saw earlier, the `index` and the verb entries (files or folders) only run for the target-folder.
 
-If you want a folder to do something even if it's not the target folder but its name was addressed in the request (e.g. `foo` in `foo/bar`), create a `first` and/or a `last` entry in it. Both are called when a folder is requested whether or not it's the target folder or should the request be passed on. `first` is called before the target folder is done with its `index` and the verb method. `last` is called after the target folder is done.
+If you want a folder to do something even if it's not the target-folder but its name was addressed in the request (e.g. `foo` in `foo/bar`), you could use 2 other methods: `first` and `last`. Both are called when a folder is requested whether or not it's the target-folder or should the request be passed on. `first` is called before the target-folder is done with its `index` and the verb method. `last` is called after the target-folder is done.
 
 ```
 ├── app
@@ -295,6 +302,8 @@ If you want a folder to do something even if it's not the target folder but its 
 │       └── last.js         <──
 ```
 
+We'll see how these `first` and `last` methods fit in the flow in a sec.
+
 
 
 
@@ -305,24 +314,50 @@ All of these names are all reserved names for entries (files or folders) in Boot
 ```
 	1. first  - first thing to run in a folder
 	2. verbs  - just a namespace folder to hold your verb handlers
-	3. index  - runs on all      HTTP requests   ─┐
-	4. get    - runs on `GET`    HTTP requests    │
-	5. post   - runs on `POST`   HTTP requests    ├─ on target folder only
-	6. put    - runs on `PUT`    HTTP requests    │
-	7. delete - runs on `DELETE` HTTP requests   ─┘
+	3. index  - called on all      HTTP requests   ─┐
+	4. get    - called on `GET`    HTTP requests    │
+	5. post   - called on `POST`   HTTP requests    ├─ on target folder only
+	6. put    - called on `PUT`    HTTP requests    │
+	7. delete - called on `DELETE` HTTP requests   ─┘
 	8. last   - last thing to run in a folder
 ```
 
-Custom name entries (e.g. `foo`) become controllers which are URL namespace handlers for requests containing their names (e.g. `/foo`).
+_Custom_ named entries (like `foo` or `bar`) become controllers which are URL namespace handlers for requests containing their name (e.g. `/foo` and `/foo/bar`).
 
-Reserved entry names are parsed as those controllers` different methods and they are called when needed according to their role listed above. Methods expected to export a single function that accept `io` as a single argument and they pass the `io` from one to another.
+Reserved entry names are parsed as those controllers' different methods and they are called when needed according to their role listed above. Methods expected to export a single function that accept `io` as a single argument (see [Get started](#get-started) for an example) and they pass this `io` from one to another.
+
+An example of a **pseudo** object that describes `foo` controller with a `bar` sub-controller:
+```js
+var foo = {
+	first: require('foo/first'),
+	index: require('foo/index'),
+	verbs: {
+		get: require('foo/get'),
+		post: require('foo/post'),
+	},
+	subControllers: {
+		bar: {
+			first: require('foo/bar/first'),
+			index: require('foo/bar/index'),
+			verbs: {
+				get: require('foo/bar/get'),
+				post: require('foo/bar/post'),
+			},
+			subControllers: null,
+			last: require('foo/bar/last')
+		}
+	},
+	last: require('foo/last')
+};
+```
+Something very similar is generated on Bootstruct init, when your `app` folder is being parsed.
 
 
 
 
 io
 --
-express/connect middleware functions accept 2-3 arguments: `request`, `response` and `next`.  
+**express/connect** middleware functions accept 2-3 arguments: `request`, `response` and `next`.  
 Bootstruct methods handles only a single argument: `io`.  
 `io` is an object that holds the native request/response as properties and a `next` method (and more):  
 &nbsp; &nbsp; &nbsp; `io.req`  
@@ -331,7 +366,7 @@ Both by reference, untouched.
 
 `io.next()` is for you to call from within your methods when they are done and the `io` is ready for the next method.
 
-With express/connect:
+With **express/connect**:
 
 ```js
 // NOT Bootstruct!
@@ -342,7 +377,7 @@ app.get('/foo', function(req, res, next){
 });
 ```
 
-With Bootstruct:
+With **Bootstruct**:
 ```js
 // file: /app/foo/get.js
 module.exports = function (io) {
@@ -363,9 +398,9 @@ On request to: `/foo/bar/aaa/bbb`
 
 `io.params` starts as: `['foo', 'bar', 'aaa', 'bbb']`.
 
-Bootstruct uses `io.params` to check if the current folder is the target-folder. Starting at your app root folder (e.g. `app`), if the first item (e.g. `foo`) is an existing sub-folder, `app` is not the target. Next, `foo` removes its name from `io.params` (always the first item) and checks the new first item (e.g. `bar`) for a sub-folder and so on. This way the target-folder (`bar`) left with the params that are not controllers in your app (e.g. `['aaa', 'bbb']`).
+Starting at your `app` folder, Bootstruct uses `io.params` to check if `app` folder is the target-folder by checking the first item for an existing sub-folder. If the first item (e.g. `foo`) is a sub-folder, `app` is not the target. Next, `foo` removes its name from `io.params` (always the first item) and checks the new first item (e.g. `bar`) for a sub-folder and so on. This way the target-folder (`bar`) is left with the params that are not controllers in your app (e.g. `['aaa', 'bbb']`).
 
-Request to: `/foo/bar/john` with express/connect:
+Request to: `/foo/bar/john` with **express/connect**:
 ```js
 // NOT Bootstruct!
 app.get('/foo/bar/:name', function(req, res, next){
@@ -375,9 +410,9 @@ app.get('/foo/bar/:name', function(req, res, next){
 });
 ```
 
-and with Bootstruct:
+and with **Bootstruct**:
 ```js
-// file: /app/foo/bar/get.js
+// file: .../app/foo/bar/get.js
 module.exports = function (io) {
 	console.log(io.params[0]); // --> 'john'
 	
@@ -417,7 +452,11 @@ Consider a structure:
 │           └── last.js
 ```
 There are 3 levels of nested folders as before: `app/foo/bar`.
-Each has a `first`, an `index`, a verb (`get`) and a `last` methods.
+Each has the following methods:  
+	* `first`
+	* `index`
+	* a verb (`get`)
+	* `last`
 
 >NOTE: This is a full use case. You don't have to use all of the possible methods for every folder.
 
@@ -428,7 +467,7 @@ module.exports = function (io) {
 	io.next();
 };
 ```
-i.e. logs the current file path (to make Bootstruct's flow "visible") and moves on to the next method.
+i.e. logs the current file path and moves on to the next method. This will make Bootstruct's flow "visible" to you.
 
 The following are examples of different requests supported by the given structure (GET requests only) and their expected logs.
 
