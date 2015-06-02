@@ -454,11 +454,10 @@ Consider a structure:
 ```
 There are 3 levels of nested folders as before: `app/foo/bar`.
 Each has the following methods:
-
-	* `first`
-	* `index`
-	* a verb (`get`)
-	* `last`
+* `first`
+* `index`
+* a verb (`get`)
+* `last`
 
 >NOTE: This is a full use case. You don't have to use all of the possible methods for every folder.
 
