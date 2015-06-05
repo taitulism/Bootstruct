@@ -322,7 +322,7 @@ This saves you some of the logic you would normally put in you `all` method, reg
 
 **TIP:** `405` is the server status code for "Method not allowed".
 
-`noVerb` is a special method in Bootstruct because if exists, it's being delegated from the parent folder to all of its sub-folder recursively.
+`noVerb` is a special method in Bootstruct because when exists, it's being delegated from the parent folder to all of its sub-folders recursively.
 ```
 ├── app
 │   ├── get.js
