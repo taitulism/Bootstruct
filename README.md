@@ -59,6 +59,7 @@ Table of contents
   * [A "stale" folder](#a-stale-folder)
   * [Scale It Up](#scale-it-up)
   * ['verbs' folder](#verbs-folder)
+  * [noVerb](#noverb)
   * [first & last](#first--last)
   * [Reserved Entry Names](#reserved-entry-names)
   * [io](#io)
@@ -125,6 +126,8 @@ app.all('/foo/bar', function () {
 
 ```
 
+>NOTE: You can use `all` instead of `index` if you'd like.
+
 
 
 
@@ -155,7 +158,7 @@ You don't have to use an `index.js`:
 │           └── get.js    <── called for GET  requests to: '/foo/bar'
 ```
 
-If an `index.js` exists it will run before the verb and they are both called only for the target folder. The target folder is the last folder whose name found in the request pathname (e.g. `bar` on request to: `/foo/bar`).
+If an `index.js` exists it will **always** run before the verb and they are both called only for the target folder. The target-folder is the last folder whose name found in the request pathname (e.g. `bar` on request to: `/foo/bar`).
 
 **express/connect** equivalent would be:
 
@@ -248,7 +251,7 @@ After:
 
 'verbs' folder
 --------------
-If you use all verbs, having multiple sub-folders can hurt your eyes:
+If you use all verbs, also having multiple sub-folders can hurt your eyes:
 ```
 ├── app
 │   ├── about
@@ -275,6 +278,58 @@ For the sake of your eyes, you can use a `verbs` folder, just as a namespace to 
 │       ├── post.js
 │       ├── put.js
 │       └── delete.js
+```
+
+>NOTE: `index` and `all` both can exist inside a `verbs` folder.
+
+In case of duplicates, the entry outside `verbs` will take place:
+```
+├── app
+│   ├── all.js       <── this will run
+│   └── verbs
+│       ├── all.js   <── this won't
+│       ├── get.js
+│       └── post.js
+```
+
+
+
+
+noVerb
+------
+Consider:
+```
+├── app
+│   ├── all.js
+│   └── get.js
+```
+Now let's say you get a `POST` request. Naturally, Bootstruct will skip the verb and will only run the `all` method. If you want to handle unsupported verbs requests individually you can use a `noVerb` entry. Controllers run their `noVerb` method on unsupported verbs requests, but **only if they have at least one verb**.
+```
+├── app
+│   ├── all.js
+│   ├── get.js
+│   └── noVerb.js    <── gets called for any type of requests other than `GET`
+```
+```
+├── app
+│   ├── all.js
+│   ├──              *
+│   └── noVerb.js    <── doesn't get called because no verbs at all
+```
+This saves you some of the logic you would normally put in you `all` method, regarding `request.method`.
+
+>NOTE: You can use a `noVerb` entry inside a `verbs` folder as well.
+
+**TIP:** `405` is the server status code for "Method not allowed".
+
+`noVerb` is a special method in Bootstruct because if exists, it's being delegated from the parent folder to all of its sub-folder recursively.
+```
+├── app
+│   ├── get.js
+│   ├── noVerb.js    <── gets called for unsupported requests to both: '/' and '/foo'
+│   └── foo
+│       ├── get.js
+│       └── bar.js
 ```
 
 
@@ -314,12 +369,14 @@ All of these names are all reserved names for entries (files or folders) in Boot
 ```
 	1. first  - first thing to run in a folder
 	2. verbs  - just a namespace folder to hold your verb handlers
-	3. index  - called on all      HTTP requests   ─┐
-	4. get    - called on `GET`    HTTP requests    │
-	5. post   - called on `POST`   HTTP requests    ├─ on target folder only
-	6. put    - called on `PUT`    HTTP requests    │
-	7. delete - called on `DELETE` HTTP requests   ─┘
-	8. last   - last thing to run in a folder
+	3. index  - called on all      HTTP requests      ─┐
+	4. all    - called on all      HTTP requests       │
+	5. get    - called on `GET`    HTTP requests       │
+	6. post   - called on `POST`   HTTP requests       ├─  on target folder only
+	7. put    - called on `PUT`    HTTP requests       │
+	8. delete - called on `DELETE` HTTP requests       │
+	9. noVerb - called on unsupported verbs requests  ─┘
+	10. last  - last thing to run in a folder
 ```
 
 _Custom_ named entries (like `foo` or `bar`) become controllers which are URL namespace handlers for requests containing their name (e.g. `/foo` and `/foo/bar`).

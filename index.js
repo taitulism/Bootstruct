@@ -35,7 +35,7 @@ function bootstruct (appRoot) {
 
 	rootMap = map(resolvedPath);
 
-	RC = new Ctrl(rootMap, 'RC', null);
+	RC = new Ctrl(rootMap, '/', null);
 	
 	return function handler (req, res) {
 		var io = new IO(req, res);
