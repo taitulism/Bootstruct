@@ -367,16 +367,19 @@ Reserved Entry Names
 All of these names are all reserved names for entries (files or folders) in Bootstruct. You name your entries with these names and get a certain behavior.
 
 ```
-	1. first  - first thing to run in a folder
-	2. verbs  - just a namespace folder to hold your verb handlers
-	3. index  - called on all      HTTP requests      ─┐
-	4. all    - called on all      HTTP requests       │
-	5. get    - called on `GET`    HTTP requests       │
-	6. post   - called on `POST`   HTTP requests       ├─  on target folder only
-	7. put    - called on `PUT`    HTTP requests       │
-	8. delete - called on `DELETE` HTTP requests       │
-	9. noVerb - called on unsupported verbs requests  ─┘
-	10. last  - last thing to run in a folder
+	1. first      - first thing to run in a folder
+	2. verbs      - just a namespace folder to hold your verb handlers
+	3. index      - called on all (before) HTTP requests  ─┐
+	4. all        - same as `index`                        │
+	5. get        - called on `GET`        HTTP requests   │
+	6. post       - called on `POST`       HTTP requests   ├─  on target folder only
+	7. put        - called on `PUT`        HTTP requests   │
+	8. delete     - called on `DELETE`     HTTP requests   │
+	9. noVerb     - called on unsupported verbs requests   │
+	10. afterVerb - called on all (after) HTTP requests   ─┘
+	11. pre_sub   - called before any subCtrl
+	12. post_sub  - called after  any subCtrl
+	13. last      - last thing to run in a folder
 ```
 
 _Custom_ named entries (like `foo` or `bar`) become controllers which are URL namespace handlers for requests containing their name (e.g. `/foo` and `/foo/bar`).
