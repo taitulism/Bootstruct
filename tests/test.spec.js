@@ -3,17 +3,17 @@ var request = require('request');
 var http    = require('http');
 var sep     = require('path').sep;
 var bts     = require('../');
-var app     = bts('./tests/app');
+var app     = bts('./tests/www');
 
 /* 
  * key   = url to test
  * value = the expected string, as array
  */
 var testsObj = {
-	'/'        : ['app/first.js', 'app/index.js', 'app/get.js', 'app/last.js'],
-	'/foo'     : ['app/first.js', 'app/foo/first.js', 'app/foo/index.js', 'app/foo/verbs/get.js', 'app/foo/last.js', 'app/last.js'],
-	'/foo/bar' : ['app/first.js', 'app/foo/first.js', 'app/foo/bar/first.js', 'app/foo/bar/index.js', 'app/foo/bar/get.js', 'app/foo/bar/last.js', 'app/foo/last.js', 'app/last.js'],
-	'/baz'     : ['app/first.js', 'app/baz.js', 'app/last.js']
+	'/'        : ['www/first.js', 'www/index.js', 'www/get.js', 'www/last.js'],
+	'/foo'     : ['www/first.js', 'www/foo/first.js', 'www/foo/index.js', 'www/foo/verbs/get.js', 'www/foo/last.js', 'www/last.js'],
+	'/foo/bar' : ['www/first.js', 'www/foo/first.js', 'www/foo/bar/first.js', 'www/foo/bar/index.js', 'www/foo/bar/get.js', 'www/foo/bar/last.js', 'www/foo/last.js', 'www/last.js'],
+	'/baz'     : ['www/first.js', 'www/baz.js', 'www/last.js']
 };
 
 
@@ -23,7 +23,7 @@ function resolveExpected (url, flowArry) {
 		return item.replace(/\//g, sep);
 	});
 
-	// returned example: "app\first.js>app\index.js>app\get.js>app\last.js"
+	// returned example: "www\first.js>www\index.js>www\get.js>www\last.js"
 	return resolved.join('>');
 }
 
