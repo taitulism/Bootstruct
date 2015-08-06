@@ -6,32 +6,23 @@ var map     = require('./lib/utils/f2j');
 var resolve = require('path').resolve;
 
 
-
-
  /*─────────────────────────────────────────────────────────────────────────────
  │  Bootstruct outer API (exported)
  │  --------------------
  │
  │  args:
- │  	appRoot [str] - The folder name to be parse as the app's root-controller
+ │  	webRoot [str] - The folder name to be parse as the app's root-controller (default: 'www')
  │  
  │  returns:
  │  	handler [fn] - To be called with: request, response.
- │  
- │	code stroy:
- │		* Bootstruct Fn is called with a folder name and resolves it. default: 'app'.
- │		* Next Bts maps this folder (if exists).
- │		* create the root controller (RC):
- │			new Ctrl(folderMap, id, owner);
- │		* returns the final handler function 
  │
 */
-function bootstruct (appRoot) {
+function bootstruct (webRoot) {
 	var resolvedPath, rootMap, RC;
 
-	appRoot = appRoot || 'app';
+	webRoot = webRoot || 'www';
 	
-	resolvedPath = resolve(appRoot);
+	resolvedPath = resolve(webRoot);
 
 	rootMap = map(resolvedPath);
 

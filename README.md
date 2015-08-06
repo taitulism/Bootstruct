@@ -10,8 +10,21 @@ Table of contents
 -----------------
 
   * [Overview](#overview)
-  * [What is Bootstruct?](#what-is-bootstruct)
-  * [What's next](#whats-next)
+  * [Understand Bootstruct](#understand-bootstruct)
+  * [Reserved Entry Names](#reserved-entry-names)
+  * [Controller's flow](#controllers-flow)
+  * [io](#io)
+  * [Get Started](#get-started)
+  * [index](#index)
+  * [get, post, put, delete](#get-post-put-delete)
+  * [verbs](#verbs)
+  * [Breath](#breath)
+  * [first & last](#first--last)
+  * [pre_sub & post_sub](#pre_sub--post_sub)
+  * [after_verb](#after_verb)
+  * [no_verb](#no_verb)
+  * [Full Example](#full-example)
+  * [Important Notes](#important-notes)
 
 
 
@@ -120,18 +133,18 @@ Reserved Entry Names
 >NOTE: The term "Entry" (plural: "Entries") is used to refer to both files and folders.
 
 Bootstruct has some reserved names for files and folders that are parsed differently. Each entry with a reserved name plays its own role in the controller it's in. They are also being `require`d as methods (like `B.js` above) and should export a single function as well. Here they are:
-* index       ─┐
-* get          │
-* post         │
-* put          ├─ Target chain
-* delete       │
-* no_verb      │
-* after_verb  ─┘
-* pre_sub     ─┬─ Parent chain
-* post_sub    ─┘
-* first       ─┬─ both chains
-* last        ─┘
-* verbs       ─── not a method
+* index / all / before_verb
+* get
+* post
+* put
+* delete
+* no_verb
+* after_verb
+* pre_sub
+* post_sub
+* first
+* last
+* verbs
 
 >NOTE: Reserved names with under_scores have a dash-version and a camelCased version as synonyms. e.g. after_verb/after-verb/afterVerb.
 
@@ -152,7 +165,7 @@ The "A" controller is **a parent**-controller for requests to `/A/B` and `/A/B/w
 Controllers have 2 chains of methods they execute in each case: the target-chain and the parent-chain. On request controllers call one of those chains: parent-controllers run their parent-chain and the target-controller runs its target-chain. Some reserved methods belong to one chain, some belong to the other and some goes in both chains. When you name an entry with a reserved name you actually mount its exported function on one of these chains when each name has its own place.
 
 Controller chart flow:
-![Controller Chart-Flow](https://github.com/taitulism/Bootstruct/tree/master/Docs/Images/controller-chart-flow.png)
+![Controller Chart-Flow](https://github.com/taitulism/Bootstruct/tree/master/Docs/controller-chart-flow.png)
 
 This image describes these two chains and a controller's general flow.
 
@@ -419,14 +432,6 @@ For the sake of your eyes, you can use a `verbs` folder, just as a namespace to 
 │       └── delete.js
 ```
 
-In case of a duplicate verb, inside and outside the `verbs` folder, the one outside the `verbs` folder will be used:
-```
-├── www
-│   ├── get.js      <── V
-│   └── verbs
-│       └── get.js  <── X
-```
-
 
 
 
@@ -556,8 +561,8 @@ pre_sub & post_sub
 ├── www
 │   ├── first.js
 │   ├── index.js
-│   ├── post_sub.js  <──
 │   ├── pre_sub.js   <──
+│   ├── post_sub.js  <──
 │   ├── last.js
 │   └── A
 │       ├── first.js
@@ -660,6 +665,130 @@ On a POST request to `/A` (without a `post` method) you'll get the `www/no_verb.
 
 
 
+Use case example
+----------------
+```
+├── www
+│   ├── first.js
+│   ├── index.js
+│   ├── last.js
+│   └── A
+│       ├── first.js
+│       ├── index.js
+│       ├── pre_sub.js
+│       ├── post_sub.js
+│       ├── last.js
+│       └── B
+│           ├── first.js
+│           ├── before_verb.js
+│           ├── get.js
+│           ├── no_verb.js
+│           ├── after_verb.js
+│           ├── post_sub.js
+│           ├── pre_sub.js
+│           ├── last.js
+│           └── C
+│               ├── first.js
+│               ├── all.js
+│               ├── verbs
+│               │   ├── get.js
+│               │   └── post
+│               │       ├── index.js
+│               │       └── helper.js
+│               └── last.js
+```
+
+All files contain:
+```js
+	module.exports = function (io) {
+	    console.log(__filename);
+	    io.next();
+	};
+```
+
+The full path to the `www` folder and file extensions (.js) removed to make it more readable:
+
+```
+request: ALL `/`
+logs:
+	www/first
+	www/index
+	www/last
+
+request: ALL `/A`
+logs:
+	www/first
+	www/A/first
+	www/A/index
+	www/A/last
+	www/last
+
+request: GET `/A/B`
+logs:
+	www/first
+	www/A/first
+	www/A/pre_sub
+	www/A/B/first
+	www/A/B/before_verb
+	www/A/B/get
+	www/A/B/after_verb
+	www/A/B/last
+	www/A/post_sub
+	www/A/last
+	www/last
+
+request: POST `/A/B`
+logs:
+	www/first
+	www/A/first
+	www/A/pre_sub
+	www/A/B/first
+	www/A/B/before_verb
+	www/A/B/no_verb
+	www/A/B/after_verb
+	www/A/B/last
+	www/A/post_sub
+	www/A/last
+	www/last
+
+request: GET & POST `/A/B/C`
+logs:	
+	www/first
+	www/A/first
+	www/A/pre_sub
+	www/A/B/first
+	www/A/B/pre_sub
+	www/A/B/C/first
+	www/A/B/C/all
+	www/A/B/C/verbs/get|post (respectively)
+	www/A/B/C/last
+	www/A/B/post_sub
+	www/A/B/last
+	www/A/post_sub
+	www/A/last
+	www/last
+
+request: PUT & DELETE `/A/B/C`
+logs:
+	www/first
+	www/A/first
+	www/A/pre_sub
+	www/A/B/first
+	www/A/B/pre_sub
+	www/A/B/C/first
+	www/A/B/C/all
+	www/A/B/no_verb ──> delegated
+	www/A/B/C/last
+	www/A/B/post_sub
+	www/A/B/last
+	www/A/post_sub
+	www/A/last
+	www/last
+```
+
+
+
+
 Important Notes
 ---------------
 * On init (parsing stage) Bootstruct ignores entries with names that starts with an underscore (e.g. `_ignoredFile.js`).
@@ -668,65 +797,10 @@ Important Notes
 * Methods belongs to controllers. The keyword "this" refers to the holding controller.
 * If you're using the `verbs` folder, any duplicate verbs outside it will override the ones inside.
 
-
+More to come.
 
 
 *******************************************************************************
 Questions, suggestions, criticism, bugs, hugs, typos and kudos are all welcome.
 
 *taitulism(at)gmail(dot)com*
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Verbs files (and the `index.js` file mentioned above) are all called on the target-folder only. An `index.js` file (when exists) would run **before** any specific verb-file does. If you want some code to run **after** the verb, put it in an `after_verb.js` file.
-
-```
-├── www
-│   ├── index.js
-│   ├── get.js
-│   ├── post.js
-│   ├── after_verb.js
-│   └── A
-│       └── ...
-```
-On a **GET** request to `/`, Bootstruct will call the files in `www` in that order:
-1. index.js
-2. **get**.js
-3. after_verb.js
-
-On a **POST** request to `/`:
-1. index.js
-2. **post**.js
-3. after_verb.js
-
->NOTE: `index.js` will run before any verb does, for all kinds of verbs. That's why you could also name it `before_verb.js` or `all.js`.
-
-
-
-
-
-
-
