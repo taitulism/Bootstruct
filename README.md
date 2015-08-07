@@ -10,7 +10,7 @@ Table of contents
 -----------------
 
   * [Overview](#overview)
-  * [Understand Bootstruct](#understand-bootstruct)
+  * [Understanding Bootstruct](#understanding-bootstruct)
   * [Reserved Entry Names](#reserved-entry-names)
   * [Controller's flow](#controllers-flow)
   * [io](#io)
@@ -59,11 +59,9 @@ your web-root folder tree should look like:
 │           └── C
 ```
 
->NOTE: Bootstruct does NOT statically serve any file.
-
 Bootstruct leverages the parental folder chain (e.g. '/A/B/C') and provides you with an onion-like layered app. 
 
-A request to `/A/B` would go through:
+A request to `/A/B/C` would go through:
 ```
 1. www        check-in
 2. www/A      check-in
@@ -86,11 +84,11 @@ Requests start at the web-root folder (e.g. "www"), do their way in to the targe
 
 
 
-Understand Bootstruct
----------------------
+Understanding Bootstruct
+------------------------
 Learning Bootstruct is more about understanding how it behaves based on your web-root folder's structure than code and syntax.
 
-When Bootstruct is initalized it parses your web-root folder: basically, folders become URL controllers and files become their methods. The web-root folder is the root-controller and sub-folders become its sub-controllers.
+When Bootstruct is initalized it parses your web-root folder. Basically, folders become URL-controllers and files become their methods. Your whole web-root folder is translated into a root-controller, containing sub-controllers, recursively. This Root-Controller (**"RC"** from now on) is your Bootstruct app's core object. 
 
 This structure:
 ```
@@ -98,9 +96,12 @@ This structure:
 │   └── A         ──> controller
 │       └── B.js  ──> method
 ```
-is parsed into something like (pseudo code):
+is parsed into something like:
 ```js
-	rootController = {
+	/*────────────┐
+	│ PSEUDO CODE │
+	└────────────*/
+	RC = {
 		folder: 'path/to/www',
 		url   : '/',
 		methods: {},
@@ -116,14 +117,13 @@ is parsed into something like (pseudo code):
 		}
 	}
 ```
+>NOTE: On request Bootstruct splits the URL pathename by slashes and checks them one by one against existing sub-controllers so you cannot "escape" the web-root folder by using '../../' in URLs because there's no `RC.sub_controllers['..']`. Bootstruct does NOT statically serve anything.
 
-See how "B" is `require`d?  
-Methods like `B.js` are expected to export a single function:
+See how "B" is `require`d above?  
+Methods in Bootstruct are expected to export a single function (they are being `require`d on init):
 ```js
 	module.exports = function () {...};
 ```
-
-The Root-Controller ("RC" from now on) is your Bootstruct app's core object. On request Bootstruct splits the URL pathename by slashes and checks them one by one against existing sub-controllers (recursively) under the "RC" so you cannot "escape" the web-root folder by using '../../' in URLs because `RC.sub_controllers['..'] === undefined`.
 
 
 
@@ -791,9 +791,9 @@ logs:
 
 Important Notes
 ---------------
-* On init (parsing stage) Bootstruct ignores entries with names that starts with an underscore (e.g. `_ignoredFile.js`).
 * Bootstruct is CaSe-InSeNsItIvE when it comes to URLs and entry names (e.g. `/A/B` is the same as `/a/b`).
 * Bootstruct ignores trailing slashes in URLs and merges repeating slashes (e.g. `/A//B//` is treated like `/A/B`).
+* On init (parsing stage) Bootstruct ignores entries with names that starts with an underscore (e.g. `_ignoredFile.js`).
 * Methods belongs to controllers. The keyword "this" refers to the holding controller.
 * If you're using the `verbs` folder, any duplicate verbs outside it will override the ones inside.
 
