@@ -236,7 +236,7 @@ You're encouraged to use the `io` as you like. Set it with your own props in an 
 	};
 ```
 
-The `io` also holds the splitted URL pathname as `io.params`. Each controller the `io` checks-in at (with the "RC" as an exception) removes its name from the array. Let's say we have:
+The `io` also holds the split URL pathname (by slash) as `io.params`. Each controller the `io` checks-in at (with the "RC" as an exception) removes its name from the array. Let's say we have:
 ```
 ├── www     (RC)
 │   ├── index.js
