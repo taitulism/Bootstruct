@@ -1,227 +1,397 @@
 Bootstruct
 ==========
-
 >*Routing by structure.*
 
-A name-convention framework for Node.js
-
-Get started
------------
-
-1. Install Bootstruct in a new folder: 
-	```sh
-		$ npm install bootstruct
-	```
-
-2. Create an `index.js` file and an `app` folder.
-
-3. Copy the following to your `index.js` file:
-	```js
-		var http = require('http');
-		var bts  = require('bootstruct');
-
-
-		// this creates a new Bootstruct app from `app` folder 
-		var app = bts('app');
-
-
-		// create a server and use `app` as its handler function
-		http.createServer(app).listen(1001, function(){
-			console.log('Listening on port 1001');
-		});
-	```
-
-4. Inside `app` folder, create a `get.js` file with the following content:
-	```js
-		module.exports = function (io) {
-			io.res.end('hello beautiful world');
-		};
-	```
-
-5. Start your server up:  
-	```
-		$ node index.js
-	```
-
-**You're now ready for GET requests to `yourdomain.com:1001/`**
-
->NOTE: You can use `post`, `put` and `delete` (.js) as well. They are all reserved names for files and folders in Bootstruct.
-
+Bootstruct is a web framework for Node, based on a folder-structure / file-name convention.
 
 
 
 Table of contents
 -----------------
 
-  * [Get started](#get-started)
   * [Overview](#overview)
-  * [get, post, put, delete](#get-post-put-delete)
-  * [A "stale" folder](#a-stale-folder)
-  * [Scale It Up](#scale-it-up)
-  * ['verbs' folder](#verbs-folder)
-  * [noVerb](#noverb)
-  * [first & last](#first--last)
+  * [Understanding Bootstruct](#understanding-bootstruct)
   * [Reserved Entry Names](#reserved-entry-names)
+  * [Controller's flow](#controllers-flow)
   * [io](#io)
-	* [io.params](#ioparams)
-  	* [io other props](#io-other-props)
-  * [Bootstruct Flow](#bootstruct-flow)
-  * [The Shorter Version](#the-shorter-version)
-  * [Important notes](#important-notes)
-
-
-
-
-intro
------
-"Coding by convention" or "configuration over code" or whatever. They are all fine and it's all a matter of personal taste and project's needs.  
-Bootstruct does it with names convention. "Routing by structure" if you'd like.
-
-As such, learning Bootstruct is more about understanding how it reads your folder-structure and behave based on this structure than code and syntax.
+  * [Get Started](#get-started)
+  * [index](#index)
+  * [get, post, put, delete](#get-post-put-delete)
+  * [verbs](#verbs)
+  * [Breath](#breath)
+  * [first & last](#first--last)
+  * [pre_sub & post_sub](#pre_sub--post_sub)
+  * [after_verb](#after_verb)
+  * [no_verb](#no_verb)
+  * [Full Example](#full-example)
+  * [Important Notes](#important-notes)
 
 
 
 
 Overview
 --------
-What Bootstruct does?
+Creating web apps with Node requires wiring up your routes manually: we need to bind different URLs to different handlers. We usually do that by coding. With Bootstruct we do it by creating files and folders.
 
-	* Bootstruct saves you from coding your routes
-	* Bootstruct enforces a good code seperation by design
-	* Bootstruct gives you intuitive control over requests' flow 
-	* Bootstruct provides you with nice RESTfull URLs
+The whole story happens in a single folder, the web-server's root folder (might ring some bells):
+```
+├── myProject
+│   ├── node_modules
+│   ├── server-index.js
+│   └── www              <──
+```
 
+Bootstruct ties that folder with your host root (domain root, localhost or just `/` in common Nodish) and routes requests through that folder's structure, matching URLs to corresponding paths under that folder. 
 
 To support routes like:
-
-	domain.com/
-	domain.com/foo
-	domain.com/foo/bar
-
-you don't have to write any code but the handler functions themselves. Just structure your app folder like the following and export your handlers from the `index.js` files like in the [Get started](#get-started) example above:
 ```
-├── app
-│   ├── index.js           <── called for all requests to: '/'
-│   └── foo
-│       ├── index.js       <── called for all requests to: '/foo'
-│       └── bar
-│           └── index.js   <── called for all requests to: '/foo/bar'
+domain.com/
+domain.com/A
+domain.com/A/B
+domain.com/A/B/C
 ```
 
-If you're familiar with express/connect, the equivalent would be:
+your web-root folder tree should look like:
+```
+├── www
+│   └── A
+│       └── B
+│           └── C
+```
 
+Bootstruct leverages the parental folder chain (e.g. '/A/B/C') and provides you with an onion-like layered app. 
+
+A request to `/A/B/C` would go through:
+```
+1. www
+2. www/A
+3. www/A/B
+4. www/A/B/C
+5. www/A/B
+6. www/A
+7. www
+```
+
+>Do you see the onion?
+
+Requests start at the web-root folder (e.g. "www"), do their way in to the target-folder, then go back out to the web-root folder and you can run some code on every step of the way.
+
+**Bootstruct**:
+- [x] saves you from coding your routes.
+- [x] enforces a natural code separation by concept.
+- [x] provides you with great control over request flow.
+
+
+
+
+Understanding Bootstruct
+------------------------
+Learning Bootstruct is more about understanding how it behaves based on your web-root folder's structure than code and syntax.
+
+When Bootstruct is initialized it parses your web-root folder. Basically, folders become URL-controllers and files become their methods. Your whole web-root folder is translated into a root-controller, containing sub-controllers, recursively. This Root-Controller (**"RC"** from now on) is your Bootstruct app's core object. 
+
+This structure:
+```
+├── www           ──> controller (root)
+│   └── A         ──> controller
+│       └── B.js  ──> method
+```
+is parsed into something like:
 ```js
-// NOT Bootstruct! **express/connect** equivalent:
-app.all('/', function () {
-	// ...
-});
+	/*────────────┐
+	│ PSEUDO CODE │
+	└────────────*/
+	RC = {
+		folder: 'path/to/www',
+		url   : '/',
+		methods: {},
+		sub_controllers: {
+			A: {
+				folder: 'path/to/www/A',
+				url   : '/A',
+				methods: {
+					B: require('www/A/B');
+				}
+				sub_controllers: {},
+			}
+		}
+	}
+```
+>NOTE: On request Bootstruct splits the URL pathename by slashes and checks them one by one against existing sub-controllers so you cannot "escape" the web-root folder by using '../../' in URLs because there is no `RC.sub_controllers['..']`. Bootstruct does NOT statically serve anything.
 
-app.all('/foo', function () {
-	// ...
-});
-
-app.all('/foo/bar', function () {
-	// ...
-});
-
+See how "B" is `require`d above?  
+Methods in Bootstruct are expected to export a single function (they are being `require`d on init):
+```js
+	module.exports = function () {...};
 ```
 
->NOTE: You can use `all` instead of `index` if you'd like.
+
+
+
+Reserved Entry Names
+--------------------
+Bootstruct has some reserved names for files and folders ("entries", for short) that are parsed differently. They are also being `require`d (like `B.js` above) as they are also methods and should export a single function as well. These special methods are not URL-reachable-methods like `B.js` and each plays its own role in the controller it's in. Here they are:
+* index / all / before_verb
+* get
+* post
+* put
+* delete
+* no_verb
+* after_verb
+* pre_sub
+* post_sub
+* first
+* last
+* verbs
+
+>NOTE: Reserved names with under_scores have a dash-version and a camelCased version as synonyms e.g. `no_verb/`no-verb`/`noVerb`.
+
+
+
+
+Controller's flow
+-----------------
+Every request has a target-controller. A request's target-controller is the last existing controller whose name found in the URL. A controller can act as the request's target-controller or as one of the target-controller's parents. For example:
+```
+├── www
+│   └── A
+│       └── B
+```
+The "A" controller is **the target**-controller for requests to `/A` (and `/A/whatever`).  
+The "A" controller is **a parent**-controller for requests to `/A/B` (and `/A/B/whatever`).
+
+Controllers can have 2 chains of methods they execute in each case: a target-chain and a parent-chain. When you name an entry with a reserved name you actually mount its exported function on one of these chains when each method has its own place. Some reserved methods belong to one chain, some belong to the other and some goes in both chains. 
+
+Controller chart flow:  
+![Controller Chart-Flow](https://github.com/taitulism/Bootstruct/tree/master/Docs/controller-chart-flow.png)
+
+This image describes these chains and the controller's internal flow. The target-chain on the right and the parent-chain on the left. The `first` and the `last` methods are held in common by the two chains.
+
+A controller is a representation of a folder structure and that `io` thingy is the "moving part" in your app's structure. 
+
+The target-controller is the center of the onion:  
+request: `/A`:
+```
+	www        check-in
+	www/A      target
+	www        check-out
+```
+request: `/A/B`:
+```
+	www        check-in
+	www/A      check-in
+	www/A/B    target
+	www/A      check-out
+	www        check-out
+```
+The target-chain methods (`index`, the verbs, etc.) should hold the controller's core functionality.
+
+In the middle of the parent-chain there are the controller's sub-controllers. This point is where the `request` (held by the `io`) is passed from one controller to another.
+
+On its way in to the target-controller, the `io` moves in the parent-controllers' parent-chains through the `first` and the `pre_sub` methods of each parent (check-in methods). It checks-in at sub-controllers recursively until it gets to the target-controller. There it walks through the whole target-chain and finally checks-out to finish the rest of all the parent-chains (`post_sub`, `last`).
+
+
+
+
+io
+--
+All of the methods your files export, accept a single argument, an object called `io`. It holds the native `request`/`response` objects as `io.req` & `io.res` (respectively) so you could:
+```js
+	module.exports = function (io) {
+		console.log(io.req.method); // ──> e.g. 'GET'
+
+		io.res.write('hello world');
+		io.res.end();
+	};
+```
+
+The `io` moves from one controller to another and inside every controller, from one method to another. You move it around by calling `io.next()`:
+```js
+	module.exports = function (io) {
+		io.res.write('hello ');
+		io.next();
+	};
+```
+```js
+	module.exports = function (io) {
+		io.res.write('world');
+		io.next();
+	};
+```
+
+You're encouraged to use the `io` as you like. Set it with your own props in an outer layer, use them in the inner parts. It's a good way to pass request related data along your app, without polluting any global scope:
+```js
+	// pseudo auth (for example in a 'www/Blog/first.js' file)
+	module.exports = function (io) {
+		io.isAdmin = true; /* "isAdmin" is a made up property */
+		io.next();
+	};
+```
+```js
+	// somewhere down the road (e.g. 'www/Blog/Edit/index.js')
+	module.exports = function (io) {
+		if (io.isAdmin){
+			//...
+		}
+	};
+```
+
+The `io` also holds the split URL pathname (by slash) as `io.params`. Each controller the `io` checks-in at (with the "RC" as an exception) removes its name from the array. Let's say we have:
+```
+├── www     (RC)
+│   ├── index.js
+│   └── A
+│       ├── index.js
+│       └── B
+│           └── index.js
+```
+
+On request to `/A/B/whatever` the `io.params` array starts as `['A','B','whatever']` but ends as `['whatever']`. Both "A" and "B" controllers remove their names on check-in:
+```
+www      ──>  io.params = [A,B,whatever]
+www/A    ──>  io.params = [B,whatever]
+www/A/B  ──>  io.params = [whatever]
+www/A    ──>  io.params = [whatever]
+www      ──>  io.params = [whatever]
+```
+
+**IMPORTANT NOTE:** Bootstruct uses the first item to find the target-controller. Don't manipulate this array unless you know what you're doing (`.push`ing and `.pop`ing your own items is cool. Changing the existing items could cause a mess).
+
+Now, just before we get to know Bootstruct's reserved names, let's see how to init Bootstruct.
+
+
+
+
+Get Started
+-----------
+1. Install Bootstruct in a new folder: 
+	```sh
+		$ npm install bootstruct
+	```
+
+2. Unlike other frameworks, Bootstruct doesn't create a server for you.	Create a `server-index.js` file with the following content: 
+	```js
+		var http = require('http');
+		var app  = require('bootstruct')();  // <-- require and init
+
+		http.createServer(app).listen(1001, function(){
+			console.log('Listening on port 1001');
+		});
+	```
+
+3. Create a `www` folder. `www` is the web-root folder's default name (borrowed from other platforms: Apache, IIS etc). To change it you can start Bootstruct with:
+	```js
+		var app = require('bootstruct')('yourFolderName');
+	```
+
+4. Your project folder tree should look like:
+	```
+	├── myProject
+	│   ├── node_modules
+	│   │   └── Bootstruct
+	│   ├── server-index.js
+	│   └── www
+	```
+	If so, you are basically ready to start your server up:
+	```sh
+		$ node server-index.js
+	```
+
+**BUT**  
+Your `www` folder is currently empty. A controller without methods. You can make requests to `localhost:1001` but you'll get nothing :/
+
+>NOTE: Bootstruct, as a "positive" module, responds with an empty `200 ok` by default and doesn't keep your requests hanging (pending until server timeout).
+
+Now let's see how to control request flow using Bootstruct's reserved entry names.
+
+
+
+
+index
+-----
+**Synonyms**: `all`, `beforeVerb`, `before_verb`, `before-verb`.
+
+`index` is a reserved entry name (and so are its synonyms). Its exported function gets mounted on the target-chain of the controller it's in. The `index` method gets called when its controller is the request target-controller, for **any** type of request (HTTP verbs).
+
+Example structure:
+```
+├── www   (RC)
+│   ├── index.js      ──> handles requests to /
+│   └── A
+│       └── index.js  ──> handles requests to /A
+```
+This works very similar to other platforms where you ask for a folder and its default file is served/executed (index.html, index.php, index.asp etc).
+
+If a controller has no sub-controllers and has only an `index` method, like "A" in our case, you can cut the overhead of a folder (a controller) and turn it into a file (a method).
+
+Before:
+```
+├── www
+│   ├── index.js
+│   └── A          ──> folder
+│       └── index.js
+```
+After:
+```
+├── www
+│   ├── index.js
+│   └── A.js       ──> file
+```
+Now "A" is a method in the "RC" instead of a single method controller.
 
 
 
 
 get, post, put, delete
 ----------------------
-You probably want to be more specific about different types of request methods. Just add verb-files where you need them (e.g. `get.js`, `post.js`):
+These 4 HTTP verbs are reserved entry names and also get mounted on their controller's target-chain. The verb methods should hold the core functionality of their controller.
 
+Example structure:
 ```
-├── app
-│   ├── index.js           <── called for ALL  requests to: '/'
-│   ├── get.js             <── called for GET  requests to: '/'
-│   └── foo
-│       ├── index.js       <── called for ALL  requests to: '/foo'
-│       ├── get.js         <── called for GET  requests to: '/foo'
-│       ├── post.js        <── called for POST requests to: '/foo'
-│       └── bar
-│           └── index.js   <── called for ALL  requests to: '/foo/bar'
+├── www
+│   ├── get.js       ──> GET requests to '/'
+│   ├── post.js      ──> POST requests to '/'
+│   └── A
+│       ├── get.js   ──> GET requests to '/A'
+│       └── post.js  ──> POST requests to '/A'
 ```
 
-You don't have to use an `index.js`:
+If you have an `index` method as well, it will get called **before** any verb does. That's why `index` has `before_verb` as a synonym.
+
+>NOTE: There's also an `after_verb` method...
+
 ```
-├── app
-│   ├── get.js            <── called for GET  requests to: '/'
-│   └── foo
-│       ├── get.js        <── called for GET  requests to: '/foo'
-│       ├── post.js       <── called for POST requests to: '/foo'
-│       └── bar
-│           └── get.js    <── called for GET  requests to: '/foo/bar'
+├── www
+│   ├── index.js      <── ALL  requests to '/'
+│   ├── get.js        <── GET  requests to '/'
+│   ├── post.js       <── POST requests to '/'
+│   └── A
+│       ├── index.js  <── ALL  requests to '/A'
+│       ├── get.js    <── GET  requests to '/A'
+│       └── post.js   <── POST requests to '/A'
 ```
 
-If an `index.js` exists it will **always** run before the verb and they are both called only for the target folder. The target-folder is the last folder whose name found in the request pathname (e.g. `bar` on request to: `/foo/bar`).
+Now you'll have to call `io.next()` to make the `io` move on from the `index` method to the verb method.
 
-**express/connect** equivalent would be:
-
+A `www/index.js` file like:
 ```js
-// NOT Bootstruct! express/connect equivalent:
-app.all('/', function () {
-	// ...
-});
-
-app.get('/', function () {
-	// ...
-});
-
-app.all('/foo', function () {
-	// ...
-});
-
-app.get('/foo', function () {
-	// ...
-});
-
-app.post('/foo', function () {
-	// ...
-});
-
-app.all('/foo/bar', function () {
-	// ...
-});
-
+	module.exports = function (io) {
+		console.log(__filename);
+		io.next();
+	};
 ```
-
-
-
-
-A "stale" folder
-----------------
-If `bar`, for example, is a "stale" folder (has no sub-folders and no other methods but `index`), you can cut the overhead of a folder and turn it into a file:
-
-Before:
+and a `www/get.js` file like:
+```js
+	module.exports = function (io) {
+		console.log(__filename);
+		io.res.end();
+	};
 ```
-├── app
-│   ├── index.js
-│   └── foo
-│       ├── index.js
-│       └── bar          <── folder
-│           └── index.js
-```
+will log (on a GET request):  
+path/to/www/index.js  
+path/to/www/get.js
 
-After:
-```
-├── app
-│   ├── index.js
-│   └── foo
-│       ├── index.js
-│       └── bar.js       <── file
-```
-
-
-
-
-Scale It Up
------------
-If any method file gets bigger, turn it into a folder:
+BTW, If **any** reserved name file gets bigger, you can turn it into a folder:
 
 Before:
 ```
@@ -245,91 +415,43 @@ After:
 │   ├── put.js
 │   └── delete.js
 ```
+Just remember to export your function from an `index.js` file. In this case the `index.js` is NOT parsed as the reserved entry name, it's just what Node is looking for when `require`ing a folder.
 
 
 
 
-'verbs' folder
---------------
-If you use all verbs, also having multiple sub-folders can hurt your eyes:
+verbs
+-----
+`verbs` is a reserved entry name but it doesn't stand for a method like the others. `verbs` acts only as a namespace folder (always a folder) to hold the different verb files.
+
+Using all verb types and having multiple sub-controllers/methods can hurt your eyes:
 ```
-├── app
-│   ├── about
-│   ├── contact
-│   ├── delete.js
-│   ├── get.js
-│   ├── index.js
-│   ├── messages
-│   ├── post.js
-│   ├── profile
-│   └── put.js
+├── www
+│   ├── [blog]      <── controller
+│   ├── [messages]  <── controller
+│   ├── [profile]   <── controller
+│   ├── about.js    <── method
+│   ├── all.js      <── verbs
+│   ├── contact.js  <── method
+│   ├── delete.js   <── verbs
+│   ├── get.js      <── verbs
+│   ├── post.js     <── verbs
+│   └── put.js      <── verbs
 ```
-
 For the sake of your eyes, you can use a `verbs` folder, just as a namespace to contain the verbs entries:
 ```
-├── app
-│   ├── about
-│   ├── contact
-│   ├── index.js
-│   ├── messages
-│   ├── profile
+├── www
+│   ├── [blog]
+│   ├── [messages]
+│   ├── [profile]
+│   ├── about.js
+│   ├── contact.js
 │   └── verbs          <──
+│       ├── all.js
 │       ├── get.js
 │       ├── post.js
 │       ├── put.js
 │       └── delete.js
-```
-
->NOTE: `index` and `all` both can exist inside a `verbs` folder.
-
-In case of duplicates, the entry outside `verbs` will take place:
-```
-├── app
-│   ├── all.js       <── this will run
-│   └── verbs
-│       ├── all.js   <── this won't
-│       ├── get.js
-│       └── post.js
-```
-
-
-
-
-noVerb
-------
-Consider:
-```
-├── app
-│   ├── all.js
-│   └── get.js
-```
-Now let's say you get a `POST` request. Naturally, Bootstruct will skip the verb and will only run the `all` method. If you want to handle unsupported verbs requests individually you can use a `noVerb` entry. Controllers run their `noVerb` method on unsupported verbs requests, but **only if they have at least one verb**.
-```
-├── app
-│   ├── all.js
-│   ├── get.js
-│   └── noVerb.js    <── gets called for any type of requests other than `GET`
-```
-```
-├── app
-│   ├── all.js
-│   ├──              *
-│   └── noVerb.js    <── doesn't get called because no verbs at all
-```
-This saves you some of the logic you would normally put in you `all` method, regarding `request.method`.
-
->NOTE: You can use a `noVerb` entry inside a `verbs` folder as well.
-
-**TIP:** `405` is the server status code for "Method not allowed".
-
-`noVerb` is a special method in Bootstruct because when exists, it's being delegated from the parent folder to all of its sub-folders recursively.
-```
-├── app
-│   ├── get.js
-│   ├── noVerb.js    <── gets called for unsupported requests to both: '/' and '/foo'
-│   └── foo
-│       ├── get.js
-│       └── bar.js
 ```
 
 
@@ -337,306 +459,361 @@ This saves you some of the logic you would normally put in you `all` method, reg
 
 first & last
 ------------
-As we saw earlier, the `index` and the verb entries (files or folders) only run for the target-folder.
+Another 2 reserved entry names. When exist they always get called whether the controller is the target-controller or a parent. `first` is the first thing controllers run when an `io` checks-in and `last` is the very last thing to run.
 
-If you want a folder to do something even if it's not the target-folder but its name was addressed in the request (e.g. `foo` in `foo/bar`), you could use 2 other methods: `first` and `last`. Both are called when a folder is requested whether or not it's the target-folder or should the request be passed on. `first` is called before the target-folder is done with its `index` and the verb method. `last` is called after the target-folder is done.
-
+Assume:
 ```
-├── app
-│   ├── index.js
-│   ├── get.js
-│   └── foo
-│       ├── first.js        <──
-│       ├── index.js
-│       ├── get.js
-│       ├── post.js
-│       ├── bar
-│       │   ├── first.js    <──
-│       │   ├── index.js
-│       │   └── last.js     <──
-│       └── last.js         <──
-```
-
-We'll see how these `first` and `last` methods fit in the flow in a sec.
-
-
-
-
-Reserved Entry Names
---------------------
-All of these names are all reserved names for entries (files or folders) in Bootstruct. You name your entries with these names and get a certain behavior.
-
-```
-	1. first      - first thing to run in a folder
-	2. verbs      - just a namespace folder to hold your verb handlers
-	3. index      - called on all (before) HTTP requests  ─┐
-	4. all        - same as `index`                        │
-	5. get        - called on `GET`        HTTP requests   │
-	6. post       - called on `POST`       HTTP requests   ├─  on target folder only
-	7. put        - called on `PUT`        HTTP requests   │
-	8. delete     - called on `DELETE`     HTTP requests   │
-	9. noVerb     - called on unsupported verbs requests   │
-	10. afterVerb - called on all (after) HTTP requests   ─┘
-	11. pre_sub   - called before any subCtrl
-	12. post_sub  - called after  any subCtrl
-	13. last      - last thing to run in a folder
-```
-
-_Custom_ named entries (like `foo` or `bar`) become controllers which are URL namespace handlers for requests containing their name (e.g. `/foo` and `/foo/bar`).
-
-Reserved entry names are parsed as those controllers' different methods and they are called when needed according to their role listed above. Methods expected to export a single function that accept `io` as a single argument (see [Get started](#get-started) for an example) and they pass this `io` from one to another.
-
-An example of a **pseudo** object that describes `foo` controller with a `bar` sub-controller:
-```js
-var foo = {
-	first: require('foo/first'),
-	index: require('foo/index'),
-	verbs: {
-		get: require('foo/get'),
-		post: require('foo/post'),
-	},
-	subControllers: {
-		bar: {
-			first: require('foo/bar/first'),
-			index: require('foo/bar/index'),
-			verbs: {
-				get: require('foo/bar/get'),
-				post: require('foo/bar/post'),
-			},
-			subControllers: null,
-			last: require('foo/bar/last')
-		}
-	},
-	last: require('foo/last')
-};
-```
-Something very similar is generated on Bootstruct init, when your `app` folder is being parsed.
-
-
-
-
-io
---
-**express/connect** middleware functions accept 2-3 arguments: `request`, `response` and `next`.  
-Bootstruct methods handles only a single argument: `io`.  
-`io` is an object that holds the native request/response as properties and a `next` method (and more):  
-&nbsp; &nbsp; &nbsp; `io.req`  
-&nbsp; &nbsp; &nbsp; `io.res`  
-Both by reference, untouched.  
-
-`io.next()` is for you to call from within your methods when they are done and the `io` is ready for the next method.
-
-With **express/connect**:
-
-```js
-// NOT Bootstruct!
-app.get('/foo', function(req, res, next){
-	res.send('hello world');
-
-	next();
-});
-```
-
-With **Bootstruct**:
-```js
-// file: /app/foo/get.js
-module.exports = function (io) {
-	io.res.send('hello world');
-
-	io.next();
-};
-```
-
-
-
-
-io.params
----------
-Bootstruct refers the different URL parts as parameters so it splits the URL by slashes (pathname only) and stores the returned array in `io.params`.
-
-On request to: `/foo/bar/aaa/bbb`
-
-`io.params` starts as: `['foo', 'bar', 'aaa', 'bbb']`.
-
-Starting at your `app` folder, Bootstruct uses `io.params` to check if `app` folder is the target-folder by checking the first item for an existing sub-folder. If the first item (e.g. `foo`) is a sub-folder, `app` is not the target. Next, `foo` removes its name from `io.params` (always the first item) and checks the new first item (e.g. `bar`) for a sub-folder and so on. This way the target-folder (`bar`) is left with the params that are not controllers in your app (e.g. `['aaa', 'bbb']`).
-
-A Request to: `/foo/bar/john`:  
-with **express/connect**:
-```js
-// NOT Bootstruct!
-app.get('/foo/bar/:name', function(req, res, next){
-	console.log(req.params.name); // --> 'john'
-	
-	next();
-});
-```
-
-and with **Bootstruct**:
-```js
-// file: .../app/foo/bar/get.js
-module.exports = function (io) {
-	console.log(io.params[0]); // --> 'john'
-	
-	io.next();
-};
-```
-
-
-
-
-io other props
---------------
-* io._ctrl     - (internal) The current handling controller
-* io._profiles - (internal) io's state in all controllers
-
-
-
-
-Bootstruct Flow
----------------
-Consider a structure:
-```
-├── app
+├── www
 │   ├── first.js
 │   ├── index.js
-│   ├── get.js
 │   ├── last.js
-│   └── foo
+│   └── A
 │       ├── first.js
 │       ├── index.js
-│       ├── get.js
-│       ├── last.js
-│       └── bar
-│           ├── first.js
-│           ├── index.js
-│           ├── get.js
-│           └── last.js
+│       └── last.js
 ```
-There are 3 levels of nested folders as before: `app/foo/bar`.
-Each has the following methods:
-* `first`
-* `index`
-* a verb (`get`)
-* `last`
-
->NOTE: This is a full use case. You don't have to use all of the possible methods for every folder.
-
-Consider all of these files contain:
+Assume all files log their names and calling `io.next()`:
 ```js
-module.exports = function (io) {
-	console.log(__filename);
-	io.next();
-};
+	module.exports = function (io) {
+		console.log(__filename);
+		io.next();
+	};
 ```
-i.e. logs the current file path and moves on to the next method. This will make Bootstruct's flow "visible" to you.
 
-The following are examples of different requests supported by the given structure (GET requests only) and their expected logs.
+The following shows the logs we'll get for different requests:
 
->NOTE: To make it more easy on the eye, preceding `long/path/to/app` and `.js` extensions were removed from the log.
+**request**: `/`  
+**logs**:  
+ &nbsp; path/to/www/first.js  
+ &nbsp; path/to/www/index.js  
+ &nbsp; path/to/www/last.js
+
+**request**: `/A`  
+**logs**:  
+ &nbsp; path/to/www/first.js  
+ &nbsp; path/to/www/A/first.js  
+ &nbsp; path/to/www/A/index.js  
+ &nbsp; path/to/www/A/last.js  
+ &nbsp; path/to/www/last.js
+
+`first` and `last` always run. `index` runs only in the target-controller. 
+
+Now with verbs:
+```
+├── www
+│   ├── first.js
+│   ├── index.js
+│   ├── get.js     <──
+│   ├── post.js    <──
+│   ├── last.js
+│   └── A
+│       ├── first.js
+│       ├── index.js
+│       ├── get.js     <──
+│       ├── post.js    <──
+│       └── last.js
+```
+
+>NOTE: The full path to the `www` folder and file extensions (.js) were removed from log for better readability:
 
 ```
-url: /
-logs: 
-    app/first
-	app/index
-	app/get
-	app/last
-```
-```
-url: /foo
+request: GET `/`
 logs:
-    app/first
-	app/foo/first
-	app/foo/index
-	app/foo/get
-	app/foo/last
-	app/last
+	www/first
+	www/index
+	www/get
+	www/last
+
+request: POST `/`
+logs:
+	www/first
+	www/index
+	www/post
+	www/last
+
+request: GET `/A`
+logs:
+	www/first
+	www/A/first
+	www/A/index
+	www/A/get
+	www/A/last
+	www/last
+
+request: POST `/A`
+logs:
+	www/first
+	www/A/first
+	www/A/index
+	www/A/post
+	www/A/last
+	www/last
+```
+
+
+
+
+after_verb
+----------
+**Synonyms**: `after-verb`, `afterVerb`.
+
+`after_verb`, like `before_verb` (`index` synonym), will run for **any** request type in the target-controller but **after** the verb method. Probably very self explanatory by now.
+```
+├── www
+│   ├── before_verb.js
+│   ├── get.js
+│   ├── post.js
+│   └── after_verb.js
 ```
 ```
-url: /foo/bar
-logs: 	
-    app/first
-	app/foo/first
-	app/foo/bar/first
-	app/foo/bar/index
-	app/foo/bar/get
-	app/foo/bar/last
-	app/foo/last
-	app/last
+request: GET `/`
+logs:
+	www/before_verb
+	www/get
+	www/after_verb
+
+request: POST `/`
+logs:
+	www/before_verb
+	www/post
+	www/after_verb
 ```
 
->NOTE: Do you see the onion-like layers? me too!
+
+
+
+pre_sub & post_sub
+------------------
+**Synonyms**: `pre-sub`, `preSub`.
+**Synonyms**: `post-sub`, `postSub`.
+
+`index` and the verbs get called only by the target-controller. `first` & `last` get called anyway, whether the controller is the target-controller or not. `pre_sub` and `post_sub` get called only by a parent-controller, before and after the sub-controller, respectively (pre=before, post=after):
+```
+├── www
+│   ├── first.js
+│   ├── index.js
+│   ├── pre_sub.js   <──
+│   ├── post_sub.js  <──
+│   ├── last.js
+│   └── A
+│       ├── first.js
+│       ├── index.js
+│       └── last.js
+```
+
+Assume all files log their names and calling `io.next()` as before:
+```
+request: /
+logs:
+	www/first
+	www/index
+	www/last
+(no sub-controller was called)
+
+request: /A
+logs:
+	www/first
+	www/pre_sub   <──
+	www/A/first
+	www/A/index
+	www/A/last
+	www/post_sub  <──
+	www/last
+```
+
+The "A" controller doesn't have any sub-controllers so `pre_sub` and `post_sub` would be redundent if existed. They would never get called.
 
 
 
 
-The Shorter Version
--------------------
-This is what happens for every request. Mind the loop:
+no_verb
+-------
+**Synonyms**: `no-verb`, `noVerb`.
 
-1. **Check-in**: A folder run its `first` method.
-2. **Check: IsTarget?**: Bootstruct checks the next URL part. Is there a matching sub-folder in the current one?  
-	&nbsp; &nbsp; &nbsp; **If so**, the folder passes the `io` to that sub-folder for a check-in. **Back to 1**.  
-	&nbsp; &nbsp; &nbsp; **If not**, current folder is the target-folder. It will run its `index` method and its `verb` methods.
-3. **Check-out**: The folder run its `last` method.
-4. the folder passes the `io` back to its parent folder for a check-out. **Back to 3**.
+Another reserved entry name in the target-controller's chain. It will get called on a request type that the target-controller doesn't support.
+
+```
+├── www
+│   ├── index.js
+│   ├── get.js
+│   └── no_verb.js
+```
+
+If someone makes a non-supported HTTP verb request and you want to respond to this case, `no_verb` is your method.
+```
+request: GET `/`
+logs:
+	www/index
+	www/get
+
+request: POST `/`
+logs:
+	www/index
+	www/no_verb
+```
+
+The `no_verb` method is kinda special because it's a delegated method: the controller who has it, delgates this method to all of its sub-controllers.
+```
+├── www
+│   ├── index.js
+│   ├── get.js
+│   ├── post.js
+│   ├── no_verb.js
+│   └── A
+│       └── get.js
+```
+On a POST request to `/A` (which has no `post` method) you'll get the `www/no_verb.js` called. Delegated from the "RC".
+
+**IMPORTANT NOTE:** The `no_verb` method gets called only if at least 1 verb file exists (`get`, `post`, `put`, `delete`).
 
 
 
 
-Important notes:
+Use case example
 ----------------
-* Bootstruct is CaSe-InSeNsItIvE when it comes to URLs and file names.
-* Bootstruct ignores trailing slashes in URLs and merges repeating slashes.
-* Bootstruct ignores entries that their names start with an underscore and doesn't parse them (e.g. `_ignored.js`).
-* You can use the `io` to hold different properties through its cycle.
-* The context of the `this` keyword inside method functions refers to the current controller object.
-  Each controller has a name (like `bar`) and a unique ID which is its folder path (e.g. `app/foo/bar`).  
-  Try to log `this.name` and `this.id` in your different methods.
-* Bootstruct haven't been tested for production environment. Yet.
+```
+├── www
+│   ├── first
+│   │   ├── index.js
+│   │   └── helper.js
+│   ├── index.js
+│   ├── qwe.js
+│   ├── last.js
+│   └── A
+│       ├── first.js
+│       ├── index.js
+│       ├── pre_sub.js
+│       ├── post_sub.js
+│       ├── last.js
+│       └── B
+│           ├── first.js
+│           ├── before_verb
+│           │    ├── index.js
+│           │    └── helper.js
+│           ├── get.js
+│           ├── no_verb.js
+│           ├── after_verb.js
+│           ├── post_sub.js
+│           ├── pre_sub.js
+│           ├── last.js
+│           └── C
+│               ├── first.js
+│               ├── all.js
+│               ├── verbs
+│               │   ├── get.js
+│               │   └── post
+│               │       ├── index.js
+│               │       └── helper.js
+│               └── last.js
+```
+
+All files contain:
+```js
+	module.exports = function (io) {
+	    console.log(__filename);
+	    io.next();
+	};
+```
+
+```
+request: ALL `/`
+logs:
+	www/first
+	www/index
+	www/last
+
+request: ALL `/qwe`
+logs:
+	www/first
+	www/qwe
+	www/last
+
+request: ALL `/A`
+logs:
+	www/first
+	www/A/first
+	www/A/index
+	www/A/last
+	www/last
+
+request: GET `/A/B`
+logs:
+	www/first
+	www/A/first
+	www/A/pre_sub
+	www/A/B/first
+	www/A/B/before_verb
+	www/A/B/get
+	www/A/B/after_verb
+	www/A/B/last
+	www/A/post_sub
+	www/A/last
+	www/last
+
+request: POST `/A/B`
+logs:
+	www/first
+	www/A/first
+	www/A/pre_sub
+	www/A/B/first
+	www/A/B/before_verb
+	www/A/B/no_verb
+	www/A/B/after_verb
+	www/A/B/last
+	www/A/post_sub
+	www/A/last
+	www/last
+
+request: GET & POST `/A/B/C`
+logs:	
+	www/first
+	www/A/first
+	www/A/pre_sub
+	www/A/B/first
+	www/A/B/pre_sub
+	www/A/B/C/first
+	www/A/B/C/all
+	www/A/B/C/verbs/get|post (respectively)
+	www/A/B/C/last
+	www/A/B/post_sub
+	www/A/B/last
+	www/A/post_sub
+	www/A/last
+	www/last
+
+request: PUT & DELETE `/A/B/C`
+logs:
+	www/first
+	www/A/first
+	www/A/pre_sub
+	www/A/B/first
+	www/A/B/pre_sub
+	www/A/B/C/first
+	www/A/B/C/all
+	www/A/B/no_verb ──> delegated
+	www/A/B/C/last
+	www/A/B/post_sub
+	www/A/B/last
+	www/A/post_sub
+	www/A/last
+	www/last
+```
+
+
+
+
+Important Notes
+---------------
+* Bootstruct is CaSe-InSeNsItIvE when it comes to URLs and entry names (e.g. `/A/B` is the same as `/a/b`).
+* Bootstruct ignores trailing slashes in URLs and merges repeating slashes (e.g. `/A//B//` is treated like `/A/B`).
+* On init (parsing stage) Bootstruct ignores entries with names that start with an underscore (e.g. `_ignoredFile.js`).
+* Methods belongs to controllers. The keyword "this" refers to the holding controller.
+* If you're using the `verbs` folder, any duplicate verbs outside it will override the ones inside.
 
 More to come.
 
-***********************************************************************
-Questions, suggestions, bugs, hugs, criticism or kudos are all welcome.
+
+*******************************************************************************
+Questions, suggestions, criticism, bugs, hugs, typos and kudos are all welcome.
 
 *taitulism(at)gmail(dot)com*
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
