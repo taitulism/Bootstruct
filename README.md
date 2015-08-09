@@ -163,7 +163,7 @@ The "A" controller is **a parent**-controller for requests to `/A/B` (and `/A/B/
 Controllers can have 2 chains of methods they execute in each case: a target-chain and a parent-chain. When you name an entry with a reserved name you actually mount its exported function on one of these chains when each method has its own place. Some reserved methods belong to one chain, some belong to the other and some goes in both chains. 
 
 Controller chart flow:  
-![Controller Chart-Flow](https://github.com/taitulism/Bootstruct/tree/master/Docs/controller-chart-flow.png)
+![Controller Chart-Flow](https://github.com/taitulism/Bootstruct/tree/master/controller-chart-flow.png)
 
 This image describes these chains and the controller's internal flow. The target-chain on the right and the parent-chain on the left. The `first` and the `last` methods are held in common by the two chains.
 
