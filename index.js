@@ -18,7 +18,7 @@ var resolve = require('path').resolve;
  │
 */
 function bootstruct (webRoot) {
-	var resolvedPath, rootMap, RC;
+	var resolvedPath, rootMap, RC, app;
 
 	webRoot = webRoot || 'www';
 	
@@ -26,12 +26,14 @@ function bootstruct (webRoot) {
 
 	rootMap = map(resolvedPath);
 
-	RC = new Ctrl(rootMap, '/', null);
+	app = {}; // A.K.A. BGS: "Bootstruct Global Scope" or "BackGround Scope"
+
+	app.RC = new Ctrl(rootMap, 'RC', null, app);
 	
 	return function handler (req, res) {
 		var io = new IO(req, res);
 
-		return RC.checkIn(io);
+		return app.RC.checkIn(io);
 	};
 }
 
