@@ -2,7 +2,7 @@
 
 var resolve = require('path').resolve;
 
-var IO        = require('./lib/io');
+var IO        = require('./lib/io').IO;
 var createApp = require('./lib/app');
 var map       = require('./lib/utils/f2j');
 var forIn     = require('./lib/utils/forIn');
