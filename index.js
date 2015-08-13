@@ -1,9 +1,13 @@
 'use strict';
 
-var Ctrl    = require('./lib/ctrl');
-var IO      = require('./lib/io');
-var map     = require('./lib/utils/f2j');
 var resolve = require('path').resolve;
+
+var IO        = require('./lib/io');
+var createApp = require('./lib/app');
+var map       = require('./lib/utils/f2j');
+var forIn     = require('./lib/utils/forIn');
+
+
 
 
  /*─────────────────────────────────────────────────────────────────────────────
@@ -17,8 +21,8 @@ var resolve = require('path').resolve;
  │  	handler [fn] - To be called with: request, response.
  │
 */
-function bootstruct (webRoot) {
-	var resolvedPath, rootMap, RC, app;
+function bootstruct (webRoot, CFG) {
+	var resolvedPath, rootMap, app;
 
 	webRoot = webRoot || 'www';
 	
@@ -26,16 +30,16 @@ function bootstruct (webRoot) {
 
 	rootMap = map(resolvedPath);
 
-	app = {}; // A.K.A. BGS: "Bootstruct Global Scope" or "BackGround Scope"
+	app = createApp(CFG, rootMap);
 
-	app.RC = new Ctrl(rootMap, 'RC', null, app);
-	
 	return function handler (req, res) {
 		var io = new IO(req, res);
 
 		return app.RC.checkIn(io);
 	};
 }
+
+
 
 
 // -------------------------
