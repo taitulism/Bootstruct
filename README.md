@@ -15,14 +15,15 @@ Table of contents
   * [Controller's flow](#controllers-flow)
   * [io](#io)
   * [Get Started](#get-started)
-  * [index](#index)
-  * [get, post, put, delete](#get-post-put-delete)
-  * [verbs](#verbs)
-  * [first & last](#first--last)
-  * [after_verb](#after_verb)
-  * [pre_sub & post_sub](#pre_sub--post_sub)
-  * [no_verb](#no_verb)
-  * [Full Example](#full-example)
+  * [Examples](#examples)
+	  * [index](#index)
+	  * [get, post, put, delete](#get-post-put-delete)
+	  * [verbs](#verbs)
+	  * [first & last](#first--last)
+	  * [after_verb](#after_verb)
+	  * [pre_sub & post_sub](#pre_sub--post_sub)
+	  * [no_verb](#no_verb)
+	  * [Full Example](#full-example)
   * [Important Notes](#important-notes)
 
 
@@ -73,7 +74,7 @@ A request to `/A/B/C` would go through:
 
 >Do you see the onion?
 
-Requests start at the web-root folder (e.g. "www"), do their way in to the target-folder, then go back out to the web-root folder and you can run some code on every step of the way.
+Requests start at the web-root folder (e.g. "www"), do their way into the target-folder, then go back out to the web-root folder and you can run some code on every step of the way.
 
 **Bootstruct**:
 - [x] saves you from coding your routes.
@@ -116,7 +117,7 @@ is parsed into something like:
 		}
 	}
 ```
->NOTE: On request Bootstruct splits the URL pathename by slashes and checks them one by one against existing sub-controllers so you cannot "escape" the web-root folder by using '../../' in URLs because there is no `RC.sub_controllers['..']`. Bootstruct does NOT statically serve anything.
+>**NOTE**: On request Bootstruct splits the URL pathename by slashes and checks them one by one against existing sub-controllers so you cannot "escape" the web-root folder by using '../../' in URLs because there is no `RC.sub_controllers['..']`. Bootstruct does NOT statically serve anything.
 
 See how "B" is `require`d above?  
 Methods in Bootstruct are expected to export a single function (they are being `require`d on init):
@@ -130,20 +131,20 @@ Methods in Bootstruct are expected to export a single function (they are being `
 Reserved Entry Names
 --------------------
 Bootstruct has some reserved names for files and folders ("entries", for short) that are parsed differently. They are also being `require`d (like `B.js` above) as they are also methods and should export a single function as well. These special methods are not URL-reachable-methods like `B.js` and each plays its own role in the controller it's in. Here they are:
-* index / all / before_verb
-* get
-* post
-* put
-* delete
-* no_verb
-* after_verb
-* pre_sub
-* post_sub
-* first
-* last
-* verbs
+* [index](#index) / [all](#index) / [before_verb](#index)
+* [get](#get)
+* [post](#post)
+* [put](#put)
+* [delete](#delete)
+* [no_verb](#no_verb)
+* [after_verb](#after_verb)
+* [pre_sub](#pre_sub)
+* [post_sub](#post_sub)
+* [first](#first)
+* [last](#last)
+* [verbs](#verbs)
 
->NOTE: Reserved names with under_scores have a dash-version and a camelCased version as synonyms e.g. `no_verb/`no-verb`/`noVerb`.
+>**NOTE**: Reserved names with under_scores have a dash-version and a camelCased version as synonyms e.g. `no_verb`/`no-verb`/`noVerb`.
 
 
 
@@ -156,10 +157,10 @@ Every request has a target-controller. A request's target-controller is the last
 │   └── A
 │       └── B
 ```
-The "A" controller is **the target**-controller for requests to `/A` (and `/A/whatever`).  
-The "A" controller is **a parent**-controller for requests to `/A/B` (and `/A/B/whatever`).
+The **"A"** controller is **the target**-controller for requests to `/A` (and `/A/whatever`).  
+The **"A"** controller is **a parent**-controller for requests to `/A/B` (and `/A/B/whatever`).
 
-Controllers can have 2 chains of methods they execute in each case: a target-chain and a parent-chain. When you name an entry with a reserved name you actually mount its exported function on one of these chains when each method has its own place. Some reserved methods belong to one chain, some belong to the other and some goes in both chains. 
+Controllers can have two chains of methods they execute in each case: a target-chain and a parent-chain. When you name an entry with a reserved name you actually mount its exported function on one of these chains when each method has its own place. Some reserved methods belong to one chain, some belong to the other and some goes in both chains. 
 
 Controller chart flow:  
 ![Controller Chart-Flow](https://raw.githubusercontent.com/taitulism/Bootstruct/master/controller-chart-flow.png)
@@ -218,7 +219,7 @@ The `io` moves from one controller to another and inside every controller, from 
 	};
 ```
 
-You're encouraged to use the `io` as you like. Set it with your own props in an outer layer, use them in the inner parts. It's a good way to pass request related data along your app, without polluting any global scope:
+You're encouraged to use the `io` as you like. Set it with your own props in an outer layer, use them in the inner parts. It's a good way to pass request related data along your app, without polluting any global scope. for example: request to `/blog/edit`:
 ```js
 	// pseudo auth (for example in a 'www/Blog/first.js' file)
 	module.exports = function (io) {
@@ -227,7 +228,8 @@ You're encouraged to use the `io` as you like. Set it with your own props in an 
 	};
 ```
 ```js
-	// somewhere down the road (e.g. 'www/Blog/Edit/index.js')
+	// somewhere down the road...
+	// same request, different file (e.g. 'www/Blog/Edit/index.js')
 	module.exports = function (io) {
 		if (io.isAdmin){
 			//...
@@ -235,7 +237,7 @@ You're encouraged to use the `io` as you like. Set it with your own props in an 
 	};
 ```
 
-The `io` also holds the split URL pathname (by slash) as `io.params`. Each controller the `io` checks-in at (with the "RC" as an exception) removes its name from the array. Let's say we have:
+The `io` also holds an array of the split URL pathname (by slash) as `io.params`. Each controller the `io` checks-in at (with the "RC" as an exception) removes its name from the array. Let's say we have:
 ```
 ├── www     (RC)
 │   ├── index.js
@@ -256,8 +258,6 @@ www      ──>  io.params = [whatever]
 
 **IMPORTANT NOTE:** Bootstruct uses the first item to find the target-controller. Don't manipulate this array unless you know what you're doing (`.push`ing and `.pop`ing your own items is cool. Changing the existing items could cause a mess).
 
-Now, just before we get to know Bootstruct's reserved names, let's see how to init Bootstruct.
-
 
 
 
@@ -268,7 +268,7 @@ Get Started
 		$ npm install bootstruct
 	```
 
-2. Unlike other frameworks, Bootstruct doesn't create a server for you.	Create a `server-index.js` file with the following content: 
+2. Unlike other frameworks, Bootstruct doesn't create a server for you.	In your new project folder, create a `server-index.js` file with the following content: 
 	```js
 		var http = require('http');
 		var app  = require('bootstruct')();  // <-- require and init
@@ -287,7 +287,7 @@ Get Started
 	```
 	├── myProject
 	│   ├── node_modules
-	│   │   └── Bootstruct
+	│   │   └── bootstruct
 	│   ├── server-index.js
 	│   └── www
 	```
@@ -299,15 +299,23 @@ Get Started
 **BUT**  
 Your `www` folder is currently empty. A controller without methods. You can make requests to `localhost:1001` but you'll get nothing :/
 
->NOTE: Bootstruct, as a "positive" module, responds with an empty `200 ok` by default and doesn't keep your requests hanging (pending until server timeout).
+>**NOTE**: Bootstruct, as a "positive" module, responds with an empty `200 OK` by default and doesn't keep your requests hanging (pending until server timeout).
 
-Now let's see how to control request flow using Bootstruct's reserved entry names.
+Add functionality by creating some files and folders in you `www` folder. See examples (link).
+
+
+
+
+Examples
+========
+This section shows some examples of how to use each reserved method.
 
 
 
 
 index
 -----
+**Chain**: Target.  
 **Synonyms**: `all`, `beforeVerb`, `before_verb`, `before-verb`.
 
 `index` is a reserved entry name (and so are its synonyms). Its exported function gets mounted on the target-chain of the controller it's in. The `index` method gets called when its controller is the request target-controller, for **any** type of request (HTTP verbs).
@@ -343,6 +351,8 @@ Now "A" is a method in the "RC" instead of a single method controller.
 
 get, post, put, delete
 ----------------------
+**Chain**: Target.
+
 These 4 HTTP verbs are reserved entry names and also get mounted on their controller's target-chain. The verb methods should hold the core functionality of their controller.
 
 Example structure:
@@ -357,7 +367,7 @@ Example structure:
 
 If you have an `index` method as well, it will get called **before** any verb does. That's why `index` has `before_verb` as a synonym.
 
->NOTE: There's also an `after_verb` method...
+>**NOTE**: There's also an `after_verb` method...
 
 ```
 ├── www
@@ -387,12 +397,11 @@ and a `www/get.js` file like:
 	};
 ```
 will log (on a GET request):  
-path/to/www/index.js  
-path/to/www/get.js
+ &nbsp; path/to/www/index.js  
+ &nbsp; path/to/www/get.js
 
-BTW, If **any** reserved name file gets bigger, you can turn it into a folder:
+BTW, If **any** reserved name file gets bigger, you can turn it into a folder.
 
-Before:
 ```
 ├── app
 │   ├── index.js
@@ -401,8 +410,8 @@ Before:
 │   ├── put.js
 │   └── delete.js
 ```
+Our `post.js` file does a lot of stuff: validates, sanitizes, sends email, writes to database etc. We would probably want to do it in more than one file. We could:
 
-After:
 ```
 ├── app
 │   ├── index.js
@@ -414,7 +423,7 @@ After:
 │   ├── put.js
 │   └── delete.js
 ```
-Just remember to export your function from an `index.js` file. In this case the `index.js` is NOT parsed as the reserved entry name, it's just what Node is looking for when `require`ing a folder.
+Just remember to export your function from an `index.js` file. In this case the `index.js` is NOT parsed as the reserved entry name, it's just what Node is looking for when `require`ing a folder. From that `index.js` file you can `require` anything.
 
 
 
@@ -430,7 +439,7 @@ Using all verb types and having multiple sub-controllers/methods can hurt your e
 │   ├── [messages]  <── controller
 │   ├── [profile]   <── controller
 │   ├── about.js    <── method
-│   ├── all.js      <── verbs
+│   ├── all.js      <── verbs ("index" synonym)
 │   ├── contact.js  <── method
 │   ├── delete.js   <── verbs
 │   ├── get.js      <── verbs
@@ -458,7 +467,9 @@ For the sake of your eyes, you can use a `verbs` folder, just as a namespace to 
 
 first & last
 ------------
-Another 2 reserved entry names. When exist they always get called whether the controller is the target-controller or a parent. `first` is the first thing controllers run when an `io` checks-in and `last` is the very last thing to run.
+**Chain**: Both.
+
+Another two reserved entry names. When exist, they always get called whether the controller is the target-controller or a parent. `first` is the first thing controllers run when an `io` checks-in and `last` is the very last thing to run.
 
 Assume:
 ```
@@ -501,19 +512,19 @@ Now with verbs:
 ```
 ├── www
 │   ├── first.js
-│   ├── index.js
+│   ├── beforeVerb.js  ("index" synonym)
 │   ├── get.js     <──
 │   ├── post.js    <──
 │   ├── last.js
 │   └── A
 │       ├── first.js
-│       ├── index.js
+│       ├── beforeVerb.js
 │       ├── get.js     <──
 │       ├── post.js    <──
 │       └── last.js
 ```
 
->NOTE: The full path to the `www` folder and file extensions (.js) were removed from log for better readability:
+>**NOTE**: The full path to the `www` folder and file extensions (.js) were removed from log for better readability:
 
 ```
 request: GET `/`
@@ -554,7 +565,8 @@ logs:
 
 after_verb
 ----------
-**Synonyms**: `after-verb`, `afterVerb`.
+**Chain**: Target.  
+**Synonyms**: `all_done`, `all-done`, `allDone`, `after-verb`, `afterVerb`.
 
 `after_verb`, like `before_verb` (`index` synonym), will run for **any** request type in the target-controller but **after** the verb method. Probably very self explanatory by now.
 ```
@@ -583,7 +595,8 @@ logs:
 
 pre_sub & post_sub
 ------------------
-**Synonyms**: `pre-sub`, `preSub`.
+**Chain**: Parent.  
+**Synonyms**: `pre-sub`, `preSub`.  
 **Synonyms**: `post-sub`, `postSub`.
 
 `index` and the verbs get called only by the target-controller. `first` & `last` get called anyway, whether the controller is the target-controller or not. `pre_sub` and `post_sub` get called only by a parent-controller, before and after the sub-controller, respectively (pre=before, post=after):
@@ -627,9 +640,10 @@ The "A" controller doesn't have any sub-controllers so `pre_sub` and `post_sub` 
 
 no_verb
 -------
+**Chain**: Target.  
 **Synonyms**: `no-verb`, `noVerb`.
 
-Another reserved entry name in the target-controller's chain. It will get called on a request type that the target-controller doesn't support.
+The `no_verb` method will get called on a request type that the target-controller doesn't have. A GET request to a controller without a `get.js` file.
 
 ```
 ├── www
