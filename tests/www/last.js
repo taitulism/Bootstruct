@@ -1,4 +1,4 @@
 module.exports = function (io) {
-    io.res.write(__filename.match(/www.*/)[0]);
+    io.res.write('l');
     io.next();
 };
