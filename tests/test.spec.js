@@ -31,7 +31,6 @@ describe('Bootstruct', function() {
 		beforeEach(function() {
 		    server.listen(1001, '127.0.0.1');
 	  	});
-	  	
 	  	afterEach(function() {
 		    server.close();
 	  	});
@@ -61,7 +60,6 @@ describe('Bootstruct', function() {
 		beforeEach(function() {
 		    server.listen(1001, '127.0.0.1');
 	  	});
-	  	
 	  	afterEach(function() {
 		    server.close();
 	  	});
@@ -91,7 +89,6 @@ describe('Bootstruct', function() {
 		beforeEach(function() {
 		    server.listen(1001, '127.0.0.1');
 	  	});
-	  	
 	  	afterEach(function() {
 		    server.close();
 	  	});
@@ -121,7 +118,6 @@ describe('Bootstruct', function() {
 		beforeEach(function() {
 		    server.listen(1001, '127.0.0.1');
 	  	});
-	  	
 	  	afterEach(function() {
 		    server.close();
 	  	});
@@ -198,7 +194,6 @@ describe('Bootstruct', function() {
 		beforeEach(function() {
 		    server.listen(1001, '127.0.0.1');
 	  	});
-	  	
 	  	afterEach(function() {
 		    server.close();
 	  	});
