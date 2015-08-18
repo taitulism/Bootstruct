@@ -1,30 +1,126 @@
 'use strict';
 
 
-var IO        = require('./lib/io').IO;
-var createApp = require('./lib/app');
+var exists             = require('fs').existsSync;
+var resolve            = require('path').resolve;
+var map                = require('./lib/utils/f2j');
+var forIn              = require('./lib/utils/forIn');
+var Ctrl               = require('./lib/ctrl');
+var normalizeEntryName = require('./lib/entryHandlers/utils').normalizeEntryName;
+var webRootHandlers    = require('./lib/entryHandlers/web-root');
+var CFGHandlers        = require('./lib/entryHandlers/cfg');
+var IO                 = require('./lib/io').IO;
+
+
+var hasOwn = Object.prototype.hasOwnProperty;
 
 
 
 
- /*─────────────────────────────────────────────────────────────────────────────
- │  Bootstruct outer API
- │  --------------------
- │
- │  argument:
- │  	webRoot [str] - The folder name to be parse as the app's root-controller 
- │                      default: 'www'
- │  
- │  returns:
- │  	handler [fn] - To be called with: request, response.
- │
-*/
-module.exports = function bootstruct(webRoot) {
-	var	app = createApp(webRoot);
+function initAppObj () {
+	var app = Object.create(null);
 
-	return function bootstruct_handler (req, res) {
+	app.ctrls = Object.create(null);
+
+	app._serverHandler = function (req, res) {
 		var io = new IO(req, res);
 
 		return app.RC.checkIn(io);
 	};
-};
+
+	// BGS stands for "Bootstruct Global Scope" (or "BackGround Scope")
+	app._serverHandler.BGS = app;
+
+	return app;
+}
+
+
+
+
+function mapWebRoot (webRoot) {
+	var webRootMap;
+
+	// resolve folder name
+	var resolved_webRoot = resolve(webRoot);
+
+	/* Deal Breaker */ if (!exists(resolved_webRoot)) {
+		return resolved_webRoot;
+	}
+
+	// map web-root folder (f2j)
+	webRootMap = map(resolved_webRoot);
+
+	return webRootMap;
+}
+
+
+
+
+function no_webRoot (resolved_webRoot) {
+	console.log("Bootstruct couldn't find your web-root folder: ");
+	console.log('    ' + resolved_webRoot);
+
+	return function (req, res) {
+		res.end("Bootstruct couldn't find your web-root folder.");
+	};
+}
+
+
+
+
+function handleCFG (webRoot, app) {
+	var cfgMap;
+
+	var cfg          = webRoot + '_cfg';
+	var resolved_cfg = resolve(cfg);
+
+	if (exists(resolved_cfg)) {
+
+		// map cfg folder (f2j)
+		cfgMap = map(resolved_cfg);
+
+		forIn(cfgMap.entries, function (entryName, entryMap) {
+			entryName = normalizeEntryName(entryName, entryMap.type);
+
+			if (hasOwn.call(CFGHandlers, entryName)) {
+				CFGHandlers[entryName].call(app, entryMap);
+			}
+			else {
+				app[entryName] = require(entryMap.path);
+			}
+		});
+	}
+
+	return app;
+}
+
+
+
+
+function create (webRoot) {
+	var webRootMap;
+
+	// app
+	var app = initAppObj();
+
+	// set folder names
+	webRoot = webRoot || 'www';
+
+	webRootMap = mapWebRoot(webRoot);
+
+	/* Deal Breaker */ if (typeof webRootMap === 'string') {
+		return no_webRoot(webRootMap);
+	}
+
+	app = handleCFG(webRoot, app);
+
+	app.RC = new Ctrl(webRootMap, 'RC', null, app, true);
+
+	return app._serverHandler;
+}
+
+
+
+
+// ---------------------
+module.exports = create;

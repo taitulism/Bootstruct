@@ -20,8 +20,9 @@ Table of contents
 	  * [get, post, put, delete](#get-post-put-delete)
 	  * [verbs](#verbs)
 	  * [first & last](#first--last)
-	  * [after_verb](#after_verb)
+	  * [pre_method & post_method](#pre_method--post_method)
 	  * [pre_sub & post_sub](#pre_sub--post_sub)
+	  * [after_verb](#after_verb)
 	  * [no_verb](#no_verb)
 	  * [Full Example](#full-example)
   * [Important Notes](#important-notes)
@@ -140,6 +141,8 @@ Bootstruct has some reserved names for files and folders ("entries", for short) 
 * [after_verb](#after_verb)
 * [pre_sub](#pre_sub)
 * [post_sub](#post_sub)
+* [pre_method](#pre_method)
+* [post_method](#post_method)
 * [first](#first)
 * [last](#last)
 * [verbs](#verbs)
@@ -156,18 +159,21 @@ Every request has a target-controller. A request's target-controller is the last
 ├── www
 │   └── A
 │       └── B
+│           └── C.js  ──> method
 ```
 The **"A"** controller is **the target**-controller for requests to `/A` (and `/A/whatever`).  
-The **"A"** controller is **a parent**-controller for requests to `/A/B` (and `/A/B/whatever`).
+The **"A"** controller is **a parent**-controller for requests to `/A/B` (and `/A/B/whatever`).  
+For requests to `/A/B/C` (and `/A/B/C/whatever`), the **"B"** controller is **the handling**-controller but this time the target is a method (`C.js`). 
 
-Controllers can have two chains of methods they execute in each case: a target-chain and a parent-chain. When you name an entry with a reserved name you actually mount its exported function on one of these chains when each method has its own place. Some reserved methods belong to one chain, some belong to the other and some goes in both chains. 
+
+Controllers can have three chains of methods they execute in each case: a target-chain, a parent-chain and a method-chain. When you name an entry with a reserved name you actually mount its exported function on one of these chains when each method has its own place. Some reserved methods belong to one chain, some belong to another and some goes in all three of them. 
 
 Controller chart flow:  
 ![Controller Chart-Flow](https://raw.githubusercontent.com/taitulism/Bootstruct/master/controller-chart-flow.png)
 
-This image describes these chains and the controller's internal flow. The target-chain on the right and the parent-chain on the left. The `first` and the `last` methods are held in common by the two chains.
+This image describes these chains in the controller's internal flow. The target-chain on the right, the parent-chain on the left and the method-chain is in the middle. The `first` and the `last` methods are held in common by the three chains.
 
-A controller is a representation of a folder structure and that `io` thingy is the "moving part" in your app's structure. 
+A controller is a representation of a static folder structure. The `io` thingy is the "moving part" in your app's structure. 
 
 The target-controller is the center of the onion:  
 request: `/A`:
@@ -184,11 +190,15 @@ request: `/A/B`:
 	www/A      check-out
 	www        check-out
 ```
-The target-chain methods (`index`, the verbs, etc.) should hold the controller's core functionality.
+
 
 In the middle of the parent-chain there are the controller's sub-controllers. This point is where the `request` (held by the `io`) is passed from one controller to another.
 
-On its way in to the target-controller, the `io` moves in the parent-controllers' parent-chains through the `first` and the `pre_sub` methods of each parent (check-in methods). It checks-in at sub-controllers recursively until it gets to the target-controller. There it walks through the whole target-chain and finally checks-out to finish the rest of all the parent-chains (`post_sub`, `last`).
+On its way into the target-controller, the `io` moves in the parent-controllers' parent-chains through the `first` and the `pre_sub` methods of each parent (check-in methods). It checks-in at sub-controllers recursively until it gets to the target-controller. There it walks through either the target-chain or the method-chain (depends on the next URL part). 
+
+If the next URL part is an existing method, the `io` will walk through the method-chain: `pre_method`, the matching method, `post_method` and `last`. If there is no matching method, the `io` will go through the target-chain: `index`, then the request matching verb method (or `no_verb`), then to `after_verb` and `last`.
+
+After the `last` method the `io` finally checks-out to its parent to finish the rest of its parent-chain (`post_sub`, `last`) and checks-out at the next parent, all the way up to the "RC".
 
 
 
@@ -205,7 +215,7 @@ All of the methods your files export, accept a single argument, an object called
 	};
 ```
 
-The `io` moves from one controller to another and inside every controller, from one method to another. You move it around by calling `io.next()`:
+The `io` moves from one controller to another and inside controllers, from one method to another. You move it around by calling `io.next()`:
 ```js
 	module.exports = function (io) {
 		io.res.write('hello ');
@@ -229,7 +239,7 @@ You're encouraged to use the `io` as you like. Set it with your own props in an 
 ```
 ```js
 	// somewhere down the road...
-	// same request, different file (e.g. 'www/Blog/Edit/index.js')
+	// same request, in a different file (e.g. 'www/Blog/Edit/index.js')
 	module.exports = function (io) {
 		if (io.isAdmin){
 			//...
@@ -430,7 +440,7 @@ Just remember to export your function from an `index.js` file. In this case the 
 
 verbs
 -----
-`verbs` is a reserved entry name but it doesn't stand for a method like the others. `verbs` acts only as a namespace folder (always a folder) to hold the different verb files.
+`verbs` is a reserved entry name but it doesn't stand for a method like the others. `verbs` acts only as a namespace entry to hold the different verb files.
 
 Using all verb types and having multiple sub-controllers/methods can hurt your eyes:
 ```
@@ -460,6 +470,38 @@ For the sake of your eyes, you can use a `verbs` folder, just as a namespace to 
 │       ├── post.js
 │       ├── put.js
 │       └── delete.js
+```
+
+You can also use a `verbs.js` file to export your verbs methods from an object:
+```
+├── www
+│   ├── [blog]
+│   ├── [messages]
+│   ├── [profile]
+│   ├── about.js
+│   ├── contact.js
+│   └── verbs.js          <──
+```
+
+```js
+// verbs.js
+module.exports = {
+	get: function (io) {
+
+	},
+	post: function (io) {
+
+	},
+	put: function (io) {
+
+	},
+	delete: function (io) {
+
+	},
+	noVerb: function (io) {
+
+	}
+};
 ```
 
 
@@ -563,31 +605,47 @@ logs:
 
 
 
-after_verb
-----------
-**Chain**: Target.  
-**Synonyms**: `all_done`, `all-done`, `allDone`, `after-verb`, `afterVerb`.
+pre_method & post_method
+------------------------
+**Chain**: Method.  
+**Synonyms**: `pre-method`, `preMethod`.  
+**Synonyms**: `post-method`, `postMethod`.
 
-`after_verb`, like `before_verb` (`index` synonym), will run for **any** request type in the target-controller but **after** the verb method. Probably very self explanatory by now.
+These reserved methods will run before and after the target-method (pre=before, post=after).
 ```
 ├── www
-│   ├── before_verb.js
-│   ├── get.js
-│   ├── post.js
-│   └── after_verb.js
+│   ├── first.js
+│   ├── index.js
+│   ├── pre_method.js    <──
+│   ├── A.js
+│   ├── B.js
+│   ├── post_method.js   <──
+│   └── last.js
 ```
+Assume all files log their names and calling `io.next()` as before:
 ```
-request: GET `/`
+request: /
 logs:
-	www/before_verb
-	www/get
-	www/after_verb
+	www/first
+	www/index
+	www/last
+(no method was called)
 
-request: POST `/`
+request: /a
 logs:
-	www/before_verb
-	www/post
-	www/after_verb
+	www/first
+	www/pre_method   <──
+	www/A.js
+	www/post_method  <──
+	www/last
+
+request: /b
+logs:
+	www/first
+	www/pre_method   <──
+	www/B.js
+	www/post_method  <──
+	www/last
 ```
 
 
@@ -599,7 +657,7 @@ pre_sub & post_sub
 **Synonyms**: `pre-sub`, `preSub`.  
 **Synonyms**: `post-sub`, `postSub`.
 
-`index` and the verbs get called only by the target-controller. `first` & `last` get called anyway, whether the controller is the target-controller or not. `pre_sub` and `post_sub` get called only by a parent-controller, before and after the sub-controller, respectively (pre=before, post=after):
+`index` and the verbs get called only by the target-controller. `first` & `last` get called anyway, whether the controller is the target-controller or not. `pre_sub` and `post_sub` get called only by a parent-controller, before and after the sub-controller, respectively.
 ```
 ├── www
 │   ├── first.js
@@ -634,6 +692,36 @@ logs:
 ```
 
 The "A" controller doesn't have any sub-controllers so `pre_sub` and `post_sub` would be redundent if existed. They would never get called.
+
+
+
+
+after_verb
+----------
+**Chain**: Target.  
+**Synonyms**: `all_done`, `all-done`, `allDone`, `after-verb`, `afterVerb`.
+
+`after_verb`, like `before_verb` (`index` synonym), will run for **any** request type in the target-controller but **after** the verb method. Probably very self explanatory by now.
+```
+├── www
+│   ├── before_verb.js
+│   ├── get.js
+│   ├── post.js
+│   └── after_verb.js
+```
+```
+request: GET `/`
+logs:
+	www/before_verb
+	www/get
+	www/after_verb
+
+request: POST `/`
+logs:
+	www/before_verb
+	www/post
+	www/after_verb
+```
 
 
 
