@@ -18,14 +18,25 @@ var hasOwn = Object.prototype.hasOwnProperty;
 
 
 function initAppObj () {
+	var checkIn;
 	var app = Object.create(null);
 
 	app.ctrls = Object.create(null);
 
+	app.checkIn = function (io) {
+		app.RC.checkIn(io);
+	};
+
 	app._serverHandler = function (req, res) {
 		var io = new IO(req, res);
 
-		return app.RC.checkIn(io);
+		if (io.init) {
+			io.init(app);
+		}
+		else {
+			app.RC.checkIn(io);
+		}
+
 	};
 
 	// BGS stands for "Bootstruct Global Scope" (or "BackGround Scope")
