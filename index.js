@@ -1,15 +1,16 @@
 'use strict';
 
 
-var exists             = require('fs').existsSync;
 var resolve            = require('path').resolve;
+var exists             = require('fs').existsSync;
+
+var Ctrl               = require('./lib/ctrl').Ctrl;
+var IO                 = require('./lib/io').IO;
 var map                = require('./lib/utils/f2j');
 var forIn              = require('./lib/utils/forIn');
-var Ctrl               = require('./lib/ctrl');
-var normalizeEntryName = require('./lib/entryHandlers/utils').normalizeEntryName;
-var webRootHandlers    = require('./lib/entryHandlers/web-root');
 var CFGHandlers        = require('./lib/entryHandlers/cfg');
-var IO                 = require('./lib/io').IO;
+var webRootHandlers    = require('./lib/entryHandlers/web-root');
+var normalizeEntryName = require('./lib/entryHandlers/utils').normalizeEntryName;
 
 
 var hasOwn = Object.prototype.hasOwnProperty;
