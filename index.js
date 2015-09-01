@@ -10,7 +10,7 @@ var map                = require('./lib/utils/f2j');
 var forIn              = require('./lib/utils/forIn');
 var CFGHandlers        = require('./lib/entryHandlers/cfg');
 var webRootHandlers    = require('./lib/entryHandlers/web-root');
-var normalizeEntryName = require('./lib/entryHandlers/utils').normalizeEntryName;
+var normalizeEntryName = require('./lib/helpers').normalizeEntryName;
 
 
 var hasOwn = Object.prototype.hasOwnProperty;
