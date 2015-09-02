@@ -40,8 +40,7 @@ function initAppObj () {
 
 	};
 
-	// BGS stands for "Bootstruct Global Scope" (or "BackGround Scope")
-	app._serverHandler.BGS = app;
+	app._serverHandler.global = app;
 
 	return app;
 }
