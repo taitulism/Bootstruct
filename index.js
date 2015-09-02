@@ -125,7 +125,7 @@ function create (webRoot) {
 
 	app = handleCFG(webRoot, app);
 
-	app.RC = new Ctrl(webRootMap, 'RC', null, app, true);
+	app.RC = new Ctrl('RC', webRootMap, null, app);
 
 	return app._serverHandler;
 }
