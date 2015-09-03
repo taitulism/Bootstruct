@@ -78,7 +78,7 @@ function no_webRoot (resolved_webRoot) {
 
 
 
-function handleCFG (webRoot, app) {
+function parseCFG (webRoot, app) {
 	var cfgMap;
 
 	var cfg          = webRoot + '_cfg';
@@ -96,6 +96,14 @@ function handleCFG (webRoot, app) {
 				CFGHandlers[entryName].call(app, entryMap);
 			}
 			else {
+				if (!entryMap.type && !entryMap.entries['index.js']) {
+					console.log('Bootstruct Error:');
+					console.log('   Expecting an "index.js" file in:');
+					console.log('   ' + entryMap.path);
+					
+					return null;
+				}
+
 				app[entryName] = require(entryMap.path);
 			}
 		});
@@ -122,7 +130,7 @@ function create (webRoot) {
 		return no_webRoot(webRootMap);
 	}
 
-	app = handleCFG(webRoot, app);
+	app = parseCFG(webRoot, app);
 
 	app.RC = new Ctrl('RC', webRootMap, null, app);
 
