@@ -1,104 +1,123 @@
 'use strict';
 
-var resolve            = require('path').resolve;
-var exists             = require('fs').existsSync;
 
-var Ctrl               = require('./lib/ctrl').Ctrl;
-var IO                 = require('./lib/io').IO;
+var appProto;
+
+var resolve = require('path').resolve;
+var exists  = require('fs').existsSync;
+
 var map                = require('./lib/utils/f2j');
 var forIn              = require('./lib/utils/forIn');
-var CFGHandlers        = require('./lib/entryHandlers/cfg');
+var getCfgHandlers     = require('./lib/entryHandlers/cfg');
+var getWebRootHandlers = require('./lib/entryHandlers/ctrl');
 var normalizeEntryName = require('./lib/helpers').normalizeEntryName;
+var createCtrlClass    = require('./lib/ctrl');
+var createIOClass      = require('./lib/io');
 
 
-var hasOwn = Object.prototype.hasOwnProperty;
+function App (webRoot) {
+	this.ctrls = Object.create(null);
+
+	if (this.resolveNames(webRoot)) { // Deal Breaker
+		this.setServerHandler();
+
+		this.initPrototypes();
+
+		this.parseCFG();
+
+		this.RC = new this.Ctrl('RC', map(this.webRoot), null, this);
+	}
+	else {
+		this.die();
+	}
+}
 
 
 
+appProto = App.prototype;
 
-function initAppObj () {
-	var checkIn;
-	var app = Object.create(null);
 
-	app.ctrls = Object.create(null);
 
-	app.checkIn = function (io) {
-		app.RC.checkIn(io);
-	};
+appProto.resolveNames = function (webRoot) {
+	var cfg;
 
-	app._serverHandler = function (req, res) {
-		var io = new IO(req, res);
+	webRoot = webRoot || 'www';
+	cfg     = webRoot + '_cfg';
+
+	this.webRoot = resolve(webRoot);
+	this.cfg     = resolve(cfg);
+
+	return exists(this.webRoot);
+};
+
+
+
+appProto.setServerHandler = function (fn) {
+	var self = this;
+
+	this.serverHandler = fn || function (req, res) {
+		var io = new self.IO(req, res);
 
 		if (io.init) {
 			if (io.init.async) {
-				io.init(app);
+				io.init(self);
 			}
 			else {
 				io.init();
-				app.RC.checkIn(io);
+				self.RC.checkIn(io);
 			}
 		}
 		else {
-			app.RC.checkIn(io);
+			self.RC.checkIn(io);
 		}
-
 	};
 
-	app._serverHandler.global = app;
-
-	return app;
-}
+	this.serverHandler.global = this;
+};
 
 
 
+appProto.initPrototypes = function () {
+	this.ignoreList            = [];
+	this.ignoreStartWith       = ['_', '.'];
+	this.webRoot_entryHandlers = getWebRootHandlers();
+	this.cfg_entryHandlers     = getCfgHandlers();
+	this.Ctrl                  = createCtrlClass();
+	this.IO                    = createIOClass();
+	this.ctrl_proto            = this.Ctrl.prototype;
+	this.io_proto              = this.IO.prototype;
+};
 
-function mapWebRoot (webRoot) {
-	var webRootMap;
 
-	// resolve folder name
-	var resolved_webRoot = resolve(webRoot);
 
-	/* Deal Breaker */ if (!exists(resolved_webRoot)) {
-		return resolved_webRoot;
+appProto.addToIgnoreList = function (item) {
+	if (typeof item != 'string') {
+		console.log('Bootstruct Error:');
+		console.log('   "ignore" cfg handler should export an array of strings.');
+		console.log('   skipping: ', item );
+		return;
 	}
 
-	// map web-root folder (f2j)
-	webRootMap = map(resolved_webRoot);
 
-	return webRootMap;
-}
+	this.ignoreList.push(item);
+};
 
 
 
+appProto.parseCFG = function () {
+	var cfgMap, CFGHandlers;
 
-function no_webRoot (resolved_webRoot) {
-	console.log("Bootstruct couldn't find your web-root folder: ");
-	console.log('    ' + resolved_webRoot);
+	var self = this;
 
-	return function (req, res) {
-		res.end("Bootstruct couldn't find your web-root folder.");
-	};
-}
+	if (exists(this.cfg)) {
 
+		this.cfgMap = map(this.cfg);
 
-
-
-function parseCFG (webRoot, app) {
-	var cfgMap;
-
-	var cfg          = webRoot + '_cfg';
-	var resolved_cfg = resolve(cfg);
-
-	if (exists(resolved_cfg)) {
-
-		// map cfg folder (f2j)
-		cfgMap = map(resolved_cfg);
-
-		forIn(cfgMap.entries, function (entryName, entryMap) {
+		forIn(this.cfgMap.entries, function (entryName, entryMap) {
 			entryName = normalizeEntryName(entryName, entryMap.type);
 
-			if (hasOwn.call(CFGHandlers, entryName)) {
-				CFGHandlers[entryName].call(app, entryMap);
+			if (self.cfg_entryHandlers[entryName]) {
+				self.cfg_entryHandlers[entryName].call(self, entryMap);
 			}
 			else {
 				if (!entryMap.type && !entryMap.entries['index.js']) {
@@ -109,41 +128,37 @@ function parseCFG (webRoot, app) {
 					return null;
 				}
 
-				app[entryName] = require(entryMap.path);
+				self[entryName] = require(entryMap.path);
 			}
 		});
+
 	}
 
-	return app;
-}
+	return self;
+};
 
 
 
-
-function create (webRoot) {
-	var webRootMap;
-
-	// app
-	var app = initAppObj();
-
-	// set folder names
-	webRoot = webRoot || 'www';
-
-	webRootMap = mapWebRoot(webRoot);
-
-	/* Deal Breaker */ if (typeof webRootMap === 'string') {
-		return no_webRoot(webRootMap);
-	}
-
-	app = parseCFG(webRoot, app);
-
-	app.RC = new Ctrl('RC', webRootMap, null, app);
-
-	return app._serverHandler;
-}
+appProto.checkIn = function (io) {
+	this.RC.checkIn(io);
+};
 
 
 
+appProto.die = function () {
+	console.log("Bootstruct couldn't find the web-root folder: ");
+	console.log('    ' + this.webRoot);
 
-// ---------------------
-module.exports = create;
+	this.setServerHandler(function (req, res) {
+		res.end("Bootstruct couldn't find the web-root folder.");
+	});
+};
+
+
+
+// -----------------------------------------
+module.exports = function create (webRoot) {
+	var app = new App(webRoot);
+
+	return app.serverHandler;
+};

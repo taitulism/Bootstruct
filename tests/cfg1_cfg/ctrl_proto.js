@@ -1,3 +1,5 @@
 module.exports = {
-	qwe: function(){return 'ctrl_proto';}
+	qwe: function() {
+		return 'ctrl_proto';
+	}
 };
