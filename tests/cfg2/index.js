@@ -8,13 +8,13 @@ body +=  (io.initiated) ? io.initiated + '-' : 'IO_INIT_FAIL-';
 
 
 // ctrl_proto
-body +=  (this.qweq) ? this.qweq() + '-' : 'CTRL_PROTO_FAIL_1-';
-body +=  (this.asda) ? this.asda() + '-' : 'CTRL_PROTO_FAIL_2-';
+body +=  (this.qwe) ? this.qwe() + '-' : 'CTRL_PROTO_FAIL_1-';
+body +=  (this.asd) ? this.asd() + '-' : 'CTRL_PROTO_FAIL_2-';
 
 
 // io_proto
-body +=  (io.qweq) ? io.qweq() + '-' : 'IO_PROTO_FAIL_1-';
-body +=  (io.asda) ? io.asda() + '-' : 'IO_PROTO_FAIL_2-';
+body +=  (io.qwe) ? io.qwe() + '-' : 'IO_PROTO_FAIL_1-';
+body +=  (io.asd) ? io.asd() + '-' : 'IO_PROTO_FAIL_2-';
 
 
 // entry_handlers
