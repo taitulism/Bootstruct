@@ -1,7 +1,10 @@
 module.exports = function (app) {
+	var self = this;
 
 	this.initiated = 'io_init';
-
-	app.checkIn(this);
+	
+	setTimeout(function () {
+		app.checkIn(self);
+	}, 0);
 
 };

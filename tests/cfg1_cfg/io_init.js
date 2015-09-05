@@ -1,7 +1,5 @@
-module.exports = function (app) {
+module.exports = function () {
 
 	this.initiated = 'io_init';
-
-	app.checkIn(this);
 
 };
