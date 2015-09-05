@@ -1,6 +1,5 @@
 'use strict';
 
-
 var resolve            = require('path').resolve;
 var exists             = require('fs').existsSync;
 
@@ -100,7 +99,7 @@ function parseCFG (webRoot, app) {
 					console.log('Bootstruct Error:');
 					console.log('   Expecting an "index.js" file in:');
 					console.log('   ' + entryMap.path);
-					
+
 					return null;
 				}
 

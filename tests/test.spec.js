@@ -29,11 +29,11 @@ describe('Bootstruct', function() {
 
 
 		beforeEach(function() {
-		    server.listen(1001, '127.0.0.1');
-	  	});
-	  	afterEach(function() {
-		    server.close();
-	  	});
+			server.listen(1001, '127.0.0.1');
+		});
+		afterEach(function() {
+			server.close();
+		});
 
 
 		it('should pass', function (done) {
@@ -58,11 +58,11 @@ describe('Bootstruct', function() {
 
 
 		beforeEach(function() {
-		    server.listen(1001, '127.0.0.1');
-	  	});
-	  	afterEach(function() {
-		    server.close();
-	  	});
+			server.listen(1001, '127.0.0.1');
+		});
+		afterEach(function() {
+			server.close();
+		});
 		
 
 		it('should pass', function (done) {
@@ -87,11 +87,11 @@ describe('Bootstruct', function() {
 
 
 		beforeEach(function() {
-		    server.listen(1001, '127.0.0.1');
-	  	});
-	  	afterEach(function() {
-		    server.close();
-	  	});
+			server.listen(1001, '127.0.0.1');
+		});
+		afterEach(function() {
+			server.close();
+		});
 		
 
 		it('should pass', function (done) {
@@ -116,11 +116,11 @@ describe('Bootstruct', function() {
 
 
 		beforeEach(function() {
-		    server.listen(1001, '127.0.0.1');
-	  	});
-	  	afterEach(function() {
-		    server.close();
-	  	});
+			server.listen(1001, '127.0.0.1');
+		});
+		afterEach(function() {
+			server.close();
+		});
 		
 		it('should pass', function (done) {
 			makeRequest('/', 'b4getftr', done, server, 'get');
@@ -192,11 +192,11 @@ describe('Bootstruct', function() {
 
 
 		beforeEach(function() {
-		    server.listen(1001, '127.0.0.1');
-	  	});
-	  	afterEach(function() {
-		    server.close();
-	  	});
+			server.listen(1001, '127.0.0.1');
+		});
+		afterEach(function() {
+			server.close();
+		});
 		
 
 		it('should pass', function (done) {
@@ -242,9 +242,80 @@ describe('Bootstruct', function() {
 		it('should pass', function (done) {
 			makeRequest('/a/b/zxc', 'fprsf1prs1f2prm2zxcptm2l2pts1l1ptsl', done, server);
 		});
+	});
 
+
+
+
+	describe('cfg 1 test', function() {
+		var app    = bts('./tests/cfg1');
+		var server = http.createServer(app);
+
+
+		beforeEach(function() {
+			server.listen(1001, '127.0.0.1');
+		});
+		afterEach(function() {
+			server.close();
+		});
+
+
+		it('should pass ignore test', function (done) {
+			makeRequest('/ignored', 'ignore', done, server);
+		});
+
+		it('should pass io_init test', function (done) {
+			makeRequest('/io_init', 'io_init', done, server);
+		});
+
+		it('should pass ctrl_proto test', function (done) {
+			makeRequest('/ctrl_proto', 'ctrl_proto', done, server);
+		});
+
+		it('should pass io_proto test', function (done) {
+			makeRequest('/io_proto', 'io_proto', done, server);
+		});
+
+		it('should pass entry_handlers test', function (done) {
+			makeRequest('/entry_handlers', 'public', done, server);
+		});
+
+		it('should pass shared_methods test', function (done) {
+			makeRequest('/a_shared_method', 'shared_methods', done, server);
+		});
+
+		it('should pass item test', function (done) {
+			makeRequest('/item', 'item', done, server);
+		});
 
 	});
 
+
+
+	describe('cfg 2 test', function() {
+		var app    = bts('./tests/cfg2');
+		var server = http.createServer(app);
+
+
+		beforeEach(function() {
+			server.listen(1001, '127.0.0.1');
+		});
+		afterEach(function() {
+			server.close();
+		});
+
+
+		it('should pass all tests', function (done) {
+			makeRequest('/', '[io_init-c_pro1-c_pro2-io_pro1-io_pro2-pub-view-item]', done, server);
+		});
+
+		it('should pass sub_ctrls 1 test', function (done) {
+			makeRequest('/x', '[X1X2X3]', done, server);
+		});
+
+		it('should pass sub_ctrls 2 test', function (done) {
+			makeRequest('/a/x', '[{{X1X2X3}}]', done, server);
+		});
+	});
 
 });
