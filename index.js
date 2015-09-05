@@ -30,7 +30,13 @@ function initAppObj () {
 		var io = new IO(req, res);
 
 		if (io.init) {
-			io.init(app);
+			if (io.init.async) {
+				io.init(app);
+			}
+			else {
+				io.init();
+				app.RC.checkIn(io);
+			}
 		}
 		else {
 			app.RC.checkIn(io);
