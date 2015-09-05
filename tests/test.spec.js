@@ -185,6 +185,24 @@ describe('Bootstruct', function() {
 
 
 
+	describe('io.params test', function() {
+		var app    = bts('./tests/Params');
+		var server = http.createServer(app);
+
+
+		beforeEach(function() {
+			server.listen(1001, '127.0.0.1');
+		});
+		afterEach(function() {
+			server.close();
+		});
+		
+		it('should pass', function (done) {
+			makeRequest('/a/b/c/d/e', 'a,b,c,d,e|b,c,d,e|c,d,e|c,d,e|c,d,e|c,d,e', done, server);
+		});
+	});
+
+
 
 	describe('Full use case test', function() {
 		var app    = bts('./tests/www');
