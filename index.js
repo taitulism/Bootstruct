@@ -25,7 +25,7 @@ function App (webRoot) {
 
 		this.parseCFG();
 
-		this.RC = new this.Ctrl('RC', map(this.webRoot), null, this);
+		this.RC = new this.Ctrl(0, map(this.webRoot), null, this);
 	}
 	else {
 		this.die();
