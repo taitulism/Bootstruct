@@ -42,7 +42,7 @@ appProto.resolveNames = function (webRoot) {
 	var cfg;
 
 	webRoot = webRoot || 'www';
-	cfg     = webRoot + '_cfg';
+	cfg     = webRoot + '_hooks';
 
 	this.webRoot = resolve(webRoot);
 	this.cfg     = resolve(cfg);

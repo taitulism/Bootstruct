@@ -265,8 +265,8 @@ describe('Bootstruct', function() {
 
 
 
-	describe('cfg 1 test', function() {
-		var app    = bts('./tests/cfg1');
+	describe('hooks 1 test', function() {
+		var app    = bts('./tests/hks1');
 		var server = http.createServer(app);
 
 
@@ -310,8 +310,8 @@ describe('Bootstruct', function() {
 
 
 
-	describe('cfg 2 test', function() {
-		var app    = bts('./tests/cfg2');
+	describe('hooks 2 test', function() {
+		var app    = bts('./tests/hks2');
 		var server = http.createServer(app);
 
 
