@@ -91,10 +91,22 @@ appProto.initPrototypes = function () {
 
 
 appProto.addToIgnoreList = function (item) {
+	var entryHandlers = Object.keys(this.webRoot_entryHandlers.__proto__);
+
+	item = item.toLowerCase();
+
 	if (typeof item != 'string') {
 		console.log('Bootstruct Error:');
-		console.log('   "ignore" hook handler should export an array of strings.');
-		console.log('   skipping: ', item );
+		console.log('   "ignore" hook handler should export a string or an array of strings.');
+		console.log('   skipping: ' + '"' + item + '"');
+		return;
+	}
+
+	// trying to ignore a reserved entry name
+	if (~entryHandlers.indexOf(item)) {
+		console.log('Bootstruct Error:');
+		console.log('   "ignore" hook: Trying to ignore a reserved entry name.');
+		console.log('   skipping: ' + '"' + item + '"');
 		return;
 	}
 
