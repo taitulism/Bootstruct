@@ -8,7 +8,7 @@ var exists  = require('fs').existsSync;
 
 var map                = require('./lib/utils/f2j');
 var forIn              = require('./lib/utils/forIn');
-var getCfgHandlers     = require('./lib/entryHandlers/cfg');
+var getHooksHandlers   = require('./lib/entryHandlers/hooks');
 var getWebRootHandlers = require('./lib/entryHandlers/ctrl');
 var normalizeEntryName = require('./lib/helpers').normalizeEntryName;
 var createCtrlClass    = require('./lib/ctrl');
@@ -23,7 +23,7 @@ function App (webRoot) {
 
 		this.initPrototypes();
 
-		this.parseCFG();
+		this.parseHooks();
 
 		this.RC = new this.Ctrl(0, map(this.webRoot), null, this);
 	}
@@ -39,13 +39,13 @@ appProto = App.prototype;
 
 
 appProto.resolveNames = function (webRoot) {
-	var cfg;
+	var hooks;
 
 	webRoot = webRoot || 'www';
-	cfg     = webRoot + '_hooks';
+	hooks   = webRoot + '_hooks';
 
 	this.webRoot = resolve(webRoot);
-	this.cfg     = resolve(cfg);
+	this.hooks   = resolve(hooks);
 
 	return exists(this.webRoot);
 };
@@ -81,7 +81,7 @@ appProto.initPrototypes = function () {
 	this.ignoreList            = [];
 	this.ignoreStartWith       = ['_', '.'];
 	this.webRoot_entryHandlers = getWebRootHandlers();
-	this.cfg_entryHandlers     = getCfgHandlers();
+	this.hooks_entryHandlers     = getHooksHandlers();
 	this.Ctrl                  = createCtrlClass();
 	this.IO                    = createIOClass();
 	this.ctrl_proto            = this.Ctrl.prototype;
@@ -93,7 +93,7 @@ appProto.initPrototypes = function () {
 appProto.addToIgnoreList = function (item) {
 	if (typeof item != 'string') {
 		console.log('Bootstruct Error:');
-		console.log('   "ignore" cfg handler should export an array of strings.');
+		console.log('   "ignore" hook handler should export an array of strings.');
 		console.log('   skipping: ', item );
 		return;
 	}
@@ -104,20 +104,20 @@ appProto.addToIgnoreList = function (item) {
 
 
 
-appProto.parseCFG = function () {
-	var cfgMap, CFGHandlers;
+appProto.parseHooks = function () {
+	var hooksMap;
 
 	var self = this;
 
-	if (exists(this.cfg)) {
+	if (exists(this.hooks)) {
 
-		this.cfgMap = map(this.cfg);
+		this.hooksMap = map(this.hooks);
 
-		forIn(this.cfgMap.entries, function (entryName, entryMap) {
+		forIn(this.hooksMap.entries, function (entryName, entryMap) {
 			entryName = normalizeEntryName(entryName, entryMap.type);
 
-			if (self.cfg_entryHandlers[entryName]) {
-				self.cfg_entryHandlers[entryName].call(self, entryMap);
+			if (self.hooks_entryHandlers[entryName]) {
+				self.hooks_entryHandlers[entryName].call(self, entryMap);
 			}
 			else {
 				if (!entryMap.type && !entryMap.entries['index.js']) {
