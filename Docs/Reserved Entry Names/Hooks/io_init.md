@@ -37,25 +37,21 @@ If your `io_init` gets too big for a single file, turn it into a folder and expo
 │           └── index.js
 ```
 
+
+
+Context and arguments
+---------------------
 The context of the "this" keyword within the `io_init` function refers to the `io` instance.
 
-**Arguments**  
-The only argument the `io_init` function is called with is the `app` object. If your `io_init` function is async in any way, you'll have to do two things:  
-1. Tell Bootstruct the function is async by setting an "async" flag on the function to `true` .
-2. Tell Bootstruct when the function is done by calling the app's `checkIn` function with the `io`.
+The only argument the `io_init` function is called with is the `app` object. The `io_init` function hook could be considered as the lobby of your building, it's the first interaction point between your app and all incoming visitors but before any interaction with any controller.
+
+At the end of the function, you need to tell Bootstruct the visitor (i.e. the `io`) is ready for a check-in at the root-controller (`RC`). You do that by calling a check-in method on the `app` object and pass it the `io`, which is the context of `this`.
 
 ```js
-	function my_init_fn (app) {
-		// your async code...
-
-		// call "app.checkIn" when done
+	module.exports = function my_init_fn (app) {
+		// ... your code ...
 
 		// "this" refers to the current "io" instance
 		app.checkIn(this);
-	}
-
-	// set "async" flag to true
-	my_init_fn.async = true;
-	
-	module.exports = my_init_fn
+	};
 ```
