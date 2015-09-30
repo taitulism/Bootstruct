@@ -59,13 +59,7 @@ appProto.setServerHandler = function (fn) {
 		var io = new self.IO(req, res);
 
 		if (io.init) {
-			if (io.init.async) {
-				io.init(self);
-			}
-			else {
-				io.init();
-				self.RC.checkIn(io);
-			}
+			io.init(self);
 		}
 		else {
 			self.RC.checkIn(io);
@@ -78,14 +72,16 @@ appProto.setServerHandler = function (fn) {
 
 
 appProto.initPrototypes = function () {
-	this.ignoreList            = [];
-	this.ignoreStartWith       = ['_', '.'];
+	this.ignoreList      = [];
+	this.ignoreStartWith = ['_', '.'];
+
 	this.webRoot_entryHandlers = getWebRootHandlers();
 	this.hooks_entryHandlers   = getHooksHandlers();
-	this.Ctrl                  = createCtrlClass();
-	this.IO                    = createIOClass();
-	this.ctrl_proto            = this.Ctrl.prototype;
-	this.io_proto              = this.IO.prototype;
+
+	this.Ctrl       = createCtrlClass();
+	this.IO         = createIOClass();
+	this.ctrl_proto = this.Ctrl.prototype;
+	this.io_proto   = this.IO.prototype;
 };
 
 
