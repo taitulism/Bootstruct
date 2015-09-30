@@ -266,7 +266,7 @@ describe('Bootstruct', function() {
 
 
 	describe('hooks 1 test', function() {
-		var app    = bts('./tests/hks1');
+		var app    = bts('./tests/hooks1');
 		var server = http.createServer(app);
 
 
@@ -305,13 +305,12 @@ describe('Bootstruct', function() {
 		it('should pass item test', function (done) {
 			makeRequest('/item', 'item', done, server);
 		});
-
 	});
 
 
 
 	describe('hooks 2 test', function() {
-		var app    = bts('./tests/hks2');
+		var app    = bts('./tests/hooks2');
 		var server = http.createServer(app);
 
 
@@ -327,12 +326,20 @@ describe('Bootstruct', function() {
 			makeRequest('/', '[io_init-c_pro1-c_pro2-io_pro1-io_pro2-pub-view-item]', done, server);
 		});
 
+		it('should pass sub_methods 1 test', function (done) {
+			makeRequest('/m1', '[shared_m1]', done, server);
+		});
+
+		it('should pass sub_methods 2 test', function (done) {
+			makeRequest('/a/m2', '[{shared_m2}]', done, server);
+		});
+
 		it('should pass sub_ctrls 1 test', function (done) {
 			makeRequest('/x', '[X1X2X3]', done, server);
 		});
 
 		it('should pass sub_ctrls 2 test', function (done) {
-			makeRequest('/a/x', '[{{X1X2X3}}]', done, server);
+			makeRequest('/a/x', '[{X1X2X3}]', done, server);
 		});
 	});
 
