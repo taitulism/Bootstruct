@@ -19,11 +19,11 @@ function App (webRoot) {
 	this.ctrls = Object.create(null);
 
 	if (this.resolveNames(webRoot)) { // Deal Breaker
-		this.setServerHandler();
-
 		this.initPrototypes();
 
 		this.parseHooks();
+
+		this.setServerHandler();
 
 		this.RC = new this.Ctrl(0, map(this.webRoot), null, this);
 	}
@@ -55,16 +55,25 @@ appProto.resolveNames = function (webRoot) {
 appProto.setServerHandler = function (fn) {
 	var self = this;
 
-	this.serverHandler = fn || function (req, res) {
-		var io = new self.IO(req, res);
+	if (fn) {
+		this.serverHandler = fn;
+	}
+	else {
+		if (this.io_init) {
+			this.serverHandler = function (req, res) {
+				var io = new self.IO(req, res);
 
-		if (io.init) {
-			io.init(self);
+				io.init(self);
+			};
 		}
 		else {
-			self.RC.checkIn(io);
+			this.serverHandler = function (req, res) {
+				var io = new self.IO(req, res);
+
+				self.RC.checkIn(io);
+			};
 		}
-	};
+	}
 
 	this.serverHandler.app = this;
 };
@@ -123,6 +132,10 @@ appProto.parseHooks = function () {
 
 		forIn(this.hooksMap.entries, function (entryName, entryMap) {
 			entryName = normalizeEntryName(entryName, entryMap.type);
+
+			if (entryName == 'io_init') {
+				self.io_init = true;
+			}
 
 			if (self.hooks_entryHandlers[entryName]) {
 				self.hooks_entryHandlers[entryName].call(self, entryMap);
