@@ -1,1 +1,1 @@
-module.exports = ['ignored'];
+module.exports = 'ignored';
