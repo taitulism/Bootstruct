@@ -15,11 +15,11 @@ var createCtrlClass    = require('./lib/ctrl');
 var createIOClass      = require('./lib/io');
 
 
-function App (webRoot) {
+function App (webRoot, debug) {
 	this.ctrls = Object.create(null);
 
-	if (this.resolveNames(webRoot)) { // Deal Breaker
-		this.initPrototypes();
+	if (this.resolveNames(webRoot)) {
+		this.initPrototypes(debug);
 
 		this.parseHooks();
 
@@ -44,8 +44,9 @@ appProto.resolveNames = function (webRoot) {
 	webRoot = webRoot || 'www';
 	hooks   = webRoot + '_hooks';
 
-	this.webRoot = resolve(webRoot);
-	this.hooks   = resolve(hooks);
+	this._webRoot = webRoot;
+	this.webRoot  = resolve(webRoot);
+	this.hooks    = resolve(hooks);
 
 	return exists(this.webRoot);
 };
@@ -80,14 +81,14 @@ appProto.setServerHandler = function (fn) {
 
 
 
-appProto.initPrototypes = function () {
+appProto.initPrototypes = function (debug) {
 	this.ignoreList      = [];
 	this.ignoreStartWith = ['_', '.'];
 
 	this.webRoot_entryHandlers = getWebRootHandlers();
 	this.hooks_entryHandlers   = getHooksHandlers();
 
-	this.Ctrl       = createCtrlClass();
+	this.Ctrl       = createCtrlClass(debug);
 	this.IO         = createIOClass();
 	this.ctrl_proto = this.Ctrl.prototype;
 	this.io_proto   = this.IO.prototype;
@@ -178,8 +179,8 @@ appProto.die = function () {
 
 
 // -----------------------------------------
-module.exports = function create (webRoot) {
-	var app = new App(webRoot);
+module.exports = function create (webRoot, debug) {
+	var app = new App(webRoot, debug);
 
 	return app.serverHandler;
 };
