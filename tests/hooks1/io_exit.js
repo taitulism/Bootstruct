@@ -1,4 +1,4 @@
 module.exports = function (io) {
-	io.res.write('IGNORE_FAIL');
+	io.exited = 'io_exit';
 	io.next();
 };

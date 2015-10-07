@@ -1,5 +1,5 @@
 module.exports = function (io) {
-	io.res.end(this.global.item);
+	io.res.write(this.global.item);
 
 	io.next();
 };

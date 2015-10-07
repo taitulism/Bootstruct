@@ -1,5 +1,4 @@
 module.exports = function (io) {
-
-	io.res.end(io.initiated);
-
+	io.res.write(io.initiated);
+	io.next();
 };
