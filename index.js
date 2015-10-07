@@ -16,7 +16,7 @@ var createIOClass      = require('./lib/io');
 
 
 function App (webRoot, debug) {
-	this.ctrls = Object.create(null);
+	// this.ctrls = Object.create(null);
 
 	if (this.resolveNames(webRoot)) {
 		this.initPrototypes(debug);

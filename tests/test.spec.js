@@ -279,11 +279,15 @@ describe('Bootstruct', function() {
 
 
 		it('should pass ignore test', function (done) {
-			makeRequest('/ignored', 'ignore', done, server);
+			makeRequest('/ignored', '', done, server);
 		});
 
 		it('should pass io_init test', function (done) {
 			makeRequest('/io_init', 'io_init', done, server);
+		});
+
+		it('should pass io_exit test', function (done) {
+			makeRequest('/io_exit', 'io_exit', done, server);
 		});
 
 		it('should pass ctrl_proto test', function (done) {
@@ -323,7 +327,7 @@ describe('Bootstruct', function() {
 
 
 		it('should pass all tests', function (done) {
-			makeRequest('/', '[io_init-c_pro1-c_pro2-io_pro1-io_pro2-pub-view-item]', done, server);
+			makeRequest('/', '[io_init-c_pro1-c_pro2-io_pro1-io_pro2-pub-view-item]exit', done, server);
 		});
 
 		it('should pass sub_methods 1 test', function (done) {
