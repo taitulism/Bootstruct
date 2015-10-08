@@ -102,7 +102,7 @@ Example
 ```
 "jade" is a template engine. `.jade` files need to be compiled before served as HTML.
 
-Let's say we want the parser to do something every time it "hits" a `Views` folder: compile the files within (as jade temaplates) and set the result on the controller the `Views` folder was found in.
+Let's say we want the parser to do something every time it hits a `Views` folder: compile the files within (as jade temaplates) and set the result on the controller the `Views` folder was found in.
 
 The `views` entry handler file could look like this:
 ```js
@@ -114,7 +114,7 @@ The `views` entry handler file could look like this:
 		 /*
 		 |	"this" refers to the "RC"
 		 |
-		 |	"entryMap" object is:
+		 |	"entryMap" object contains:
 		 |  {
 		 |		path: 'path/to/www/Views',
 		 |		type: 0,
@@ -137,28 +137,31 @@ The `views` entry handler file could look like this:
 
 		 /*
 		 | loop through the templates, compile them and 
-		 | populate "views"
+		 | populate "views" on the controller
 		*/
 		for (tplName in entryMap.entries) {
+			// read the template
 			template = fs.readFileSync( entryMap.entries[tplName].path );
 
-			// pseudo code to remove the ".jade" extension
+			// pseudo code to remove the ".jade" extension.
+			// to store it on the controller without the '.jade' extension.
 			tplName = removeExt(tplName);
 
+			// compile the template
 			this.views[tplName] = jade.compile(template);
 		}
 	};
 ```
 
-To serve the compiled templates (HTML now) you can use `this.views[name]` from your `www/index.js` file.
+To serve the compiled templates (HTML) you can use `this.views[tplName]` from your `www/index.js` file.
 ```js
 	// www/index.js
-	module.exports = function (io) {
-		if (io.params[0] === 'contactUs') {
-			io.res.end(this.views['contactForm']());
+	module.exports = function (io, action) {
+		if (action == 'contactUs') { // request: '/contactUs'
+			io.res.end( this.views['contactForm']() );
 		}
 		else {
-			io.res.end(this.views['home']());
+			io.res.end( this.views['home']() );
 		}
 	};
 ```
