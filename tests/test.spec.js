@@ -51,7 +51,7 @@ describe('Bootstruct', function() {
 
 
 
-	
+
 	describe('Method-chain test', function() {
 		var app    = bts('./tests/Method');
 		var server = http.createServer(app);
@@ -63,7 +63,7 @@ describe('Bootstruct', function() {
 		afterEach(function() {
 			server.close();
 		});
-		
+
 
 		it('should pass', function (done) {
 			makeRequest('/a1', 'preapost', done, server);
@@ -92,7 +92,7 @@ describe('Bootstruct', function() {
 		afterEach(function() {
 			server.close();
 		});
-		
+
 
 		it('should pass', function (done) {
 			makeRequest('/a/b1', 'prebpost', done, server);
@@ -121,7 +121,7 @@ describe('Bootstruct', function() {
 		afterEach(function() {
 			server.close();
 		});
-		
+
 		it('should pass', function (done) {
 			makeRequest('/', 'b4getftr', done, server, 'get');
 		});
@@ -196,7 +196,7 @@ describe('Bootstruct', function() {
 		afterEach(function() {
 			server.close();
 		});
-		
+
 		it('should pass', function (done) {
 			makeRequest('/a/b/c/d/e', 'a,b,c,d,e|b,c,d,e|c,d,e|c,d,e|c,d,e|c,d,e', done, server);
 		});
@@ -215,7 +215,7 @@ describe('Bootstruct', function() {
 		afterEach(function() {
 			server.close();
 		});
-		
+
 
 		it('should pass', function (done) {
 			makeRequest('/', 'figal', done, server, 'get');
