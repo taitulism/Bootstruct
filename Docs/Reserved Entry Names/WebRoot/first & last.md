@@ -1,6 +1,6 @@
 first & last
 ------------
-**Chain**: Both.
+**Chain**: All.
 
 Another two reserved entry names. When exist, they always get called whether the controller is the target-controller or a parent. `first` is the first thing controllers run when an `io` checks-in and `last` is the very last thing to run.
 

@@ -76,7 +76,7 @@ appProto.setServerHandler = function (fn) {
 		}
 	}
 
-	this.serverHandler.app = this;
+	this.serverHandler.global = this;
 };
 
 

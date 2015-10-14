@@ -72,4 +72,4 @@ Our `post.js` file does a lot of stuff: validates, sanitizes, sends email, write
 │   ├── put.js
 │   └── delete.js
 ```
-Just remember to export your function from an `index.js` file. In this case the `index.js` is NOT parsed as the reserved entry name, it's just what Node is looking for when `require`ing a folder. From that `index.js` file you can `require` anything.
+Just remember to export your function from an `index.js` file. In this case the `index.js` is NOT parsed as the reserved entry name, it's just what Node is looking for when `require`-ing a folder. From that `index.js` file you can `require` anything.

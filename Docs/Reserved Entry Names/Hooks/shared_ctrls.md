@@ -10,7 +10,7 @@ Let's say you want to run the same test over all of your controllers when addres
 
 You can create a shared `test` controller.
 
-To create a shared controller, create in your [hooks folder](#hooks) a `shared_ctrls` folder.
+To create a shared controller, create in your [hooks folder](https://github.com/taitulism/Bootstruct/blob/master/Docs/Hooks.md) a `shared_ctrls` folder.
 
 ```
 ├── myProject

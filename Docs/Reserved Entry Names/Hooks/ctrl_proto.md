@@ -9,7 +9,7 @@ The `Ctrl` prototype is extendable. You can create your own methods and use them
 
 Let's say you want to be able to log some request data to a file. Create on the `Ctrl` prototype a `log2file` method that accepts an `io` as an argument and call it when you need it with `this.log2file(io)`.
 
-To extend the `Ctrl` prototype, create in your [hooks folder](#hooks) an `ctrl_proto.js` file or an `ctrl_proto` folder.
+To extend the `Ctrl` prototype, create in your [hooks folder](https://github.com/taitulism/Bootstruct/blob/master/Docs/Hooks.md) an `ctrl_proto.js` file or an `ctrl_proto` folder.
 
 **File**  
 ```
