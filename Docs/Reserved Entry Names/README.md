@@ -63,7 +63,7 @@ Method-chain
 
 Hooks Folder Reserved Names
 ===========================
-Bootstruct provides you with hooks to some key points in its architecture (on init). You can extend prototypes, add your own reserved entry names and more.
+Bootstruct provides you with hooks to some key points in its architecture (on init). You can extend prototypes, add your own reserved entry names and more. Read about [Bootstruct's hooks](https://github.com/taitulism/Bootstruct/blob/master/Docs/Hooks.md)
 
 * [ignore](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved-Entry-Names/Hooks/ignore.md)
 * [io_init](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved-Entry-Names/Hooks/io_init.md)
