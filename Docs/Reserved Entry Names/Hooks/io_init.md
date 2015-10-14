@@ -7,7 +7,7 @@ The `IO` class is one of the main components in Bootstruct. `io` instances are c
 
 You can write a function that will get called for any request on the `io` initialization, before the `io` checks-in at your `RC` (before `RC`'s `first` method). It's the very first code to run for any request. This way you can design the `io` to hold all the properties you'll need in your app. For example, having an `.IP` property or `.isLoggedIn` on your `io`s.
 
-To do that, create in your [hooks folder](#hooks) an `io_init.js` file or an `io_init` folder.
+To do that, create in your [hooks folder](https://github.com/taitulism/Bootstruct/blob/master/Docs/Hooks.md) an `io_init.js` file or an `io_init` folder.
 
 **File**  
 ```

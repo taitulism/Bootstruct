@@ -11,7 +11,10 @@ Get Started
 3. Unlike other frameworks, Bootstruct doesn't create a server for you.	In your new project folder, create a `server-index.js` file with the following content: 
 	```js
 		var http = require('http');
-		var app  = require('bootstruct')();  // <-- require and init
+		
+		var boots = require('bootstruct');
+
+		var app = boots();
 
 		http.createServer(app).listen(1001, function(){
 			console.log('Listening on port 1001');
@@ -20,7 +23,7 @@ Get Started
 
 4. Create a `www` folder. `www` is the web-root folder's default name (borrowed from other platforms). To change it you can start Bootstruct with:
 	```js
-		var app = require('bootstruct')('yourFolderName');
+		var app = boots('yourFolderName');
 	```
 
 5. This is how your project folder tree should look like:
@@ -48,7 +51,7 @@ Copy the following to `index.js`:
 ```js
 module.exports = function (io) {
 	
-	io.res.end('hello world');
+	io.res.end('hello beautiful world');
 
 };
 ```
@@ -65,27 +68,23 @@ Try requesting:
 
 When initialized, Bootstruct parses your web-root folder (recursively) and translates folders to URL controllers (starting with the web-root folder itself as the root-controller) and files to their methods.
 
-Your `www` folder becomes your app's root-controller and `index.js` is its only method so any request will be responded with "hello world".
+Your `www` folder becomes your app's root-controller and `index.js` is its only method so ANY request will be responded with "hello beautiful world".
 
-The `io` argument is an object that holds the native `request`/`response` so `io.res.end` should be clear now ([if not](link to Node docs))
+The `io` argument is an object that holds the native `request`/`response` so `io.res.end` should be clear now. ([If not](https://github.com/taitulism/Bootstruct/blob/master/Docs/README.md)).
 
-
->**NOTE**: IO.prototype is extendable. Read: io_proto hook.
-
-
-Let's add another file: `greet.js`
+Let's add another method (a file): `greet.js`
 ```
 ├── www
-│   ├── index.js
-│   └── greet.js
+│   ├── greet.js
+│   └── index.js
 ```
 
 `greet.js` contents:
 ```js
-module.exports = function (io) {
+module.exports = function (io, who) {
 	
-	if (io.params[0]) {
-		io.res.end('hey ' + io.params[0]);
+	if (who) {
+		io.res.end('hey ' + who);
 	}
 	else {
 		io.res.end('hello everyone');
@@ -94,48 +93,55 @@ module.exports = function (io) {
 };
 ```
 
-Request/Response:
-1. /greet     => hello everyone
-2. /greet/you => hey you
+Request => Response:
+```
+/greet     => hello everyone
+/greet/you => hey you
+```
 
 Our "www" controller now has another method named "greet".
 
-`io.params` is an array, the URL pathname split by slashes. On a request to `/A/B/C`, `io.params` will hold `['A','B','C']`.
+Bootstruct splits the URL pathname by slashes. On a request to `/A/B/C`, an array is created and holds `['A','B','C']`.
 
->**NOTE**: Bootstruct ignores trailing slashes in URLs and merges repeating slashes (e.g. `/A//B//` is treated like `/A/B`).
+Bootstruct takes out this array's first item if it means something (i.e. stands for a controller name or a method name). In this case `greet` is taken out so we left with the `who` we want to greet.
 
+>**NOTE**: The first argument is always an `io`.
 
-
-
-Now let's create a folder named "A" and another "index.js" file inside it:
+Now let's create a file named "first.js":
 ```
 ├── www
-│   ├── A
-│   │   └── index.js
-│   ├── index.js
-│   └── greet.js
+│   ├── first.js
+│   ├── greet.js
+│   └── index.js
 ```
 
-`www/A/index.js` contents:
+`www/first.js` contents:
 ```js
 module.exports = function (io) {
 	
-	io.res.end(this.id);
+	io.res.write('first! ');
+
+	io.next();
 
 };
 ```
 
-Request: `/A`  
-Response: '/a'
+Request => Response:
+```
+/          => first! hello beautiful world
+/whatever  => first! hello beautiful world
+/first     => first! hello beautiful world
+/greet     => first! hello everyone
+/greet/you => first! hey you
+```
 
-By creating the "A" folder, we've actually created a controller, a sub-controller to our root-controller ("www"). The "this" keyword in methods refers to their holding controller object.
+`first` is one of Bootstruct's reserved names for files and folders. `first`'s exported function will run before the other two (`index` and `greet`). Because `first` is a reserved name, it won't be parsed as a method like `greet` and requesting `/first` will be handled by `www/index.js` just like requesting `/whatever`.
 
-try logging `this.id` in `www/index.js`.
-
+`io.next()` is called to move the `io` forward in the chain. You call it at the end of your methods.
 
 
 
 
 What's next?
 ------------
-This page describes Bootstruct's most basic behavior. Find out more about flow control and how to customize Bootstruct. [Read the Docs](#docs).
+You've just tasted Bootstruct's basics. Find out more about Bootstruct's main components (app, controllers, io), how to control your request flow (with Bootstruct's reserved entry names) and how to extend Bootstruct and use your own API (using hooks). [Read The Fabulous Manual](https://github.com/taitulism/Bootstruct/blob/master/Docs/README.md).

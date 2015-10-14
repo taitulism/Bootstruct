@@ -11,7 +11,7 @@ Let's say you are building a very friendly server: by requesting any of its path
 
 You can create a shared `help` method.
 
-To create a shared method, create in your [hooks folder](#hooks) a `shared_methods.js` file or a `shared_methods` folder.
+To create a shared method, create in your [hooks folder](https://github.com/taitulism/Bootstruct/blob/master/Docs/Hooks.md) a `shared_methods.js` file or a `shared_methods` folder.
 
 **File**  
 ```

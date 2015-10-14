@@ -7,7 +7,7 @@ The `IO` class is one of the main components in Bootstruct. `io` instances are c
 
 You can write a function that will get called for any request on the `io`'s way out, after the `RC`'s `last` method. It's the very last code to run for any request. This can be used to set a default ending response like a "404 - not found".
 
-To do that, create in your [hooks folder](#hooks) an `io_exit.js` file or an `io_exit` folder.
+To do that, create in your [hooks folder](https://github.com/taitulism/Bootstruct/blob/master/Docs/Hooks.md) an `io_exit.js` file or an `io_exit` folder.
 
 **File**  
 ```

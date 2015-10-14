@@ -18,7 +18,7 @@ In this case `_myModules` is not parsed as a controller and you cannot reach it 
 
 An underscore in your entry names is generally not a pretty sight.
 
-You can add "myModules" (without the underscore) to the parser's ignore list. You do that by creating a file named `ignore.js` in your [hooks folder](#hooks) and exporting your ignored names:
+You can add "myModules" (without the underscore) to the parser's ignore list. You do that by creating a file named `ignore.js` in your [hooks folder](https://github.com/taitulism/Bootstruct/blob/master/Docs/Hooks.md) and exporting your ignored names:
 ```
 ├── myProject
 │   ├── node_modules
