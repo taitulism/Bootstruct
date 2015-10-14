@@ -15,7 +15,7 @@ Table of Contents
 	* [URL parameters](#url-parameters)
 	* [Extend Bootstruct](#extend-bootstruct)
 * More Docs
-	* [Reserved Entry Names](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved-Entry-Names/README.md)
+	* [Reserved Entry Names](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/README.md)
 	* [Extending Bootstruct](https://github.com/taitulism/Bootstruct/blob/master/Docs/Hooks.md)
 
 
@@ -93,7 +93,7 @@ The **"A"** controller is **the target**-controller for requests to `/A` (and `/
 The **"A"** controller is **a parent**-controller for requests to `/A/B` (and `/A/B/whatever`).  
 For requests to `/A/B/C` (and `/A/B/C/whatever`), the **"B"** controller is **the target**-controller and `C.js` is its method. 
 
-Controllers have three chains of methods they execute in each case: a target-chain, a parent-chain and a method-chain. These chains are arrays of functions (created on init) and when you name an entry with one of [Bootstruct's reserved names](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved-Entry-Names/README.md) you actually mount its exported function on one of these chains.  
+Controllers have three chains of methods they execute in each case: a target-chain, a parent-chain and a method-chain. These chains are arrays of functions (created on init) and when you name an entry with one of [Bootstruct's reserved names](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/README.md) you actually mount its exported function on one of these chains.  
 When a request checks-in at a controller, the controller routes the request through one of its chains according to its role (parent/target/method).
 
 >**NOTE**: All methods get called with an `io` as their first argument.
@@ -115,7 +115,7 @@ As `before_verb` and `after_verb` run in the target-chain before and after any v
 
 The "sub-ctrl" part is where the recursion happens, where an `io` checks in and out at controllers, parent -> child -> parent. The child, a controller itself, has its own chains and child-controller (sub-controllers).
 
-See [Bootstruct's reserved names](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved-Entry-Names/README.md)
+See [Bootstruct's reserved names](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/README.md)
 
 
 
