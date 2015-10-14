@@ -3,8 +3,8 @@ Bootstruct Docs
 
 Table of Contents
 -----------------
-* [Main Page (Overview)](#main-page)
-* [Get Started](#get-started)
+* [Main Page (Overview)](https://github.com/taitulism/Bootstruct/blob/master/README.md)
+* [Get Started](https://github.com/taitulism/Bootstruct/blob/master/Docs/Get Started.md)
 * Docs (this page)
 	* [Terminology](#terminology)
 	* [General](#general)
