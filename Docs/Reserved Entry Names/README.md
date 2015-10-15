@@ -25,38 +25,38 @@ The following image describes a controller's chains (similar to the one shown in
 
 All chains
 ----------
-* [first](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved-Entry-Names/WebRoot/first.md)
-* [last](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved-Entry-Names/WebRoot/last.md)
+* [first](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/WebRoot/first.md)
+* [last](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/WebRoot/last.md)
 
 
 
 
 Target-chain
 ------------
-* [before_verb / index / all](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved-Entry-Names/WebRoot/index.md)
-* [get](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved-Entry-Names/WebRoot/get.md)
-* [post](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved-Entry-Names/WebRoot/post.md)
-* [put](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved-Entry-Names/WebRoot/put.md)
-* [delete](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved-Entry-Names/WebRoot/delete.md)
-* [no_verb](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved-Entry-Names/WebRoot/no_verb.md)
-* [after_verb / all_done](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved-Entry-Names/WebRoot/after_verb.md)
-* [verbs](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved-Entry-Names/WebRoot/verbs.md) (EXCEPTION: not a method)
+* [before_verb / index / all](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/WebRoot/index.md)
+* [get](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/WebRoot/get.md)
+* [post](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/WebRoot/post.md)
+* [put](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/WebRoot/put.md)
+* [delete](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/WebRoot/delete.md)
+* [no_verb](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/WebRoot/no_verb.md)
+* [after_verb / all_done](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/WebRoot/after_verb.md)
+* [verbs](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/WebRoot/verbs.md) (EXCEPTION: not a method)
 
 
 
 
 Parent-chain
 ------------
-* [pre_sub](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved-Entry-Names/WebRoot/pre_sub.md)
-* [post_sub](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved-Entry-Names/WebRoot/post_sub.md)
+* [pre_sub](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/WebRoot/pre_sub.md)
+* [post_sub](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/WebRoot/post_sub.md)
 
 
 
 
 Method-chain
 ------------
-* [pre_method](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved-Entry-Names/WebRoot/pre_method.md)
-* [post_method](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved-Entry-Names/WebRoot/post_method.md)
+* [pre_method](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/WebRoot/pre_method.md)
+* [post_method](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/WebRoot/post_method.md)
 
 
 
@@ -65,11 +65,11 @@ Hooks Folder Reserved Names
 ===========================
 Bootstruct provides you with hooks to some key points in its architecture (on init). You can extend prototypes, add your own reserved entry names and more. Read about [Bootstruct's hooks](https://github.com/taitulism/Bootstruct/blob/master/Docs/Hooks.md).
 
-* [ignore](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved-Entry-Names/Hooks/ignore.md)
-* [io_init](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved-Entry-Names/Hooks/io_init.md)
-* [io_exit](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved-Entry-Names/Hooks/io_exit.md)
-* [io_proto](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved-Entry-Names/Hooks/io_proto.md)
-* [ctrl_proto](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved-Entry-Names/Hooks/ctrl_proto.md)
-* [entry_handlers](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved-Entry-Names/Hooks/entry_handlers.md)
-* [shared_methods](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved-Entry-Names/Hooks/shared_methods.md)
-* [shared_ctrls](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved-Entry-Names/Hooks/shared_ctrls.md)
+* [ignore](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/Hooks/ignore.md)
+* [io_init](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/Hooks/io_init.md)
+* [io_exit](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/Hooks/io_exit.md)
+* [io_proto](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/Hooks/io_proto.md)
+* [ctrl_proto](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/Hooks/ctrl_proto.md)
+* [entry_handlers](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/Hooks/entry_handlers.md)
+* [shared_methods](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/Hooks/shared_methods.md)
+* [shared_ctrls](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/Hooks/shared_ctrls.md)
