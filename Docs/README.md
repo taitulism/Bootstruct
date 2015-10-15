@@ -278,7 +278,7 @@ Bootstruct provides you with hooks to these classes and other main parts in its 
 
 * You can add your own [reserved entry names](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/README.md) on the parser and handle them. Cache the files when a "public" folder is found, precompile a "views" folder etc.
 
-* You can create shared methods and shared controllers instead of copy-pasting the same files in every folder (when you need the same functionality in more than one place). A shared `test` controller will allow: `/anyController/test`).
+* You can create shared methods and shared controllers instead of copy-pasting the same files in every folder (when you need the same functionality in more than one place). A shared `test` method/controller will allow: `/anyController/test`).
 
 * You can run some code on `io` initialization. This is the very first thing to run on each request, before the `io` checks-in at your app. Set some request related props like `io.ip` or `io.isLoggedIn` ready for use in your methods. You can create methods on the `io.prototype` (another hook) and invoke them on `io` initialization.
 

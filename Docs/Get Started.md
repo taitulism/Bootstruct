@@ -142,6 +142,14 @@ Request => Response:
 
 
 
+Debugging
+---------
+Bootstruct can be initiated with a second argument (the first is your web-root folder name e.g. "www"). The second argument is a debug-mode flag (default: false). Start your app with a second truthy value argument to see logs (in console) of the `io`'s different checkpoints along its way:
+```js
+	var app = boots('www', true);
+```
+
+
 What's next?
 ------------
 You've just tasted Bootstruct's basics. Find out more about Bootstruct's main components (app, controllers, io), how to control your request flow (with Bootstruct's reserved entry names) and how to extend Bootstruct and use your own API (using hooks). [Read The Fabulous Manual](https://github.com/taitulism/Bootstruct/blob/master/Docs/README.md).
