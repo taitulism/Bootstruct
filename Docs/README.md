@@ -272,19 +272,19 @@ Controllers are nested inside each other and they all have a reference to the ap
 
 Bootstruct provides you with hooks to these classes and other main parts in its architecture. These hooks allow you to create your own API over Bootstruct's infrastructure.
 
-* You can add methods to the controller's prototype and the `io` prototype. Create a `this.kick(io)` or a `io.getIP()` methods.
+* You can add methods to the `Ctrl`'s prototype and the `IO` prototype. Create a `this.kick(io)` or a `io.getIP()` methods.
 
-* You can load your own stuff on the `app` object (`this.global` A.K.A the `app` instance) and access them from you controllers and methods. A database connection, a reference to the server, a log-to-file function or whatever.
+* You can load your own stuff on the `app` object (`this.global` A.K.A the `app` instance) and access them from your controllers and methods. A database connection, a reference to the server, a log-to-file function or whatever.
 
-* You can add your own reserved entry names on the parser and handle them. Cache the files when a 'public' folder is found, precompile a `views` folder etc.
+* You can add your own [reserved entry names](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/README.md) on the parser and handle them. Cache the files when a "public" folder is found, precompile a "views" folder etc.
 
-* You can create shared methods and shared controllers instead of copy-pasting the same files in every folder (when you need the same functionality in more than one folder). A shared `test` controller will allow: `/anyController/test`).
+* You can create shared methods and shared controllers instead of copy-pasting the same files in every folder (when you need the same functionality in more than one place). A shared `test` controller will allow: `/anyController/test`).
 
 * You can run some code on `io` initialization. This is the very first thing to run on each request, before the `io` checks-in at your app. Set some request related props like `io.ip` or `io.isLoggedIn` ready for use in your methods. You can create methods on the `io.prototype` (another hook) and invoke them on `io` initialization.
 
 * You can run some code when the `io` checks-out from your app and choose what to do at the end of the request cycle (end the response? log it? pass it to another framework?).
 
-With these hooks you can create yourself your own set of tools
+With these hooks you can create yourself your own set of tools and use Bootstruct as a platform or infrastructure with your own syntax.
 
 Read more about [Bootstruct Hooks](https://github.com/taitulism/Bootstruct/blob/master/Docs/Hooks.md).
 
