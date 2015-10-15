@@ -25,12 +25,11 @@ Terminology
 -----------
 Before we start, let's clarify some terms used in these docs:
 
-* **RC**:  
-The Root-Controller. The main controller parsed from the web-root folder.
-* An **Entry**:  
-Either a file or a folder. Folder's **entries** are the files and folders inside it. This term is used because from a certain aspect the type of an entry (a file or a folder) doesn't matter: `require('path/to/entry')`.
-* An HTTP **Verb**:  
-From Google: "The primary or most-commonly-used HTTP verbs (or methods, as they are properly called) are POST, GET, PUT, and DELETE". The word "method" is used in these docs in the context of a function so "HTTP verbs" is used instead of "HTTP methods".
+* **RC**: The Root-Controller. The main controller parsed from the web-root folder.
+
+* An **Entry**: Either a file or a folder. Folder's **entries** are the files and folders inside it. This term is used because from a certain aspect the type of an entry (a file or a folder) doesn't matter: `require('path/to/entry')`.
+
+* An HTTP **Verb**: From Google: *"The primary or most-commonly-used HTTP verbs (or methods, as they are properly called) are POST, GET, PUT, and DELETE"*. The word "method" is used in these docs in the context of a function so "HTTP verbs" is used instead of "HTTP methods".
 
 >**NOTE**: You can extend Bootstruct to support more HTTP verbs.
 
@@ -105,7 +104,7 @@ The following image describes these chains: The method-chain is on the right, th
 
 All of the three chains start with `first` and end with `last` methods. These are the very first and last methods a controller (who has them) would call, regardless of its role per request.
 
-The principle is pretty simple: **each chain has a center, its main point, and you can run some code before and after that main point.**
+The principle is pretty simple: **each chain has a center, which is its main point, and you can run some code before and after that main point.**
 
 The target-chain is all about the verbs (GET, POST, PUT, DELETE). They are for controllers' core functionality (see wiki: [CRUD](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete)). 
 
@@ -273,11 +272,16 @@ Controllers are nested inside each other and they all have a reference to the ap
 
 Bootstruct provides you with hooks to these classes and other main parts in its architecture. These hooks allow you to create your own API over Bootstruct's infrastructure.
 
-* You can add methods to the controller's prototype and the `io` prototype. Create a `this.kick(io)` or a `io.getIP()`.
-* You can load your own stuff on the `app` object (`this.global` A.K.A the `app` instance) and access them from you controllers and methods. A database connection, a reference to the server, a log-to-file function or whatever.  
-* You can add your own reserved entry names on the parser and handle them. Cache the files when a 'public' folder is found, precompile a `views` folder etc.  
-* You can create shared methods and shared controllers instead of copy-pasting the same files in every folder (when you need the same functionality in more than one folder). A shared `test` controller will allow: `/anyController/test`).  
-* You can run some code on `io` initialization. This is the very first thing to run on each request, before the `io` checks-in at your app. Set some request related props like `io.ip` or `io.isLoggedIn` ready for use in your methods. You can create methods on the `io.prototype` (another hook) and invoke them on `io` initialization.  
+* You can add methods to the controller's prototype and the `io` prototype. Create a `this.kick(io)` or a `io.getIP()` methods.
+
+* You can load your own stuff on the `app` object (`this.global` A.K.A the `app` instance) and access them from you controllers and methods. A database connection, a reference to the server, a log-to-file function or whatever.
+
+* You can add your own reserved entry names on the parser and handle them. Cache the files when a 'public' folder is found, precompile a `views` folder etc.
+
+* You can create shared methods and shared controllers instead of copy-pasting the same files in every folder (when you need the same functionality in more than one folder). A shared `test` controller will allow: `/anyController/test`).
+
+* You can run some code on `io` initialization. This is the very first thing to run on each request, before the `io` checks-in at your app. Set some request related props like `io.ip` or `io.isLoggedIn` ready for use in your methods. You can create methods on the `io.prototype` (another hook) and invoke them on `io` initialization.
+
 * You can run some code when the `io` checks-out from your app and choose what to do at the end of the request cycle (end the response? log it? pass it to another framework?).
 
 With these hooks you can create yourself your own set of tools
