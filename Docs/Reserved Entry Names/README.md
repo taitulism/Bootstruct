@@ -25,8 +25,8 @@ The following image describes a controller's chains (similar to the one shown in
 
 All chains
 ----------
-* [first](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/WebRoot/first.md)
-* [last](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/WebRoot/last.md)
+* [first](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/WebRoot/first & last.md)
+* [last](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/WebRoot/first & last.md)
 
 
 
