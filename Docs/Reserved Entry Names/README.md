@@ -34,10 +34,10 @@ All chains
 Target-chain
 ------------
 * [before_verb / index / all](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/WebRoot/index.md)
-* [get](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/WebRoot/get.md)
-* [post](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/WebRoot/post.md)
-* [put](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/WebRoot/put.md)
-* [delete](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/WebRoot/delete.md)
+* [get](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/WebRoot/get post put delete.md)
+* [post](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/WebRoot/get post put delete.md)
+* [put](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/WebRoot/get post put delete.md)
+* [delete](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/WebRoot/get post put delete.md)
 * [no_verb](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/WebRoot/no_verb.md)
 * [after_verb / all_done](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/WebRoot/after_verb.md)
 * [verbs](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/WebRoot/verbs.md) (EXCEPTION: not a method)
