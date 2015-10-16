@@ -47,16 +47,16 @@ Target-chain
 
 Parent-chain
 ------------
-* [pre_sub](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/WebRoot/pre_sub.md)
-* [post_sub](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/WebRoot/post_sub.md)
+* [pre_sub](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/WebRoot/pre-post sub.md)
+* [post_sub](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/WebRoot/pre-post sub.md)
 
 
 
 
 Method-chain
 ------------
-* [pre_method](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/WebRoot/pre_method.md)
-* [post_method](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/WebRoot/post_method.md)
+* [pre_method](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/WebRoot/pre-post method.md)
+* [post_method](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/WebRoot/pre-post method.md)
 
 
 
