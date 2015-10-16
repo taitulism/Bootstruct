@@ -63,13 +63,13 @@ Method-chain
 
 Hooks Folder Reserved Names
 ===========================
-Bootstruct provides you with hooks to some key points in its architecture (on init). You can extend prototypes, add your own reserved entry names and more. Read about [Bootstruct's hooks](https://github.com/taitulism/Bootstruct/blob/master/Docs/Hooks.md).
+Bootstruct provides you with hooks to some key points in its architecture (on init). You can extend prototypes, add your own reserved entry names and more. Read about [Bootstruct's hooks](../Hooks.md).
 
 * [ignore](./Hooks/ignore.md)
-* [io_init](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/Hooks/io_init.md)
-* [io_exit](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/Hooks/io_exit.md)
-* [io_proto](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/Hooks/io_proto.md)
-* [ctrl_proto](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/Hooks/ctrl_proto.md)
-* [entry_handlers](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/Hooks/entry_handlers.md)
-* [shared_methods](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/Hooks/shared_methods.md)
-* [shared_ctrls](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/Hooks/shared_ctrls.md)
+* [io_init](./Hooks/io_init.md)
+* [io_exit](./Hooks/io_exit.md)
+* [io_proto](./Hooks/io_proto.md)
+* [ctrl_proto](./Hooks/ctrl_proto.md)
+* [entry_handlers](./Hooks/entry_handlers.md)
+* [shared_methods](./Hooks/shared_methods.md)
+* [shared_ctrls](./Hooks/shared_ctrls.md)
