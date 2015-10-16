@@ -17,7 +17,7 @@ One exception is the `verbs` name.
 
 >**NOTE**: Reserved names with under_scores have a dash-version and a camelCased version as synonyms e.g. `no_verb`/`no-verb`/`noVerb`.
 
-The following image describes a controller's chains (similar to the one shown in the [Docs main page](https://github.com/taitulism/Bootstruct/blob/master/README.md)): The target-chain is on the right, the parent-chain is on the left and the method-chain is in the middle.
+The following image describes a controller's chains (explained in the [docs main page](https://github.com/taitulism/Bootstruct/blob/master/README.md#controllers-flow)): The target-chain is in the middle, the parent-chain is on the left and the method-chain is on the right.
 ![Controller Chart-Flow](https://raw.githubusercontent.com/taitulism/Bootstruct/master/Docs/controller-flowchart.png)
 
 
