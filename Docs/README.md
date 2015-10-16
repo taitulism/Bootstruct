@@ -15,8 +15,8 @@ Table of Contents
 	* [URL parameters](#url-parameters)
 	* [Extend Bootstruct](#extend-bootstruct)
 * More Docs
-	* [Reserved Entry Names](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/README.md)
-	* [Extending Bootstruct](https://github.com/taitulism/Bootstruct/blob/master/Docs/Hooks.md)
+	* [Reserved Entry Names](./Reserved Entry Names/README.md)
+	* [Extending Bootstruct](./Docs/Hooks.md)
 
 
 
