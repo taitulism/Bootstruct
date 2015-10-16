@@ -61,8 +61,8 @@ Start your server up:
 	$ node server-index.js
 ```
 
-Try requesting:
-1. /
+Try requesting:  
+1. /  
 2. /whatever
 
 
@@ -70,7 +70,7 @@ When initialized, Bootstruct parses your web-root folder (recursively) and trans
 
 Your `www` folder becomes your app's root-controller and `index.js` is its only method so ANY request will be responded with "hello beautiful world".
 
-The `io` argument is an object that holds the native `request`/`response` so `io.res.end` should be clear now. ([If not](./README.md)).
+The `io` argument is an object that holds the native `request`/`response` so `io.res.end` should be clear now.
 
 Let's add another method (a file): `greet.js`
 ```
