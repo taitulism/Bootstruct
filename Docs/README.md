@@ -16,7 +16,7 @@ Table of Contents
 	* [Extend Bootstruct](#extend-bootstruct)
 * More Docs
 	* [Reserved Entry Names](./Reserved Entry Names/README.md)
-	* [Extending Bootstruct](./Docs/Hooks.md)
+	* [Extending Bootstruct](./Hooks.md)
 
 
 
