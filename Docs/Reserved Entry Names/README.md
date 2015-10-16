@@ -26,7 +26,7 @@ The following image describes a controller's chains (explained in the [docs main
 All chains
 ----------
 * [first](./WebRoot/first & last.md)
-* [last](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/WebRoot/first & last.md)
+* [last](./WebRoot/first & last.md)
 
 
 
@@ -34,12 +34,12 @@ All chains
 Target-chain
 ------------
 * [before_verb / index / all](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/WebRoot/index.md)
-* [get](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/WebRoot/get post put delete.md)
-* [post](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/WebRoot/get post put delete.md)
-* [put](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/WebRoot/get post put delete.md)
-* [delete](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/WebRoot/get post put delete.md)
-* [no_verb](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/WebRoot/no_verb.md)
-* [after_verb / all_done](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/WebRoot/after_verb.md)
+* [get](./WebRoot/get post put delete.md)
+* [post](./WebRoot/get post put delete.md)
+* [put](./WebRoot/get post put delete.md)
+* [delete](./WebRoot/get post put delete.md)
+* [no_verb](./WebRoot/no_verb.md)
+* [after_verb / all_done](./WebRoot/after_verb.md)
 * [verbs](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/WebRoot/verbs.md) (EXCEPTION: not a method)
 
 
@@ -47,16 +47,16 @@ Target-chain
 
 Parent-chain
 ------------
-* [pre_sub](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/WebRoot/pre-post sub.md)
-* [post_sub](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/WebRoot/pre-post sub.md)
+* [pre_sub](./WebRoot/pre-post sub.md)
+* [post_sub](./WebRoot/pre-post sub.md)
 
 
 
 
 Method-chain
 ------------
-* [pre_method](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/WebRoot/pre-post method.md)
-* [post_method](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/WebRoot/pre-post method.md)
+* [pre_method](./WebRoot/pre-post method.md)
+* [post_method](./WebRoot/pre-post method.md)
 
 
 
@@ -65,7 +65,7 @@ Hooks Folder Reserved Names
 ===========================
 Bootstruct provides you with hooks to some key points in its architecture (on init). You can extend prototypes, add your own reserved entry names and more. Read about [Bootstruct's hooks](https://github.com/taitulism/Bootstruct/blob/master/Docs/Hooks.md).
 
-* [ignore](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/Hooks/ignore.md)
+* [ignore](./Hooks/ignore.md)
 * [io_init](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/Hooks/io_init.md)
 * [io_exit](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/Hooks/io_exit.md)
 * [io_proto](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/Hooks/io_proto.md)
