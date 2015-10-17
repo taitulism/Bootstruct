@@ -29,9 +29,10 @@ Before we start, let's clarify some terms used in these docs:
 
 * An **Entry**: Either a file or a folder. Folder's **entries** are the files and folders inside it. This term is used because from a certain aspect the type of an entry (a file or a folder) doesn't matter: `require('path/to/entry')`.
 
-* An HTTP **Verb**: From Google: *"The primary or most-commonly-used HTTP verbs (or methods, as they are properly called) are POST, GET, PUT, and DELETE"*. The word "method" is used in these docs in the context of a function so "HTTP verbs" is used instead of "HTTP methods".
+* An HTTP **Verb**: From Google: *"The primary or most-commonly-used HTTP verbs (or methods, as they are properly called) are POST, GET, PUT, and DELETE"*.  
+The word "method" is used in these docs in the context of a function so "HTTP verbs" is used instead of "HTTP methods".
 
->**NOTE**: You can extend Bootstruct to support more HTTP verbs.
+
 
 
 General
