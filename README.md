@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/taitulism/Bootstruct.svg?branch=master)](https://travis-ci.org/taitulism/Bootstruct)
+
 Bootstruct
 ==========
 Bootstruct is a web framework for Node, based on a folder-structure / file-name convention.
