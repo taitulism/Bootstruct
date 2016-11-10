@@ -2,3 +2,4 @@
 /playground/
 /Docs/
 npm-debug.log
+.travis.yml
