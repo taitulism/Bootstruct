@@ -135,7 +135,10 @@ module.exports = {
         "no-lone-blocks": "error",
         "no-lonely-if": "error",
         "no-loop-func": "error",
-        "no-magic-numbers": "warn",
+        "no-magic-numbers": [
+            "warn",
+            { "ignore": [0, 1] }
+        ],
         "no-mixed-operators": "error",
         "no-mixed-requires": "error",
         "no-multi-spaces": "off",
