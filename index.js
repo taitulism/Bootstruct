@@ -1,18 +1,16 @@
 'use strict';
 
 
-var appProto;
+const resolve = require('path').resolve;
+const exists  = require('fs').existsSync;
 
-var resolve = require('path').resolve;
-var exists  = require('fs').existsSync;
-
-var map                = require('./lib/utils/f2j');
-var forIn              = require('./lib/utils/forIn');
-var getHooksHandlers   = require('./lib/entryHandlers/hooks');
-var getWebRootHandlers = require('./lib/entryHandlers/ctrl');
-var normalizeEntryName = require('./lib/helpers').normalizeEntryName;
-var createCtrlClass    = require('./lib/ctrl');
-var createIOClass      = require('./lib/io');
+const map                = require('./lib/utils/f2j');
+const forIn              = require('./lib/utils/forIn');
+const getHooksHandlers   = require('./lib/entryHandlers/hooks');
+const getWebRootHandlers = require('./lib/entryHandlers/ctrl');
+const normalizeEntryName = require('./lib/helpers').normalizeEntryName;
+const createCtrlClass    = require('./lib/ctrl');
+const createIOClass      = require('./lib/io');
 
 
 function App (webRoot, debug) {
@@ -33,16 +31,11 @@ function App (webRoot, debug) {
 }
 
 
-
-appProto = App.prototype;
-
+const appProto = App.prototype;
 
 
-appProto.resolveNames = function (webRoot) {
-	var hooks;
-
-	webRoot = webRoot || 'www';
-	hooks   = webRoot + '_hooks';
+appProto.resolveNames = function (webRoot = 'www') {
+	const hooks = `${webRoot}_hooks`;
 
 	this._webRoot = webRoot;
 	this.webRoot  = resolve(webRoot);
@@ -52,33 +45,27 @@ appProto.resolveNames = function (webRoot) {
 };
 
 
-
 appProto.setServerHandler = function (fn) {
-	var self = this;
-
 	if (fn) {
 		this.serverHandler = fn;
 	}
+	else if (this.io_init) {
+		this.serverHandler = (req, res) => {
+			const io = new this.IO(req, res);
+
+			io.init(this);
+		};
+	}
 	else {
-		if (this.io_init) {
-			this.serverHandler = function (req, res) {
-				var io = new self.IO(req, res);
+		this.serverHandler = (req, res) => {
+			const io = new this.IO(req, res);
 
-				io.init(self);
-			};
-		}
-		else {
-			this.serverHandler = function (req, res) {
-				var io = new self.IO(req, res);
-
-				self.RC.checkIn(io);
-			};
-		}
+			this.RC.checkIn(io);
+		};
 	}
 
 	this.serverHandler.global = this;
 };
-
 
 
 appProto.initPrototypes = function (debug) {
@@ -95,24 +82,23 @@ appProto.initPrototypes = function (debug) {
 };
 
 
-
 appProto.addToIgnoreList = function (item) {
-	var entryHandlers = Object.keys(this.webRoot_entryHandlers.__proto__);
+	const entryHandlers = Object.keys(Object.getPrototypeOf(this.webRoot_entryHandlers));
 
 	item = item.toLowerCase();
 
-	if (typeof item != 'string') {
+	if (typeof item !== 'string') {
 		console.log('Bootstruct Error:');
 		console.log('   "ignore" hook handler should export a string or an array of strings.');
-		console.log('   skipping: ' + '"' + item + '"');
+		console.log(`   skipping: "${item}"`);
 		return;
 	}
 
 	// trying to ignore a reserved entry name
-	if (~entryHandlers.indexOf(item)) {
+	if (entryHandlers.includes(item)) {
 		console.log('Bootstruct Error:');
 		console.log('   "ignore" hook: Trying to ignore a reserved entry name.');
-		console.log('   skipping: ' + '"' + item + '"');
+		console.log(`   skipping: "${item}"`);
 		return;
 	}
 
@@ -121,44 +107,38 @@ appProto.addToIgnoreList = function (item) {
 };
 
 
-
 appProto.parseHooks = function () {
-	var hooksMap;
-
-	var self = this;
-
 	if (exists(this.hooks)) {
 
 		this.hooksMap = map(this.hooks);
 
-		forIn(this.hooksMap.entries, function (entryName, entryMap) {
+		forIn(this.hooksMap.entries, (entryName, entryMap) => {
 			entryName = normalizeEntryName(entryName, entryMap.type);
 
-			if (entryName == 'io_init') {
-				self.io_init = true;
+			if (entryName === 'io_init') {
+				this.io_init = true;
 			}
 
-			if (self.hooks_entryHandlers[entryName]) {
-				self.hooks_entryHandlers[entryName].call(self, entryMap);
+			if (this.hooks_entryHandlers[entryName]) {
+				this.hooks_entryHandlers[entryName].call(this, entryMap);
 			}
 			else {
 				if (!entryMap.type && !entryMap.entries['index.js']) {
 					console.log('Bootstruct Error:');
-					console.log('   Expecting an "index.js" file in:');
-					console.log('   ' + entryMap.path);
+					console.log('    Expecting an "index.js" file in:');
+					console.log(`    ${entryMap.path}`);
 
 					return null;
 				}
 
-				self[entryName] = require(entryMap.path);
+				this[entryName] = require(entryMap.path);
 			}
 		});
 
 	}
 
-	return self;
+	return this;
 };
-
 
 
 appProto.checkIn = function (io) {
@@ -166,21 +146,19 @@ appProto.checkIn = function (io) {
 };
 
 
-
 appProto.die = function () {
-	console.log("Bootstruct couldn't find the web-root folder: ");
-	console.log('    ' + this.webRoot);
+	console.log('Bootstruct couldn\'t find the web-root folder: ');
+	console.log(`    ${this.webRoot}`);
 
-	this.setServerHandler(function (req, res) {
-		res.end("Bootstruct couldn't find the web-root folder.");
+	this.setServerHandler((req, res) => {
+		res.end('Bootstruct couldn\'t find the web-root folder.');
 	});
 };
 
 
-
 // -----------------------------------------
-module.exports = function create (webRoot, debug) {
-	var app = new App(webRoot, debug);
+module.exports = function (webRoot, debug) {
+	const app = new App(webRoot, debug);
 
 	return app.serverHandler;
 };
