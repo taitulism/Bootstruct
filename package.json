@@ -25,6 +25,7 @@
   "license": "MIT",
   "devDependencies": {
     "eslint": "3.9.1",
+    "jasmine-node": "1.14.5",
     "request": "^2.55.0"
   }
 }
