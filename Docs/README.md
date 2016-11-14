@@ -103,17 +103,17 @@ The following image describes these chains: The method-chain is on the right, th
 
 >**NOTE**: Those are NOT all of Bootstruct's reserved names.
 
-All of the three chains start with `first` and end with `last` methods. These are the very first and last methods a controller (who has them) would call, regardless of its role per request.
+All of the three chains start with `$in` and end with `$out` methods. These are the very first and last methods a controller (who has them) would call, regardless of its role per request.
 
 The principle is pretty simple: **each chain has a center, which is its main point, and you can run some code before and after that main point.**
 
 The target-chain is all about the verbs (GET, POST, PUT, DELETE). They are for controllers' core functionality (see wiki: [CRUD](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete)). 
 
-You can run some code before or after the verb method. A "verb method" would be the exported function from a `post.js` file or a `post` folder for example. `before_verb` is a synonym of `index`, mentioned in the [Get started](https://github.com/taitulism/Bootstruct/blob/master/Docs/Get Started.md) page, and another synonym is `all`. Their exported function gets called "before" the verb, for "all" verbs. `after_verb`'s synonym is `all_done`.
+You can run some code before or after the verb method. A "verb method" would be the exported function from a `$post.js` file or a `$post` folder for example. `$before_verb` is a synonym of `index`, mentioned in the [Get started](https://github.com/taitulism/Bootstruct/blob/master/Docs/Get Started.md) page. Their exported function gets called "before" any \<verb>.
 
-As `before_verb` and `after_verb` run in the target-chain before and after any verb method does, `pre_method` and `post_method` will run in the method-chain before and after any user method (e.g. `C.js`) and `pre_sub`/`post_sub` (parent-chain) will run before and after any sub-controller ("pre" = before, "post" = after, not to be confused with the `post` HTTP verb).
+As `$before_verb` and `$after_verb` run in the target-chain before and after any verb method does, `$pre_method` and `$post_method` will run in the method-chain before and after any user \<method/> (e.g. `C.js`) and `$pre_sub`/`$post_sub` (parent-chain) will run before and after any /<sub-controller> ("pre" = before, "post" = after, not to be confused with the `$post` HTTP verb).
 
-The "sub-ctrl" part is where the recursion happens, where an `io` checks in and out at controllers, parent -> child -> parent. The child, a controller itself, has its own chains and child-controller (sub-controllers).
+The "\<sub-ctrl\>" part is where the recursion happens, where an `io` checks in and out at controllers, parent -> child -> parent. The child, a controller itself, has its own chains and child-controllers (sub-controllers).
 
 See [Bootstruct's reserved names](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/README.md)
 
