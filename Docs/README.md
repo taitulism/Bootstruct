@@ -122,7 +122,7 @@ See [Bootstruct's reserved names](https://github.com/taitulism/Bootstruct/blob/m
 
 Methods
 -------
-Both types of methods, reserved methods and non-reserved methods (user methods) are being `require`-d to the controller (on init) so they must export a single function. On request, methods handle at least one argument, an `io` (mentioned above). It holds the `request` and the `response` (and some other props and methods. To move the `io` forward in the chain you call: `io.next()`, unless you choose to end the response with `io.res.end()`.
+Both types of methods, reserved methods and non-reserved methods (user methods) are being `require`-d to the controller on init so they must export a single function. On request, methods handle at least one argument, an `io` (mentioned above). It holds the `request` and the `response` (and some other props and methods. To move the `io` forward in the chain you call: `io.next()`, unless you choose to end the response with `io.res.end()`.
 
 Your Bootstruct methods will generally look like:
 ```js
@@ -163,25 +163,25 @@ Consider this structure for example:
 ├── www
 │   └── friends
 │       ├── index.js
-│       ├── get.js
-│       └── post.js
+│       ├── $get.js
+│       └── $post.js
 ```
-`index`, `get` and `post` are all reserved names for target-chain methods.
+`index`, `$get` and `$post` are all reserved names for target-chain methods.
 
-Let's say we have a user's "/friends" page in our social network app. Our `index` checks for authentication before both verbs. Our `get` method is pretty simple, it gets the user's friends list and sends it back to the client. Our `post` method, from the other hand, is quite messy: it has a lot of dependencies, it validates, sends an email, etc. In this case it would be better to turn the `post.js` file into a `post` folder:
+Let's say we have a user's "/friends" page in our social network app. Our `index` checks for authentication before both verbs. Our `$get` method is pretty simple, it gets the user's friends list and sends it back to the client. Our `$post` method, from the other hand, is quite messy: it has a lot of dependencies, it validates, sends an email, etc. In this case it would be better to turn the `$post.js` file into a `$post` folder:
 ```
 ├── www
 │   └── friends
 │       ├── index.js   // reserved name `index`
-│       ├── get.js
-│       └── post
-│           ├── index.js     // = post.js
+│       ├── $get.js
+│       └── $post
+│           ├── index.js     // = $post.js
 │           ├── validate.js
 │           ├── email.js
 │           └── etc.js
 ```
 
-The `post` folder is not parsed as a controller because of its meaningful name, therefore the `index.js` file inside it is not treated as a reserved name (like `www/friends/index.js` does). It's just what Node is looking for when `require`-ing a folder. Consider: `require('friends/post')`.
+The `$post` folder does NOT parsed as a controller because of its meaningful name, therefore the `index.js` file inside it is not treated as a reserved name (like `www/friends/index.js` does). It's just what Node is looking for when `require`-ing a folder. Consider: `require('friends/post')`.
 
 In another case we have a tiny controller with `index` as its only method:
 ```
@@ -211,11 +211,11 @@ If you want a certain entry to be ignored by the parser, add a preceding undersc
 │   ├── _myModules      <── 
 │   │   ├── helper1.js
 │   │   └── helper2.js
-│   ├── .myUtils        <──
+│   ├── _myUtils        <──
 │   └── index.js
 ```
 
->**NOTE**: Non `.js` files are all ignored (e.g. 'file.txt').
+>**NOTE**: Non-`.js` files are always ignored (e.g. 'file.txt').
 
 
 
