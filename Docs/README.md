@@ -98,7 +98,7 @@ When a request checks-in at a controller, the controller routes the request thro
 
 >**NOTE**: All methods get called with an `io` as their first argument.
 
-The following image describes these chains: The method-chain is on the right, the parent-chain is on the left and the target-chain is in the middle.
+The following image describes these chains: The method-chain is on the right, the parent-chain is on the left and the target-chain is in the middle.  
 ![Controller Flowchart](https://raw.githubusercontent.com/taitulism/Bootstruct/master/Docs/controller-flowchart.png)
 
 >**NOTE**: Those are NOT all of Bootstruct's reserved names.
