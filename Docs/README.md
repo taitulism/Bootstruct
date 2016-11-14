@@ -41,7 +41,7 @@ Learning Bootstruct is more about understanding how it behaves based on your fil
 
 Bootstruct is based on a mix of two quite close conventions: a folder structure convention and a filename convention. 
 
-When Bootstruct is initialized it parses your web-root folder recursively. Basically, folders become URL-controllers and files become their methods. Certain names are parsed into specific kinds of methods, whether they are files or folders. Eventually, your web-root folder and its sub-folders are translated into a root-controller, a nested structure of controllers and their sub-controllers. This Root-Controller (`RC` from now on) is your Bootstruct app's core object.
+When Bootstruct is initialized it parses your web-root folder recursively. Basically, folders become URL-controllers and files become their methods. Certain names (start with a `$` sign) are parsed into specific kinds of methods, whether they are files or folders. Eventually, your web-root folder and its sub-folders are translated into a root-controller, a nested structure of controllers and their sub-controllers. This Root-Controller (`RC` from now on) is your Bootstruct app's core object.
 
 >**NOTE**: Bootstruct ignores files and folders that their names start with a dot or an underscore like `.ignored` or `_ignored`).
 
