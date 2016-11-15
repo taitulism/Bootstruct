@@ -29,11 +29,13 @@ For the sake of your eyes, you can use a `$verbs` folder, just as a namespace to
 │   ├── contact.js
 │   └── $verbs          <──
 │       ├── index.js
-│       ├── $get.js
-│       ├── $post.js
-│       ├── $put.js
-│       └── $delete.js
+│       ├── get.js
+│       ├── post.js
+│       ├── put.js
+│       └── delete.js
 ```
+
+>**NOTE**: Under `$verbs` namespace (file or folder), you won't be needing the $ sign for your verbs (e.g. $get, $post etc.)
 
 You can also use a `$verbs.js` file to export your verbs methods from an object:
 ```
@@ -66,4 +68,3 @@ module.exports = {
 	}
 };
 ```
->**NOTE**: In this case, you don't need the $ sign for your verbs (e.g. $get, $post etc.)
