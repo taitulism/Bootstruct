@@ -8,10 +8,10 @@ These reserved methods will run before and after the target-method (pre=before, 
 ├── www
 │   ├── $in.js
 │   ├── index.js
-│   ├── $pre-method.js    <──
-│   ├── A.js
-│   ├── B.js
-│   ├── $post-method.js   <──
+│   ├── $pre-method.js    <── runs before methods
+│   ├── A.js              <── file = method
+│   ├── B.js              <── file = method
+│   ├── $post-method.js   <── runs after methods
 │   └── $out.js
 ```
 
