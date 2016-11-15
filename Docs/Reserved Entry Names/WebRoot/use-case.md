@@ -36,7 +36,7 @@ Use case example
 │               └── $out.js
 ```
 
-Assume all files contain:
+Assume all files logs their paths (full path ommited for readability):
 ```js
 	module.exports = function (io) {
 	    console.log(__filename);
