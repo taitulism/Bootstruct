@@ -2,7 +2,8 @@ $in & $out
 ----------
 **Chain**: All.
 
-Another two reserved entry names. When exist, they always get called whether the controller is the target-controller or a parent. `$in` is the first thing controllers run when an `io` checks-in and `$out` is the very last thing to run.
+`$in` is the first thing controllers run when an `io` checks-in and `$out` is the very last thing to run.  
+They get called for **any** request to the controller they are in.
 
 Assume:
 ```
@@ -39,7 +40,7 @@ The following shows the logs we'll get for different requests:
  &nbsp; path/to/www/A/$out.js  
  &nbsp; path/to/www/$out.js
 
-`$in` and `$out` always run. `index` runs only in the target-controller. 
+`$in` and `$out` always get called. `index` runs only in the target-controller. 
 
 Now with verbs:
 ```
@@ -57,7 +58,7 @@ Now with verbs:
 │       └── $out.js
 ```
 
->**NOTE**: The full path to the `www` folder and file extensions (.js) were removed from log for better readability:
+>**NOTE**: The full path to the `www` folder and file extensions (.js) were removed from log for readability:
 
 ```
 request: GET `/`
