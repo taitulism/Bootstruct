@@ -2,7 +2,7 @@ $get, $post, $put, $delete
 --------------------------
 **Chain**: Target.
 
->**NOTE**: In Bootstruct's docs, referred to as "\<verbs>". Not to be confused with [$verbs](./$verbs) which is another reserved entry name.
+>**NOTE**: In Bootstruct's docs, referred to as "\<verbs>". Not to be confused with [$verbs](https://github.com/taitulism/Bootstruct/blob/entry-names/Docs/Reserved%20Entry%20Names/WebRoot/%24verbs.md) which is another reserved entry name.
 
 These 4 HTTP verbs are **currently** the only supported HTTP verbs in Bootstruct. These verb methods should hold the core functionality of their controller for [CRUD](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete) operations.
 
