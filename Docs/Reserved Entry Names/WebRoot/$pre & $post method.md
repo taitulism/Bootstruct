@@ -9,8 +9,8 @@ These reserved methods will run before and after the target-method (pre=before, 
 │   ├── $in.js
 │   ├── index.js
 │   ├── $pre-method.js    <── runs before methods
-│   ├── A.js              <── file = method
-│   ├── B.js              <── file = method
+│   ├── A.js              <── user file = method
+│   ├── B.js              <── user file = method
 │   ├── $post-method.js   <── runs after methods
 │   └── $out.js
 ```
