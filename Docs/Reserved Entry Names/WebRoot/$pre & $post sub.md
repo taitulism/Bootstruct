@@ -1,7 +1,7 @@
-$pre-sub & $post-sub
+$pre_sub & $post_sub
 --------------------
 **Chain**: Parent.  
-**Synonyms**: `$pre-sub`, `$post-sub`.
+**Synonyms**: `$pre-sub`, `$post-sub` (respectively).
 
 These reserved methods will run before and after a child-controller (sub-ctrl) (pre=before, post=after).
 
@@ -10,8 +10,8 @@ These reserved methods will run before and after a child-controller (sub-ctrl) (
 ├── www
 │   ├── $in.js
 │   ├── index.js
-│   ├── $pre-sub.js    <──
-│   ├── $post-sub.js   <──
+│   ├── $pre_sub.js    <──
+│   ├── $post_sub.js   <──
 │   ├── $out.js
 │   └── A
 │       ├── $in.js
@@ -31,12 +31,12 @@ logs:
 request: /A
 logs:
 	www/$in
-	www/$pre-sub   <──
+	www/$pre_sub   <──
 	www/A/$in
 	www/A/index
 	www/A/$out
-	www/$post-sub  <──
+	www/$post_sub  <──
 	www/$out
 ```
 
-The "A" controller doesn't have any sub-controllers so `$pre-sub` and `$post-sub` would be redundent if existed. They would never get called.
+The "A" controller doesn't have any sub-controllers so `$pre_sub` and `$post_sub` would be redundent if existed. They would never get called.

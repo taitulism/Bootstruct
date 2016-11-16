@@ -1,26 +1,26 @@
-$after-verb
+$after_verb
 -----------
 **Chain**: Target.  
 **Synonym**: `$after_verb`
 
-`$after-verb`, like `$before-verb` (`index` synonym), will run for **any** request type in the **target**-controller but **after** the \<verb> method.
+`$after_verb`, like `$before_verb` (`index` synonym), will run for **any** request type in the **target**-controller but **after** the \<verb> method.
 ```
 ├── www
-│   ├── $before-verb.js
+│   ├── $before_verb.js
 │   ├── $get.js
 │   ├── $post.js
-│   └── $after-verb.js
+│   └── $after_verb.js
 ```
 ```
 request: GET `/`
 logs:
-	www/$before-verb
+	www/$before_verb
 	www/$get
-	www/$after-verb
+	www/$after_verb
 
 request: POST `/`
 logs:
-	www/$before-verb
+	www/$before_verb
 	www/$post
-	www/$after-verb
+	www/$after_verb
 ```

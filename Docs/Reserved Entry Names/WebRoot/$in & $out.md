@@ -46,7 +46,7 @@ Now with verbs:
 ```
 ├── www
 │   ├── $in.js
-│   ├── $before-verb.js  ("index" synonym)
+│   ├── $before_verb.js  ("index" synonym)
 │   ├── $get.js     <──
 │   ├── $post.js    <──
 │   ├── $out.js

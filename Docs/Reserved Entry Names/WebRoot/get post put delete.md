@@ -16,9 +16,9 @@ Example structure:
 │       └── $post.js  ──> POST requests to '/A'
 ```
 
-If you have an `index` method as well, it will get called **before** any verb does. That's why `index` has `$before-verb` as a synonym.
+If you have an `index` method as well, it will get called **before** any verb does. That's why `index` has `$before_verb` as a synonym.
 
->**NOTE**: There's also an `$after-verb` method.
+>**NOTE**: There's also an `$after_verb` method.
 
 ```
 ├── www

@@ -1,4 +1,4 @@
-$pre-method & $post-method
+$pre_method & $post_method
 --------------------------
 **Chain**: Method.  
 **Synonyms**: `$pre_method`, `$post_method` (respectively).
@@ -8,10 +8,10 @@ These reserved methods will run before and after the target-method (pre=before, 
 ├── www
 │   ├── $in.js
 │   ├── index.js
-│   ├── $pre-method.js    <── runs before methods
+│   ├── $pre_method.js    <── runs before methods
 │   ├── A.js              <── user file = method
 │   ├── B.js              <── user file = method
-│   ├── $post-method.js   <── runs after methods
+│   ├── $post_method.js   <── runs after methods
 │   └── $out.js
 ```
 
@@ -27,16 +27,16 @@ logs:
 request: /a
 logs:
 	www/$in
-	www/$pre-method   <──
+	www/$pre_method   <──
 	www/A.js
-	www/$post-method  <──
+	www/$post_method  <──
 	www/$out
 
 request: /b
 logs:
 	www/$in
-	www/$pre-method   <──
+	www/$pre_method   <──
 	www/B.js
-	www/$post-method  <──
+	www/$post_method  <──
 	www/$out
 ```

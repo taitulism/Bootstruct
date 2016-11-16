@@ -1,7 +1,7 @@
 index
 -----
 **Chain**: Target.  
-**Synonyms**: `$before-verb`, `$before_verb`.
+**Synonyms**: `$before_verb`, `$before-verb`.
 
 >**NOTE**: `index` is the only reserved name that doesn't start with a $ sign.
 
