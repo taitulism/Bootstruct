@@ -33,7 +33,7 @@ All chains
 
 Target-chain
 ------------
-* [$before_verb / index](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/WebRoot/index.md)
+* [index / $before_verb](./WebRoot/index.md)
 * [$get](./WebRoot/get post put delete.md)
 * [$post](./WebRoot/get post put delete.md)
 * [$put](./WebRoot/get post put delete.md)
