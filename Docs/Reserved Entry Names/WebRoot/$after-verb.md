@@ -1,7 +1,7 @@
 $after_verb
 -----------
 **Chain**: Target.  
-**Synonym**: `$after_verb`
+**Synonym**: `$after-verb`
 
 `$after_verb`, like `$before_verb` (`index` synonym), will run for **any** request type in the **target**-controller but **after** the \<verb> method.
 ```
