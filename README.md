@@ -12,7 +12,7 @@ Table of contents
 -----------------
 
 * Overview (this page)
-* [Get Started](https://github.com/taitulism/Bootstruct/blob/master/Docs/Get Started.md)
+* [Get Started](https://github.com/taitulism/Bootstruct/blob/master/Docs/Get%20Started.md)
 * [Docs](https://github.com/taitulism/Bootstruct/blob/master/Docs/README.md)
 
 
@@ -78,7 +78,7 @@ Requests start at the web-root folder (e.g. "www"), do their way into the target
 
 Start Using Bootstruct
 ----------------------
-* [Get Started](https://github.com/taitulism/Bootstruct/blob/master/Docs/Get Started.md)
+* [Get Started](https://github.com/taitulism/Bootstruct/blob/master/Docs/Get%20Started.md)
 * [Docs](https://github.com/taitulism/Bootstruct/blob/master/Docs/README.md)
 
 

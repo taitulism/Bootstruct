@@ -41,7 +41,7 @@ Learning Bootstruct is more about understanding how it behaves based on your fil
 
 Bootstruct is based on a mix of two quite close conventions: a folder structure convention and a filename convention. 
 
-When Bootstruct is initialized it parses your web-root folder recursively. Basically, folders become URL-controllers and files become their methods. Certain names are parsed into specific kinds of methods, whether they are files or folders. Eventually, your web-root folder and its sub-folders are translated into a root-controller, a nested structure of controllers and their sub-controllers. This Root-Controller (`RC` from now on) is your Bootstruct app's core object.
+When Bootstruct is initialized it parses your web-root folder recursively. Basically, folders become URL-controllers and files become their methods. Certain names (start with a `$` sign) are parsed into specific kinds of methods, whether they are files or folders. Eventually, your web-root folder and its sub-folders are translated into a root-controller, a nested structure of controllers and their sub-controllers. This Root-Controller (`RC` from now on) is your Bootstruct app's core object.
 
 >**NOTE**: Bootstruct ignores files and folders that their names start with a dot or an underscore like `.ignored` or `_ignored`).
 
@@ -98,22 +98,22 @@ When a request checks-in at a controller, the controller routes the request thro
 
 >**NOTE**: All methods get called with an `io` as their first argument.
 
-The following image describes these chains: The method-chain is on the right, the parent-chain is on the left and the target-chain is in the middle.
+The following image describes these chains: The method-chain is on the right, the parent-chain is on the left and the target-chain is in the middle.  
 ![Controller Flowchart](https://raw.githubusercontent.com/taitulism/Bootstruct/master/Docs/controller-flowchart.png)
 
 >**NOTE**: Those are NOT all of Bootstruct's reserved names.
 
-All of the three chains start with `first` and end with `last` methods. These are the very first and last methods a controller (who has them) would call, regardless of its role per request.
+All of the three chains start with `$in` and end with `$out` methods. These are the very first and last methods a controller (who has them) would call, regardless of its role per request.
 
 The principle is pretty simple: **each chain has a center, which is its main point, and you can run some code before and after that main point.**
 
 The target-chain is all about the verbs (GET, POST, PUT, DELETE). They are for controllers' core functionality (see wiki: [CRUD](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete)). 
 
-You can run some code before or after the verb method. A "verb method" would be the exported function from a `post.js` file or a `post` folder for example. `before_verb` is a synonym of `index`, mentioned in the [Get started](https://github.com/taitulism/Bootstruct/blob/master/Docs/Get Started.md) page, and another synonym is `all`. Their exported function gets called "before" the verb, for "all" verbs. `after_verb`'s synonym is `all_done`.
+You can run some code before or after the verb method. A "verb method" would be the exported function from a `$post.js` file or a `$post` folder for example. `$before_verb` is a synonym of `index`, mentioned in the [Get started](https://github.com/taitulism/Bootstruct/blob/master/Docs/Get Started.md) page. Their exported function gets called "before" any \<verb>.
 
-As `before_verb` and `after_verb` run in the target-chain before and after any verb method does, `pre_method` and `post_method` will run in the method-chain before and after any user method (e.g. `C.js`) and `pre_sub`/`post_sub` (parent-chain) will run before and after any sub-controller ("pre" = before, "post" = after, not to be confused with the `post` HTTP verb).
+As `$before_verb` and `$after_verb` run in the target-chain before and after any verb method does, `$pre_method` and `$post_method` will run in the method-chain before and after any user \<method> (e.g. `C.js`) and `$pre_sub`/`$post_sub` (parent-chain) will run before and after any \<sub-controller> ("pre" = before, "post" = after, not to be confused with the `$post` HTTP verb).
 
-The "sub-ctrl" part is where the recursion happens, where an `io` checks in and out at controllers, parent -> child -> parent. The child, a controller itself, has its own chains and child-controller (sub-controllers).
+The \<sub-ctrl> part is where the recursion happens, where an `io` checks in and out at controllers, parent -> child -> parent. The child, a controller itself, has its own chains and child-controllers (sub-controllers).
 
 See [Bootstruct's reserved names](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/README.md)
 
@@ -122,7 +122,7 @@ See [Bootstruct's reserved names](https://github.com/taitulism/Bootstruct/blob/m
 
 Methods
 -------
-Both types of methods, reserved methods and non-reserved methods (user methods) are being `require`-d to the controller (on init) so they must export a single function. On request, methods handle at least one argument, an `io` (mentioned above). It holds the `request` and the `response` (and some other props and methods. To move the `io` forward in the chain you call: `io.next()`, unless you choose to end the response with `io.res.end()`.
+Both types of methods, reserved methods and non-reserved methods (user methods) are being `require`-d to the controller on init so they must export a single function. On request, methods handle at least one argument, an `io` (mentioned above). It holds the `request` and the `response` (and some other props and methods. To move the `io` forward in the chain you call: `io.next()`, unless you choose to end the response with `io.res.end()`.
 
 Your Bootstruct methods will generally look like:
 ```js
@@ -163,25 +163,25 @@ Consider this structure for example:
 ├── www
 │   └── friends
 │       ├── index.js
-│       ├── get.js
-│       └── post.js
+│       ├── $get.js
+│       └── $post.js
 ```
-`index`, `get` and `post` are all reserved names for target-chain methods.
+`index`, `$get` and `$post` are all reserved names for target-chain methods.
 
-Let's say we have a user's "/friends" page in our social network app. Our `index` checks for authentication before both verbs. Our `get` method is pretty simple, it gets the user's friends list and sends it back to the client. Our `post` method, from the other hand, is quite messy: it has a lot of dependencies, it validates, sends an email, etc. In this case it would be better to turn the `post.js` file into a `post` folder:
+Let's say we have a user's "/friends" page in our social network app. Our `index` checks for authentication before both verbs. Our `$get` method is pretty simple, it gets the user's friends list and sends it back to the client. Our `$post` method, from the other hand, is quite messy: it has a lot of dependencies, it validates, sends an email, etc. In this case it would be better to turn the `$post.js` file into a `$post` folder:
 ```
 ├── www
 │   └── friends
 │       ├── index.js   // reserved name `index`
-│       ├── get.js
-│       └── post
-│           ├── index.js     // = post.js
+│       ├── $get.js
+│       └── $post
+│           ├── index.js     // = $post.js
 │           ├── validate.js
 │           ├── email.js
 │           └── etc.js
 ```
 
-The `post` folder is not parsed as a controller because of its meaningful name, therefore the `index.js` file inside it is not treated as a reserved name (like `www/friends/index.js` does). It's just what Node is looking for when `require`-ing a folder. Consider: `require('friends/post')`.
+The `$post` folder does NOT parsed as a controller because of its meaningful name, therefore the `index.js` file inside it is not treated as a reserved name (like `www/friends/index.js` does). It's just what Node is looking for when `require`-ing a folder. Consider: `require('friends/post')`.
 
 In another case we have a tiny controller with `index` as its only method:
 ```
@@ -211,11 +211,11 @@ If you want a certain entry to be ignored by the parser, add a preceding undersc
 │   ├── _myModules      <── 
 │   │   ├── helper1.js
 │   │   └── helper2.js
-│   ├── .myUtils        <──
+│   ├── _myUtils        <──
 │   └── index.js
 ```
 
->**NOTE**: Non `.js` files are all ignored (e.g. 'file.txt').
+>**NOTE**: Non-`.js` files are always ignored (e.g. 'file.txt').
 
 
 
