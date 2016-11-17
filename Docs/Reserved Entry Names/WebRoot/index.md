@@ -1,9 +1,11 @@
 index
 -----
 **Chain**: Target.  
-**Synonyms**: `all`, `beforeVerb`, `before_verb`, `before-verb`.
+**Synonyms**: `$before_verb`, `$before-verb`.
 
-`index` is a reserved entry name (and so are its synonyms). Its exported function gets mounted on the target-chain of the controller it's in. The `index` method gets called when its controller is the request target-controller, for **any** type of request (HTTP verbs).
+>**NOTE**: `index` is the only reserved name that doesn't start with a $ sign.
+
+`index` is a reserved entry name (and so are its synonyms). Its exported function gets mounted on the target-chain of the controller it's in. The `index` method gets called when its controller is the request target-controller, for **all** HTTP verbs.
 
 Example structure:
 ```
@@ -29,4 +31,4 @@ After:
 │   ├── index.js
 │   └── A.js       ──> file
 ```
-Now "A" is a method in the "RC" instead of a single method controller.
+Now "A" is a method instead of a controller with a single method.

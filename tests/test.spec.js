@@ -1,7 +1,8 @@
-var forIn   = require('../lib/utils/forin');
 var request = require('request');
 var http    = require('http');
 var sep     = require('path').sep;
+
+var forIn   = require('../lib/utils/for-in');
 var bts     = require('../');
 
 function makeRequest (url, expectRes, done, server, verb) {
