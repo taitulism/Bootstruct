@@ -15,7 +15,7 @@ The web-root reserved entry names become methods in their controller's chains so
 
 One exception is the `verbs` name.
 
->**NOTE**: Reserved names with under_scores have a dash-version and a camelCased version as synonyms e.g. `no_verb`/`no-verb`/`noVerb`.
+>**NOTE**: Reserved names with under_scores have a dash-version as synonym e.g. `$no_verb`/`$no-verb`.
 
 The following image describes a controller's chains (explained in the [docs main page](https://github.com/taitulism/Bootstruct/blob/master/README.md#controllers-flow)): The target-chain is in the middle, the parent-chain is on the left and the method-chain is on the right.
 ![Controller Chart-Flow](https://raw.githubusercontent.com/taitulism/Bootstruct/master/Docs/controller-flowchart.png)
@@ -25,38 +25,38 @@ The following image describes a controller's chains (explained in the [docs main
 
 All chains
 ----------
-* [first](./WebRoot/first & last.md)
-* [last](./WebRoot/first & last.md)
+* [$in](./WebRoot/%24in%20%26%20%24out.md)
+* [$out](./WebRoot/%24in%20%26%20%24out.md)
 
 
 
 
 Target-chain
 ------------
-* [before_verb / index / all](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/WebRoot/index.md)
-* [get](./WebRoot/get post put delete.md)
-* [post](./WebRoot/get post put delete.md)
-* [put](./WebRoot/get post put delete.md)
-* [delete](./WebRoot/get post put delete.md)
-* [no_verb](./WebRoot/no_verb.md)
-* [after_verb / all_done](./WebRoot/after_verb.md)
-* [verbs](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/WebRoot/verbs.md) (EXCEPTION: not a method)
+* [index / $before_verb](./WebRoot/index.md)
+* [$get](./WebRoot/get post put delete.md)
+* [$post](./WebRoot/get post put delete.md)
+* [$put](./WebRoot/get post put delete.md)
+* [$delete](./WebRoot/get post put delete.md)
+* [$no_verb](./WebRoot/%24no_verb.md)
+* [$after_verb](./WebRoot/%24after_verb.md)
+* [$verbs](./WebRoot/%24verbs.md) (EXCEPTION: not a method)
 
 
 
 
 Parent-chain
 ------------
-* [pre_sub](./WebRoot/pre-post sub.md)
-* [post_sub](./WebRoot/pre-post sub.md)
+* [$pre_sub](./WebRoot/%24pre%20%26%20%24post%20sub.md)
+* [$post_sub](./WebRoot/%24pre%20%26%20%24post%20sub.md)
 
 
 
 
 Method-chain
 ------------
-* [pre_method](./WebRoot/pre-post method.md)
-* [post_method](./WebRoot/pre-post method.md)
+* [$pre_method](./WebRoot/%24pre%20%26%20%24post%20method.md)
+* [$post_method](./WebRoot/%24pre%20%26%20%24post%20method.md)
 
 
 
