@@ -47,16 +47,16 @@ Target-chain
 
 Parent-chain
 ------------
-* [$pre_sub](./WebRoot/%24pre-post sub.md)
-* [$post_sub](./WebRoot/%24pre-post sub.md)
+* [$pre_sub](./WebRoot/%24pre%20%26%20%24post%20sub.md)
+* [$post_sub](./WebRoot/%24pre%20%26%20%24post%20sub.md)
 
 
 
 
 Method-chain
 ------------
-* [$pre_method](./WebRoot/%24pre-post method.md)
-* [$post_method](./WebRoot/%24pre-post method.md)
+* [$pre_method](./WebRoot/%24pre%20%26%20%24post%20method.md)
+* [$post_method](./WebRoot/%24pre%20%26%20%24post%20method.md)
 
 
 
