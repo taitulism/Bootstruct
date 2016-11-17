@@ -1,3 +1,3 @@
-module.exports = function(entryMap){
+module.exports = function (entryMap) {
 	this.public = 'pub';
 };
