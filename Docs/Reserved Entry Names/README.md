@@ -38,25 +38,25 @@ Target-chain
 * [$post](./WebRoot/get post put delete.md)
 * [$put](./WebRoot/get post put delete.md)
 * [$delete](./WebRoot/get post put delete.md)
-* [$no_verb](./WebRoot/no_verb.md)
-* [$after_verb](./WebRoot/after_verb.md)
-* [$verbs](https://github.com/taitulism/Bootstruct/blob/master/Docs/Reserved Entry Names/WebRoot/verbs.md) (EXCEPTION: not a method)
+* [$no_verb](./WebRoot/%24no_verb.md)
+* [$after_verb](./WebRoot/%24after_verb.md)
+* [$verbs](./WebRoot/%24verbs.md) (EXCEPTION: not a method)
 
 
 
 
 Parent-chain
 ------------
-* [$pre_sub](./WebRoot/pre-post sub.md)
-* [$post_sub](./WebRoot/pre-post sub.md)
+* [$pre_sub](./WebRoot/%24pre-post sub.md)
+* [$post_sub](./WebRoot/%24pre-post sub.md)
 
 
 
 
 Method-chain
 ------------
-* [$pre_method](./WebRoot/pre-post method.md)
-* [$post_method](./WebRoot/pre-post method.md)
+* [$pre_method](./WebRoot/%24pre-post method.md)
+* [$post_method](./WebRoot/%24pre-post method.md)
 
 
 
