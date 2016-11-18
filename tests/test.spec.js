@@ -299,8 +299,8 @@ describe('Bootstruct', function() {
 			makeRequest('/io_proto', 'io_proto', done, server);
 		});
 
-		it('should pass entry_handlers test', function (done) {
-			makeRequest('/entry_handlers', 'public', done, server);
+		it('should pass ctrl_hooks test', function (done) {
+			makeRequest('/ctrl_hooks', 'public', done, server);
 		});
 
 		it('should pass shared_methods test', function (done) {

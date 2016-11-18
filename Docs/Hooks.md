@@ -47,11 +47,11 @@ If the entry is a folder, make sure to include an `index.js` file within.
 This is how you extend your `app` instance. Use it for properties and methods you need access to from anywhere in your app: a database connection, log methods, error methods, a reference to the server or whatever you'd like.
 
 Here are the rest of Bootstruct's hooks (click to read about):
-* [ignore](./Reserved Entry Names/Hooks/ignore.md)
-* [io_init](./Reserved Entry Names/Hooks/io_init.md)
-* [io_exit](./Reserved Entry Names/Hooks/io_exit.md)
-* [io_proto](./Reserved Entry Names/Hooks/io_proto.md)
-* [ctrl_proto](./Reserved Entry Names/Hooks/ctrl_proto.md)
-* [entry_handlers](./Reserved Entry Names/Hooks/entry_handlers.md)
-* [shared_methods](./Reserved Entry Names/Hooks/shared_methods.md)
-* [shared_ctrls](./Reserved Entry Names/Hooks/shared_ctrls.md)
+* [ignore](./Hooks/App Hooks/ignore.md)
+* [io_init](./Hooks/App Hooks/io_init.md)
+* [io_exit](./Hooks/App Hooks/io_exit.md)
+* [io_proto](./Hooks/App Hooks/io_proto.md)
+* [ctrl_proto](./Hooks/App Hooks/ctrl_proto.md)
+* [ctrl_hooks](./Hooks/App Hooks/ctrl_hooks.md)
+* [shared_methods](./Hooks/App Hooks/shared_methods.md)
+* [shared_ctrls](./Hooks/App Hooks/shared_ctrls.md)

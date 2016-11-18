@@ -1,5 +1,5 @@
-Hook: "entry_handlers"
-======================
+Hook: "ctrl_hooks"
+==================
 **Entry Type**: both a file or a folder  
 **Exports**: an object of functions (if file) or functions files (if folder)
 
@@ -7,7 +7,7 @@ When Bootstruct is initialized it parses the web-root folder. User folders becom
 
 You can add your own reserved names and write their parser handlers.
 
-An "entry handler" is a named function. The name is for the parser to match with entries in your web-root different folders (soon to become controllers). The handler, a function, is what should the parser do when it "hits" this name. "entry_handlers" are used to do something with a matched entry's contents in the context of the current holding folder/controller.
+An "entry handler" is a named function. The name is for the parser to match with entries in your web-root different folders (soon to become controllers). The handler, a function, is what should the parser do when it "hits" this name. "ctrl_hooks" are used to do something with a matched entry's contents in the context of the current holding folder/controller.
 
 >**NOTE**: Bootstruct has an entry handler for each reserved name.
 
@@ -21,7 +21,7 @@ Let's say you want to read and cache some static resources or precompile some vi
 │   └── Public        ──> read and cache on "RC"
 ```
 
-To create entry handlers, create in your [hooks folder](https://github.com/taitulism/Bootstruct/blob/master/Docs/Hooks.md) an `entry_handlers.js` file or an `entry_handlers` folder.
+To create entry handlers, create in your [hooks folder](https://github.com/taitulism/Bootstruct/blob/master/Docs/Hooks.md) an `ctrl_hooks.js` file or an `ctrl_hooks` folder.
 
 **File**  
 ```
@@ -30,11 +30,11 @@ To create entry handlers, create in your [hooks folder](https://github.com/taitu
 │   ├── server-index.js
 │   ├── www
 │   └── www_hooks
-│       └── entry_handlers.js  <──
+│       └── ctrl_hooks.js  <──
 ```
 When using a file it should export an object of named functions like:
 ```js
-	// entry_handlers.js
+	// ctrl_hooks.js
 	module.exports = {
 		views: function (){...},
 		public: function (){...}
@@ -48,7 +48,7 @@ When using a file it should export an object of named functions like:
 │   ├── server-index.js
 │   ├── www
 │   └── www_hooks
-│       └── entry_handlers  <──
+│       └── ctrl_hooks  <──
 │           ├── views
 │           └── public.js
 ```
@@ -106,7 +106,7 @@ Let's say we want the parser to do something every time it hits a `Views` folder
 
 The `views` entry handler file could look like this:
 ```js
-	// www_hooks/entry_handlers/views.js
+	// www_hooks/ctrl_hooks/views.js
 	var fs   = require('fs');
 	var jade = require('jade');
 
