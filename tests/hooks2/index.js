@@ -21,5 +21,4 @@ module.exports = function (io) {
 	io.res.write(body);
 
 	io.next();
-
 };
