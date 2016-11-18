@@ -12,7 +12,7 @@ module.exports = function (io) {
 	body +=  (io.qwe) ? io.qwe() + '-' : 'IO_PROTO_FAIL_1-';
 	body +=  (io.asd) ? io.asd() + '-' : 'IO_PROTO_FAIL_2-';
 
-	// entry_handlers
+	// ctrl_hooks
 	body +=  (this.public) ? this.public + '-' : 'ENTRY_HANDLER_FAIL_1';
 	body +=  (this.views)  ? this.views  + '-' : 'ENTRY_HANDLER_FAIL_2';
 
