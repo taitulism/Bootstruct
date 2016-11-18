@@ -135,7 +135,7 @@ Request => Response:
 /greet/you => in! hey you
 ```
 
-`$in` is one of Bootstruct's reserved names for files and folders. `$in`'s exported function will run before the other two (`index` and `greet`). This is why all the responses start with "in! ". Because `$in` is a reserved name, it won't be parsed as a method like `greet` so requesting `/$in` will be handled by `www/index.js` just like requesting `/whatever`.
+`$in` is one of Bootstruct's hooks (reserved names for files and folders). `$in`'s exported function will run before the other two (`index` and `greet`). This is why all the responses start with "in! ". Because `$in` is a reserved name, it won't be parsed as a method like `greet` so requesting `/$in` will be handled by `www/index.js` just like requesting `/whatever`.
 
 `io.next()` is called to move the `io` forward in the chain. You call it at the end of your methods.
 
@@ -152,4 +152,4 @@ Bootstruct can be initiated with a second argument (the first is your web-root f
 
 What's next?
 ------------
-You've just tasted Bootstruct's basics. Find out more about Bootstruct's main components (app, controllers, io), how to control your request flow (with Bootstruct's reserved entry names) and how to extend Bootstruct and use your own API (using hooks). [Read The Fabulous Manual](https://github.com/taitulism/Bootstruct/blob/master/Docs/README.md).
+You've just tasted Bootstruct's basics. Find out more about Bootstruct's main components (app, controllers, io), how to control your request flow (with Bootstruct's hooks) and how to extend Bootstruct and use your own API (using hooks). [Read The Fabulous Manual](https://github.com/taitulism/Bootstruct/blob/master/Docs/README.md).
