@@ -12,9 +12,9 @@ Get Started
 	```js
 		var http = require('http');
 		
-		var boots = require('bootstruct');
+		var bts = require('bootstruct');
 
-		var app = boots();
+		var app = bts();
 
 		http.createServer(app).listen(1001, function(){
 			console.log('Listening on port 1001');
@@ -23,7 +23,7 @@ Get Started
 
 4. Create a `www` folder. `www` is the web-root folder's default name (borrowed from other platforms). To change it you can start Bootstruct with:
 	```js
-		var app = boots('yourFolderName');
+		var app = bts('yourFolderName');
 	```
 
 5. This is how your project folder tree should look like:
@@ -146,7 +146,7 @@ Debugging
 ---------
 Bootstruct can be initiated with a second argument (the first is your web-root folder name e.g. "www"). The second argument is a debug-mode flag (default: false). Start your app with a second truthy value argument to see logs (in console) of the `io`'s different checkpoints along its way:
 ```js
-	var app = boots('www', true);
+	var app = bts('www', true);
 ```
 
 
