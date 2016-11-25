@@ -12,9 +12,9 @@ Get Started
 	```js
 		var http = require('http');
 		
-		var boots = require('bootstruct');
+		var bts = require('bootstruct');
 
-		var app = boots();
+		var app = bts();
 
 		http.createServer(app).listen(1001, function(){
 			console.log('Listening on port 1001');
@@ -23,7 +23,7 @@ Get Started
 
 4. Create a `www` folder. `www` is the web-root folder's default name (borrowed from other platforms). To change it you can start Bootstruct with:
 	```js
-		var app = boots('yourFolderName');
+		var app = bts('yourFolderName');
 	```
 
 5. This is how your project folder tree should look like:
@@ -107,19 +107,19 @@ Bootstruct takes out this array's first item if it means something (i.e. stands 
 
 >**NOTE**: The first argument is always an `io`.
 
-Now let's create a file named "first.js":
+Now let's create a file named "$in.js":
 ```
 ├── www
-│   ├── first.js
+│   ├── $in.js
 │   ├── greet.js
 │   └── index.js
 ```
 
-`www/first.js` contents:
+`www/$in.js` contents:
 ```js
 module.exports = function (io) {
 	
-	io.res.write('first! ');
+	io.res.write('in! ');
 
 	io.next();
 
@@ -128,14 +128,14 @@ module.exports = function (io) {
 
 Request => Response:
 ```
-/          => first! hello beautiful world
-/whatever  => first! hello beautiful world
-/first     => first! hello beautiful world
-/greet     => first! hello everyone
-/greet/you => first! hey you
+/          => in! hello beautiful world
+/whatever  => in! hello beautiful world
+/$in       => in! hello beautiful world
+/greet     => in! hello everyone
+/greet/you => in! hey you
 ```
 
-`first` is one of Bootstruct's reserved names for files and folders. `first`'s exported function will run before the other two (`index` and `greet`). Because `first` is a reserved name, it won't be parsed as a method like `greet` and requesting `/first` will be handled by `www/index.js` just like requesting `/whatever`.
+`$in` is one of Bootstruct's hooks (reserved names for files and folders). `$in`'s exported function will run before the other two (`index` and `greet`). This is why all the responses start with "in! ". Because `$in` is a reserved name, it won't be parsed as a method like `greet` so requesting `/$in` will be handled by `www/index.js` just like requesting `/whatever`.
 
 `io.next()` is called to move the `io` forward in the chain. You call it at the end of your methods.
 
@@ -146,10 +146,10 @@ Debugging
 ---------
 Bootstruct can be initiated with a second argument (the first is your web-root folder name e.g. "www"). The second argument is a debug-mode flag (default: false). Start your app with a second truthy value argument to see logs (in console) of the `io`'s different checkpoints along its way:
 ```js
-	var app = boots('www', true);
+	var app = bts('www', true);
 ```
 
 
 What's next?
 ------------
-You've just tasted Bootstruct's basics. Find out more about Bootstruct's main components (app, controllers, io), how to control your request flow (with Bootstruct's reserved entry names) and how to extend Bootstruct and use your own API (using hooks). [Read The Fabulous Manual](https://github.com/taitulism/Bootstruct/blob/master/Docs/README.md).
+You've just tasted Bootstruct's basics. Find out more about Bootstruct's main components (app, controllers, io), how to control your request flow (with Bootstruct's hooks) and how to extend Bootstruct and use your own API (using hooks). [Read The Fabulous Manual](https://github.com/taitulism/Bootstruct/blob/master/Docs/README.md).
