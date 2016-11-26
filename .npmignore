@@ -3,3 +3,4 @@
 /Docs/
 npm-debug.log
 .travis.yml
+.vscode
