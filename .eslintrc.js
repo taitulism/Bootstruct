@@ -23,7 +23,6 @@ module.exports = {
         "computed-property-spacing": "error",
         "consistent-this": "error",
         "default-case": "error",
-        "dot-location": "error",
         "dot-notation": "error",
         "eol-last": "error",
         "eqeqeq": "error",
@@ -141,6 +140,10 @@ module.exports = {
         "wrap-regex": "error",
         "yield-star-spacing": "error",
         "yoda": "error",
+        "dot-location": [
+            "error",
+            "property"
+        ],
         "func-names": [
             "error",
             "never"
