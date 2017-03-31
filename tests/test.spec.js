@@ -8,7 +8,7 @@ var bts     = require('../');
 function makeRequest (url, expectRes, done, server, verb) {
 	verb = verb || 'get';
 
-	request[verb]('http://localhost:1001' + url, function(err, response, body) {
+	request[verb]('http://localhost:8181' + url, function(err, response, body) {
 		/* Deal Breaker */ if (err) { requestErr(err); return; }
 
 		expect(body).toEqual(expectRes);
@@ -30,7 +30,7 @@ describe('Bootstruct', function() {
 
 
 		beforeEach(function() {
-			server.listen(1001, '127.0.0.1');
+			server.listen(8181, '127.0.0.1');
 		});
 		afterEach(function() {
 			server.close();
@@ -59,7 +59,7 @@ describe('Bootstruct', function() {
 
 
 		beforeEach(function() {
-			server.listen(1001, '127.0.0.1');
+			server.listen(8181, '127.0.0.1');
 		});
 		afterEach(function() {
 			server.close();
@@ -88,7 +88,7 @@ describe('Bootstruct', function() {
 
 
 		beforeEach(function() {
-			server.listen(1001, '127.0.0.1');
+			server.listen(8181, '127.0.0.1');
 		});
 		afterEach(function() {
 			server.close();
@@ -117,7 +117,7 @@ describe('Bootstruct', function() {
 
 
 		beforeEach(function() {
-			server.listen(1001, '127.0.0.1');
+			server.listen(8181, '127.0.0.1');
 		});
 		afterEach(function() {
 			server.close();
@@ -192,7 +192,7 @@ describe('Bootstruct', function() {
 
 
 		beforeEach(function() {
-			server.listen(1001, '127.0.0.1');
+			server.listen(8181, '127.0.0.1');
 		});
 		afterEach(function() {
 			server.close();
@@ -211,7 +211,7 @@ describe('Bootstruct', function() {
 
 
 		beforeEach(function() {
-			server.listen(1001, '127.0.0.1');
+			server.listen(8181, '127.0.0.1');
 		});
 		afterEach(function() {
 			server.close();
@@ -272,7 +272,7 @@ describe('Bootstruct', function() {
 
 
 		beforeEach(function() {
-			server.listen(1001, '127.0.0.1');
+			server.listen(8181, '127.0.0.1');
 		});
 		afterEach(function() {
 			server.close();
@@ -320,7 +320,7 @@ describe('Bootstruct', function() {
 
 
 		beforeEach(function() {
-			server.listen(1001, '127.0.0.1');
+			server.listen(8181, '127.0.0.1');
 		});
 		afterEach(function() {
 			server.close();
