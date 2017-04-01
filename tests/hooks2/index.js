@@ -16,7 +16,7 @@ module.exports = function (io) {
 	body +=  (this.public) ? this.public + '-' : 'ENTRY_HANDLER_FAIL_1';
 	body +=  (this.views)  ? this.views  + '-' : 'ENTRY_HANDLER_FAIL_2';
 
-	body += (this.global.stuff) ? this.global.stuff.item : 'DEFAULT_HANDLER_FAIL';
+	body += (this.app.stuff) ? this.app.stuff.item : 'DEFAULT_HANDLER_FAIL';
 
 	io.res.write(body);
 

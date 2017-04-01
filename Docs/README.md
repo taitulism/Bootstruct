@@ -147,7 +147,7 @@ module.exports = function (io) {
 
 Methods get called with the context of their holding controller so the keyword "this" refers to the controller you're in.
 
-All controllers have access to the same scope (`this.global`), which is the `app` instance itself so you could share data in your app without polluting any other global scope or reapeating the same `require`-s. 
+All controllers have access to the same scope (`this.app`), which is the `app` instance itself so you could share data in your app without polluting any global scope or reapeating the same `require`-s. 
 
 See [Bootstruct Hooks](https://github.com/taitulism/Bootstruct/blob/master/Docs/Hooks.md) to learn how to populate your app instance with properties on init.
 
@@ -275,7 +275,7 @@ Bootstruct provides you with hooks to these classes and other main parts in its 
 
 * You can add methods to the `Ctrl`'s prototype and the `IO` prototype. Create a `this.kick(io)` or a `io.getIP()` methods.
 
-* You can load your own stuff on the `app` object (`this.global` A.K.A the `app` instance) and access them from your controllers and methods. A database connection, a reference to the server, a log-to-file function or whatever.
+* You can load your own stuff on the `app` object (`this.app` A.K.A the `app` instance) and access them from your controllers and methods. A database connection, a reference to the server, a log-to-file function or whatever.
 
 * You can add your own [Hooks](https://github.com/taitulism/Bootstruct/blob/master/Docs/Hooks/README.md) on the parser and handle them. Cache the files when a "public" folder is found, precompile a "views" folder etc.
 
