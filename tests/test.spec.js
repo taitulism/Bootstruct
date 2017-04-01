@@ -1,6 +1,7 @@
-var request = require('request');
 var http    = require('http');
 var sep     = require('path').sep;
+var request = require('request');
+var expect  = require('chai').expect;
 
 var forIn   = require('../lib/utils/for-in');
 var bts     = require('../');
@@ -11,7 +12,7 @@ function makeRequest (url, expectRes, done, server, verb) {
 	request[verb]('http://localhost:8181' + url, function(err, response, body) {
 		/* Deal Breaker */ if (err) { requestErr(err); return; }
 
-		expect(body).toEqual(expectRes);
+		expect(body).to.eql(expectRes);
 
 		done && done();
 	});
