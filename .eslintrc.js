@@ -162,7 +162,7 @@ module.exports = {
         ],
         "linebreak-style": [
             "error",
-            "windows"
+            "unix"
         ],
         "newline-after-var": [
             "error",
