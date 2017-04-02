@@ -1,0 +1,201 @@
+--------------------------------------------------
+NEXT: goto links
+--------------------------------------------------
+	
+relative-links?
+
+MUST!
+
+todo
+====
+STOP THINKING! JUST DO IT!
+
+
+Docs
+====
+	get started
+		app.handler.app
+
+	improvements
+		wiki/docs/examples
+
+		Bootstruct news page
+			ChangeLog
+			what's next
+
+		about Bootstruct
+			a limited mini blog
+			just some posts (posts. not a blog.)
+
+		examples:
+			each readme has the xmp's structure, desc, supported urls, explanation
+			express/connect
+			public - use serve-static
+			auth
+			log
+			db
+			simple/medium/complex
+			views
+			tutorial
+			.gitignore + .npmignore
+
+		Bootstruct vs express (when to use and when not, weaknesses)
+
+tests
+=====
+	* add named_params test
+	* split hooks tests to tiny bits
+
+
+
+----------------------------------------------------------------
+
+
+
+=========
+Long run:
+=========
+	views go through wrapper methods? a new hook?
+	f2j: 
+		add .name & .normalizedName?
+		make async
+	utesting:
+		create ctrls with different set of methods (structure.create(ary))
+	BTS CLI
+		use entryHandlres! :D
+		create/remove/edit ctrls
+		web API for CLI
+	serveStatic
+		fix: on entryHandler[public] if there are static files put them on RC under currentCtrl namespace.
+			this way requests for all static resources will start only with /public (without the ctrl's name. this will be implicitly set on init
+			and BTS will resolve those as RC's statics.
+	use own modules (finish first)
+		structure (replace f2j)
+		entries
+		chain (simple router)
+		objLib
+			isEmpty
+			hasOwn
+			forIn
+			get (getOwn)
+
+
+
+----------------------------------------------------------------
+
+
+
+
+=====
+Misc.
+=====
+	err = new Error(title);
+	err.throw(filePath, fnName, msg, showStackFlag) 
+		// showStack when abstract fn
+		// dont when origin known
+	var fn = validator(function (a,b,c) {...})
+		var validator = function(fn) {
+			if(debugMode) {validate arguments}
+			else return fn;
+		}
+	new module:
+		server manager
+		chain - like asynq but static Q. like mounting middlewares.
+	benchmark oop
+		proto inherit X1000 (in a for loop) and check:
+			__proto__ vs getProtoOf
+			hasOwn vs parent check
+			new vs objCreate
+			copy methods to empty obj vs ?
+
+	bookmarklet - highlight text (save)
+	orderedObject
+		an object with a prop like: __order that holds a precedence array of this obj keys
+		myOrderedObject = {
+			email:
+			age:
+			lname:
+			fname:
+			__order: ['fname','lname','age','email']
+		}
+
+
+	* ctrl owner, vfactory viewobj... connection and hyrarchy
+		a is a core class (super). b inherits from a. but also being extended with abilities to be an owner of a types.
+		b controlls, contains, listens to its child a types events (both r EEs)
+
+
+		response - presets
+		action cmds = {
+				meta
+					type
+					key
+					value
+				data
+			}
+
+				anything
+			Q: 	what do i need cmds for?
+			A:	preset responses
+				errors
+				static files
+				views
+			examples:
+
+			preset:
+				type: preset
+				key:  notFound
+				value: 'u/r/l/blabla.html'
+			error:
+				type: error
+				key: msg
+				value: errHandler
+
+		ctrl cmds
+			type
+				static  (isFile) done on RC
+				method  (next === 'getView')
+				subctrl (subCtrls[next])
+				target  (  !(isSubCtrl|method)  )
+			action: 'run'
+			data: 'all'
+
+
+	/*
+	 * checkPoint is an anti debugging module.
+	 * u call check() to follow timestamps and limit the time between them.
+	 * expose handling of the callback (on over-limit)
+	 * think final API first!!!
+	 * this is copied from asynQ, for an example.
+	 */
+	var checkPoint = function (ctx) {
+		'use strict';
+
+		var CPs = [];
+		var len = 0;
+
+		var go = function () {
+			len--;
+
+			Q.shift().call(ctxObj, next);
+		};
+
+		var next = function (pushedFn) {
+			if (pushedFn) {
+				len = Q.unshift(pushedFn);
+			}
+
+			len && go();
+		};
+
+		// ------------------------
+		ctxObj.check = function (name, limit) {
+			len = Q.push(fn);
+
+			if (len === 1) {
+				go();
+			}
+
+			return this;
+		};
+	};
