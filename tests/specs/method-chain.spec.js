@@ -26,4 +26,8 @@ describe('Method-chain test', function() {
     it('should pass', function (done) {
         makeRequest('/a/b/c1', 'precpost', done, server);
     });
+
+    it('_METHOD turns a folder into a method (instead of a controller)', function (done) {
+        makeRequest('/a/b/a-method', 'premethodpost', done, server);
+    });
 });
