@@ -1,0 +1,70 @@
+
+io ───────────┐
+			  │
+function app (io) {
+			  │
+	 checkIn(io)
+			  │
+    ┌─────────┴─────┐
+    │check_nextParam│ 
+    └──┬──────────┬─┘
+   	   └──┐	      │
+	verbs(io)     │
+  ┌───────┘       │
+  │	  			  │    
+  │	function aaa (io) {
+  │				  │    
+  │		 checkIn(io)   
+  │				  │    
+  │			 [internals]...
+  │				  │    
+  │		 checkOut(io)  
+  │	}		  ┌───┘    
+  │		      │
+  └──────────┐│
+			 ││
+	checkOut(io)
+}		  ┌──┘
+		  │
+io ───────┘
+
+
+
+		 └────┐
+function bbb (io) {
+			  │
+	 checkIn(io)
+			  │
+	 verbs  (io)
+			  │
+	 checkOut(io)
+}	      ┌───┘
+		  │
+		 
+
+		 
+		       │
+		       │
+function root (io) {
+		   ┌───┘
+	first(io)
+		   │
+		function root/about (io) {
+			   ┌─────────┘
+		first(io)
+			   │
+		GET  (io)
+			   │
+		last (io)
+	}	       │
+			   │
+		   │
+	last (io)
+}	       │
+		   │
+		   └─────────┐
+
+		  
+
+
+
