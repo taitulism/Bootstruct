@@ -32,38 +32,38 @@ The target-chain is in the middle, the parent-chain is on the left and the metho
 
 All chains
 ----------
-* [$in](./Controller Hooks/%24in%20%26%20%24out.md)
-* [$out](./Controller Hooks/%24in%20%26%20%24out.md)
+* [$in](./Controller%20Hooks/%24in%20%26%20%24out.md)
+* [$out](./Controller%20Hooks/%24in%20%26%20%24out.md)
 
 
 
 
 Target-chain
 ------------
-* [index / $before_verb](./Controller Hooks/index.md)
-* [$get](./Controller Hooks/get post put delete.md)
-* [$post](./Controller Hooks/get post put delete.md)
-* [$put](./Controller Hooks/get post put delete.md)
-* [$delete](./Controller Hooks/get post put delete.md)
-* [$no_verb](./Controller Hooks/%24no_verb.md)
-* [$after_verb](./Controller Hooks/%24after_verb.md)
-* [$verbs](./Controller Hooks/%24verbs.md) (EXCEPTION: not a method)
+* [index / $before_verb](./Controller%20Hooks/index.md)
+* [$get](./Controller%20Hooks/get%20post%20put%20delete.md)
+* [$post](./Controller%20Hooks/get%20post%20put%20delete.md)
+* [$put](./Controller%20Hooks/get%20post%20put%20delete.md)
+* [$delete](./Controller%20Hooks/get%20post%20put%20delete.md)
+* [$no_verb](./Controller%20Hooks/%24no_verb.md)
+* [$after_verb](./Controller%20Hooks/%24after_verb.md)
+* [$verbs](./Controller%20Hooks/%24verbs.md) (EXCEPTION: not a method)
 
 
 
 
 Parent-chain
 ------------
-* [$pre_sub](./Controller Hooks/%24pre%20%26%20%24post%20sub.md)
-* [$post_sub](./Controller Hooks/%24pre%20%26%20%24post%20sub.md)
+* [$pre_sub](./Controller%20Hooks/%24pre%20%26%20%24post%20sub.md)
+* [$post_sub](./Controller%20Hooks/%24pre%20%26%20%24post%20sub.md)
 
 
 
 
 Method-chain
 ------------
-* [$pre_method](./Controller Hooks/%24pre%20%26%20%24post%20method.md)
-* [$post_method](./Controller Hooks/%24pre%20%26%20%24post%20method.md)
+* [$pre_method](./Controller%20Hooks/%24pre%20%26%20%24post%20method.md)
+* [$post_method](./Controller%20Hooks/%24pre%20%26%20%24post%20method.md)
 
 
 
@@ -71,13 +71,13 @@ Method-chain
 App Hooks Folder
 ================
 Bootstruct provides you with hooks to some key points in its architecture (app level hooks). You 
-can extend prototypes, add your own controller-hooks and more. Read about [Bootstruct's hooks](../App Hooks.md).
+can extend prototypes, add your own controller-hooks and more. Read about [Bootstruct's hooks](../App%20Hooks.md).
 
-* [ignore](./App Hooks/ignore.md)
-* [io_init](./App Hooks/io_init.md)
-* [io_exit](./App Hooks/io_exit.md)
-* [io_proto](./App Hooks/io_proto.md)
-* [ctrl_proto](./App Hooks/ctrl_proto.md)
-* [ctrl_hooks](./App Hooks/ctrl_hooks.md)
-* [shared_methods](./App Hooks/shared_methods.md)
-* [shared_ctrls](./App Hooks/shared_ctrls.md)
+* [ignore](./App%20Hooks/ignore.md)
+* [io_init](./App%20Hooks/io_init.md)
+* [io_exit](./App%20Hooks/io_exit.md)
+* [io_proto](./App%20Hooks/io_proto.md)
+* [ctrl_proto](./App%20Hooks/ctrl_proto.md)
+* [ctrl_hooks](./App%20Hooks/ctrl_hooks.md)
+* [shared_methods](./App%20Hooks/shared_methods.md)
+* [shared_ctrls](./App%20Hooks/shared_ctrls.md)
