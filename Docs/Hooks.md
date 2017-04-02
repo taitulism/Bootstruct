@@ -55,11 +55,11 @@ This is how you extend your `app` instance. It loads props on your app's main ob
 your app: a database connection, log methods, error methods or whatever you'd like.
 
 Here are the rest of Bootstruct's hooks (click to read about):
-* [ignore](./Hooks/App Hooks/ignore.md)
-* [io_init](./Hooks/App Hooks/io_init.md)
-* [io_exit](./Hooks/App Hooks/io_exit.md)
-* [io_proto](./Hooks/App Hooks/io_proto.md)
-* [ctrl_proto](./Hooks/App Hooks/ctrl_proto.md)
-* [ctrl_hooks](./Hooks/App Hooks/ctrl_hooks.md)
-* [shared_methods](./Hooks/App Hooks/shared_methods.md)
-* [shared_ctrls](./Hooks/App Hooks/shared_ctrls.md)
+* [ignore](./Hooks/App%20Hooks/ignore.md)
+* [io_init](./Hooks/App%20Hooks/io_init.md)
+* [io_exit](./Hooks/App%20Hooks/io_exit.md)
+* [io_proto](./Hooks/App%20Hooks/io_proto.md)
+* [ctrl_proto](./Hooks/App%20Hooks/ctrl_proto.md)
+* [ctrl_hooks](./Hooks/App%20Hooks/ctrl_hooks.md)
+* [shared_methods](./Hooks/App%20Hooks/shared_methods.md)
+* [shared_ctrls](./Hooks/App%20Hooks/shared_ctrls.md)
