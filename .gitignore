@@ -1,6 +1,4 @@
-/node_modules/
-/playground/
-/Docs/
-/playground/
+node_modules
+project
 npm-debug.log
 .vscode
