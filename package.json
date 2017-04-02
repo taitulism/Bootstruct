@@ -9,7 +9,7 @@
     "url": "https://github.com/taitulism/Bootstruct"
   },
   "scripts": {
-    "test": "mocha ./tests/test.spec.js",
+    "test": "mocha ./tests/bootstruct.spec.js",
     "lint": "eslint ./index.js ./lib"
   },
   "keywords": [
