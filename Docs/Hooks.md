@@ -32,7 +32,7 @@ The hooks folder is parsed when Bootstruct is initialized BEFORE the web-root fo
 naming them with certain names.
 
 By default, any entry in your hooks folder with a non-reserved name (e.g. `WhatEver.js`) will be `require`-d as a property on 
-your `app` instance and you could access it by using `this.global` in your methods. If the entry is a file (e.g. `WhatEver.js`), its 
+your `app` instance and you could access it by using `this.app` in your methods. If the entry is a file (e.g. `WhatEver.js`), its 
 extension (`.js`) will be ommited from the prop name:
 ``` js
 	// this is kind of what's going on behind the scenes:
@@ -51,15 +51,15 @@ If the entry is a folder, make sure to include an `index.js` file within.
 │       └── WhatEver     <──
 │           └── index.js
 ```
-This is how you extend your `app` instance. It's your app's global scope. Use it for properties and methods you need access to, from anywhere in 
+This is how you extend your `app` instance. It loads props on your app's main object,. Use it for properties and methods you need access to, from anywhere in 
 your app: a database connection, log methods, error methods or whatever you'd like.
 
 Here are the rest of Bootstruct's hooks (click to read about):
-* [ignore](./Hooks/App Hooks/ignore.md)
-* [io_init](./Hooks/App Hooks/io_init.md)
-* [io_exit](./Hooks/App Hooks/io_exit.md)
-* [io_proto](./Hooks/App Hooks/io_proto.md)
-* [ctrl_proto](./Hooks/App Hooks/ctrl_proto.md)
-* [ctrl_hooks](./Hooks/App Hooks/ctrl_hooks.md)
-* [shared_methods](./Hooks/App Hooks/shared_methods.md)
-* [shared_ctrls](./Hooks/App Hooks/shared_ctrls.md)
+* [ignore](./Hooks/App%20Hooks/ignore.md)
+* [io_init](./Hooks/App%20Hooks/io_init.md)
+* [io_exit](./Hooks/App%20Hooks/io_exit.md)
+* [io_proto](./Hooks/App%20Hooks/io_proto.md)
+* [ctrl_proto](./Hooks/App%20Hooks/ctrl_proto.md)
+* [ctrl_hooks](./Hooks/App%20Hooks/ctrl_hooks.md)
+* [shared_methods](./Hooks/App%20Hooks/shared_methods.md)
+* [shared_ctrls](./Hooks/App%20Hooks/shared_ctrls.md)

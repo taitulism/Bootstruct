@@ -1,5 +1,7 @@
 /node_modules/
 /playground/
+/project/
 /Docs/
 npm-debug.log
 .travis.yml
+.vscode
