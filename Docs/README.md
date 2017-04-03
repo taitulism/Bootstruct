@@ -265,6 +265,50 @@ module.exports = function (io, param) {
 
 
 
+Argument Smart Matching
+-----------------------
+Let's say you want to support requests like: `/bookId/351/chapter/12`. Without the smart-matching your method will probably look like:
+```js
+module.exports = function (io, bookId, bookIdValue, chapter, chapterValue) {
+	// ...
+}
+```
+
+This makes your key params ("bookId" and "chpater") redundant:
+```js
+module.exports = function (io, bookId, bookIdValue, chapter, chapterValue) {
+	bookId === 'bookId'   // static value - not very usefull
+	bookIdValue === 351   // dynamic value
+	chapter === 'chapter' // static value - not very usefull
+	chapterValue === 12   // dynamic value
+}
+```
+
+You can skip the duplication by doing:
+```js
+module.exports = function (io, $bookId, $chapter) {
+	$bookId === 351
+	$chapter === 12
+}
+```
+
+Bootstruct reads your methods on initialization and looks at their params. For any parameter that starts with a `$` sign (e.g. `$myParam`), Bootstruct will "smart-match" its value.
+
+single values like "blah" in `/bookId/351/blah/chapter/12` will be pushed last:
+```js
+module.exports = function (io, $bookId, $chapter, single) {
+	$bookId === 351
+	$chapter === 12
+	single === 'blah'
+}
+```
+
+**IMPORTANT NOTE:** The way Bootstruct extracts $params is by calling `.toString()` on your methods and a regular-expression to get the $params. Currently ES6's default value feature is not supported:  
+`function (io, $a, $b = 'default') {...}`
+
+
+
+
 Extend Bootstruct
 -----------------
 Bootstruct's three main classes are `App`, `Ctrl` and `IO`.
