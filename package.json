@@ -1,7 +1,7 @@
 {
   "name": "bootstruct",
-  "version": "1.5.0",
-  "description": "Routing by structure. A name-convention framework for Node.js.",
+  "version": "1.6.1",
+  "description": "Routing by structure. A name-convention web framework for Node.js.",
   "main": "index.js",
   "author": "Taitu Lizenbaum taitulism@gmail.com",
   "repository": {
@@ -9,7 +9,7 @@
     "url": "https://github.com/taitulism/Bootstruct"
   },
   "scripts": {
-    "test": "jasmine-node --forceexit ./tests/test.spec.js",
+    "test": "mocha ./tests/bootstruct.spec.js",
     "lint": "eslint ./index.js ./lib"
   },
   "keywords": [
@@ -24,8 +24,9 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "eslint": "3.9.1",
-    "jasmine-node": "1.14.5",
-    "request": "^2.55.0"
+    "chai": "^3.5.0",
+    "eslint": "^3.19.0",
+    "mocha": "^3.2.0",
+    "request": "^2.81.0"
   }
 }

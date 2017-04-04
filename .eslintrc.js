@@ -23,7 +23,6 @@ module.exports = {
         "computed-property-spacing": "error",
         "consistent-this": "error",
         "default-case": "error",
-        "dot-location": "error",
         "dot-notation": "error",
         "eol-last": "error",
         "eqeqeq": "error",
@@ -50,6 +49,7 @@ module.exports = {
         "no-caller": "error",
         "no-catch-shadow": "error",
         "no-confusing-arrow": "error",
+        "no-console": "error",
         "no-continue": "error",
         "no-div-regex": "error",
         "no-duplicate-imports": "error",
@@ -141,6 +141,10 @@ module.exports = {
         "wrap-regex": "error",
         "yield-star-spacing": "error",
         "yoda": "error",
+        "dot-location": [
+            "error",
+            "property"
+        ],
         "func-names": [
             "error",
             "never"
@@ -158,7 +162,7 @@ module.exports = {
         ],
         "linebreak-style": [
             "error",
-            "windows"
+            "unix"
         ],
         "newline-after-var": [
             "error",
@@ -188,7 +192,7 @@ module.exports = {
         ],
         "no-magic-numbers": [
             "warn",
-            { "ignore": [0, 1] }
+            { "ignore": [0, 1, 2] }
         ],
         "object-curly-spacing": [
             "error",
@@ -238,7 +242,6 @@ module.exports = {
         "max-statements": "off",
         "multiline-ternary": "off",
         "newline-before-return": "off",
-        "no-console": "off",
         "no-extra-parens": "off",
         "no-inline-comments": "off",
         "no-invalid-this": "off",

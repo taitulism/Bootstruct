@@ -1,3 +1,4 @@
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Build Status](https://travis-ci.org/taitulism/Bootstruct.svg?branch=master)](https://travis-ci.org/taitulism/Bootstruct)
 
 Bootstruct
@@ -21,9 +22,9 @@ Table of contents
 
 Overview
 --------
-Creating web apps with Node requires wiring up your routes manually: we need to bind different URLs to different handlers. We usually do that by coding. With Bootstruct we do it by creating files and folders.
+Creating web apps with Node requires wiring up our routes manually: we need to bind different URLs to different handlers. We usually do that by coding. With Bootstruct we do it by creating files and folders.
 
-The whole story happens in a single folder, the web-server's root folder (might ring some bells):
+The whole story (well, most of it) happens in a single folder, the web-server's root folder (might ring some bells):
 ```
 ├── myProject
 │   ├── node_modules
@@ -31,9 +32,9 @@ The whole story happens in a single folder, the web-server's root folder (might 
 │   └── www              <──
 ```
 
-Bootstruct ties that folder with your host root (domain root, localhost or just `/` in common Nodish) and routes requests through that folder's structure, matching URLs to corresponding paths under that folder. 
+Bootstruct ties that folder with your domain root (`/` in common Nodish) and routes requests through that folder's structure, matching URLs to corresponding paths under that folder. 
 
-To support routes like:
+Meaning, to support routes like:
 ```
 domain.com/
 domain.com/A
@@ -41,7 +42,7 @@ domain.com/A/B
 domain.com/A/B/C
 ```
 
-your web-root folder tree should look like:
+your web-root folder tree would generally look like:
 ```
 ├── www
 │   └── A
@@ -66,7 +67,18 @@ A request to `/A/B/C` would go through:
 
 Requests start at the web-root folder (e.g. "www"), do their way into the target-folder, then go back out to the web-root folder and you can run some code on every step of the way.
 
-**Bootstruct**:
+
+
+
+What Else?
+----------
+Bootstruct uses files and folders with special meanings as different lifecycle hooks. In addition, you can create your own hooks, extend the different components' prototypes and more.
+
+
+
+
+Bootstruct:
+-----------
 - [x] saves you from coding your routes.
 - [x] enforces a natural code separation by concept.
 - [x] provides you with great control over request flow.
