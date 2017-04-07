@@ -72,7 +72,7 @@ Requests start at the web-root folder (e.g. "www"), do their way into the target
 
 What Else?
 ----------
-Bootstruct uses files and folders with special meanings as different lifecycle hooks. In addition, you can create your own hooks, extend the different components' prototypes and more.
+Bootstruct uses files and folders with special meanings as lifecycle hooks. In addition, you can create your own hooks, extend the different components' prototypes and more.
 
 
 
