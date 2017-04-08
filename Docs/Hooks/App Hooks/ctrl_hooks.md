@@ -21,7 +21,7 @@ Let's say you want to read and cache some static resources or precompile some vi
 │   └── Public        ──> read and cache on "RC"
 ```
 
-To create entry handlers, create in your [hooks folder](https://github.com/taitulism/Bootstruct/blob/master/Docs/Hooks.md) an `ctrl_hooks.js` file or an `ctrl_hooks` folder.
+To create controller-hooks, create in your [hooks folder](https://github.com/taitulism/Bootstruct/blob/master/Docs/Hooks.md) a `ctrl_hooks.js` file or an `ctrl_hooks` folder.
 
 **File**  
 ```
