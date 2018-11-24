@@ -10,5 +10,5 @@ module.exports = function (webRoot, debug) {
 		log('Bootstruct - debugging mode started');
 	}
 
-	return app.serverHandler;
+	return app.requestHandler;
 };
