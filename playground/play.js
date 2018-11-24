@@ -1,9 +1,8 @@
-var http = require('http');
+const http = require('http');
 	
-var bts = require('../');
+const bts = require('../');
+const app = bts('www');
 
-var app = bts('./playground/www');
-
-http.createServer(app).listen(8181, function(){
-    console.log('Listening on port 8181');
+http.createServer(app).listen(8080, () => {
+    console.log('Listening on port 8080');
 });
