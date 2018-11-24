@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 const http = require('http');
 const bts  = require('../../');
 const makeRequest = require('../make-request');
