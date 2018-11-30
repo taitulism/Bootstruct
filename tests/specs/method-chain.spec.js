@@ -3,7 +3,7 @@ const bts  = require('../../');
 const makeRequest = require('../make-request');
 
 describe('Method-chain test', function() {
-    const app    = bts('./tests/Method');
+    const app    = bts('./tests/app-folders/Method');
     const server = http.createServer(app);
 
 

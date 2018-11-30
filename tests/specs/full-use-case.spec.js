@@ -3,7 +3,7 @@ const bts  = require('../../');
 const makeRequest = require('../make-request');
 
 describe('Full use case test', function() {
-    const app    = bts('./tests/www');
+    const app    = bts('./tests/app-folders/www');
     const server = http.createServer(app);
 
 

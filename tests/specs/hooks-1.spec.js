@@ -5,7 +5,7 @@ const bts  = require('../../');
 const makeRequest = require('../make-request');
 
 describe('hooks 1 test', function() {
-    const app    = bts('./tests/hooks1');
+    const app    = bts('./tests/app-folders/hooks1');
     const server = http.createServer(app);
 
 

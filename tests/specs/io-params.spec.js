@@ -3,7 +3,7 @@ const bts  = require('../../');
 const makeRequest = require('../make-request');
 
 describe('io.params test', function() {
-    const app    = bts('./tests/Params');
+    const app    = bts('./tests/app-folders/Params');
     const server = http.createServer(app);
 
 

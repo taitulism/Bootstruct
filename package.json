@@ -11,7 +11,7 @@
   "scripts": {
     "dev": "npm test -- --watch --reporter nyan",
     "test": "mocha ./tests/bootstruct.spec.js",
-    "lint": "eslint ./index.js ./lib",
+    "lint": "eslint index.js lib tests",
     "playground": "node ./playground/play.js"
   },
   "keywords": [
