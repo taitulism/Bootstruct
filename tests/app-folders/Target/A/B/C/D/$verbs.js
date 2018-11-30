@@ -1,10 +1,10 @@
 module.exports = {
-	GET: function (io) {
+	GET (io) {
 		io.res.write('get');
 		io.next();
 	},
 
-	post: function (io) {
+	post (io) {
 		io.res.write('post');
 		io.next();
 	}

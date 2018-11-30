@@ -1,4 +1,6 @@
 module.exports = function (io) {
-	io.res.write(io.params.join(',') + '|');
+	const params = io.params.join(',');
+
+	io.res.write(`${params}|`);
 	io.next();
 };

@@ -1,5 +1,5 @@
-module.exports = function (app) {
-	if (this.req.url == '/') {
+module.exports = function () {
+	if (this.req.url === '/') {
 		this.res.write('exit');
 	}
 

@@ -1,5 +1,5 @@
 module.exports = {
-	a_shared_method: function (io) {
+	a_shared_method (io) {
 		io.res.end('shared_methods');
 	}
 };

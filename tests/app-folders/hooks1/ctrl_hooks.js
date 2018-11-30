@@ -1,5 +1,5 @@
 module.exports = function (io) {
-	if (typeof this.public == 'string') {
+	if (typeof this.public === 'string') {
 		io.res.write(this.public);
 	}
 

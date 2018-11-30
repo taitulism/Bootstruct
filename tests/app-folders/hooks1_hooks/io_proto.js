@@ -1,3 +1,5 @@
 module.exports = {
-	qwe: function(){return 'io_proto';}
+	qwe () {
+		return 'io_proto';
+	}
 };

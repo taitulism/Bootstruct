@@ -1,5 +1,5 @@
 module.exports = {
-	public: function (entryMap) {
+	public () {
 		this.public = 'public';
 	}
 };
