@@ -3,7 +3,7 @@ const bts  = require('../../');
 const makeRequest = require('../make-request');
 
 describe('Wrappers test', function() {
-    const app    = bts('./tests/Wrappers');
+    const app    = bts('./tests/app-folders/Wrappers');
     const server = http.createServer(app);
 
 
