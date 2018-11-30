@@ -1,4 +1,5 @@
 module.exports = {
+    "root": true,
     "env": {
         "node": true,
         "commonjs": true,
@@ -9,6 +10,22 @@ module.exports = {
     "parserOptions": {
         "sourceType": "module"
     },
+    "overrides": [{
+		"files": 'tests/**',
+		"env": {
+			"mocha": true
+		},
+		"rules": {
+			"no-unused-expressions": "off",
+			"no-magic-numbers": "off",
+			"max-lines-per-function": "off",
+			"max-statements": "off",
+			"func-names": "off",
+			"prefer-arrow-callback": "off",
+			"global-require": "off",
+			"no-new": "off",
+		},
+	}],
     "rules": {
         "accessor-pairs": "error",
         "array-bracket-spacing": "error",

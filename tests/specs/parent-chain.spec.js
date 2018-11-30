@@ -3,7 +3,7 @@ const bts  = require('../../');
 const makeRequest = require('../make-request');
 
 describe('Parent-chain test', function() {
-    const app    = bts('./tests/Parent');
+    const app    = bts('./tests/app-folders/Parent');
     const server = http.createServer(app);
 
 
