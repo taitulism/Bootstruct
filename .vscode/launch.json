@@ -12,9 +12,13 @@
             "cwd": "${workspaceFolder}/playground",
             "windows": {
                 "program": "${workspaceFolder}\\playground\\play.js",
-                "cwd": "${workspaceFolder}\\playground",
-            },
-            
-        }
+                "cwd": "${workspaceFolder}\\playground"
+            }
+		}, {
+			"type": "node",
+			"request": "attach",
+			"name": "Debug Test",
+			"processId": "${command:PickProcess}"
+		}
     ]
 }
