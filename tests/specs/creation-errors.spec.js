@@ -42,4 +42,12 @@ describe('Creation errors', function () {
 
         expect(failedApp).to.throw('a controller and a method with the same name');
     });
+
+    it('throws an exception when a controller method has no params', function () {
+        function failedApp () {
+            bts('./tests/app-folders/creation-errors/method-no-params/www');
+        }
+
+        expect(failedApp).to.throw('must handle at least one param');
+    });
 });
