@@ -34,4 +34,12 @@ describe('Creation errors', function () {
 
         expect(failedApp).to.throw('a string or an array of strings');
     });
+
+    it('throws an exception when a file and a folder share the same name (in the web-root folder)', function () {
+        function failedApp () {
+            bts('./tests/app-folders/creation-errors/file-folder-same-name/www');
+        }
+
+        expect(failedApp).to.throw('a controller and a method with the same name');
+    });
 });
