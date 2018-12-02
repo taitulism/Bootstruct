@@ -16,6 +16,22 @@ describe('Creation errors', function () {
             bts('./tests/app-folders/creation-errors/app-hook-folder-no-index/www');
         }
 
-        expect(failedApp).to.throw('Expecting an "index.js" file ');
+        expect(failedApp).to.throw('Expecting an "index.js" file');
+    });
+
+    it('throws an exception when an `ignore` hook is not a string', function () {
+        function failedApp () {
+            bts('./tests/app-folders/creation-errors/ignore-not-string/www');
+        }
+
+        expect(failedApp).to.throw('a string or an array of strings');
+    });
+
+    it('throws an exception when an `ignore` hook item is not a string', function () {
+        function failedApp () {
+            bts('./tests/app-folders/creation-errors/ignore-item-not-string/www');
+        }
+
+        expect(failedApp).to.throw('a string or an array of strings');
     });
 });
