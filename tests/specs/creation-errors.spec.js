@@ -50,4 +50,12 @@ describe('Creation errors', function () {
 
         expect(failedApp).to.throw('must handle at least one param');
     });
+
+    it('throws an exception when an `io_init` hook in use and has no params', function () {
+        function failedApp () {
+            bts('./tests/app-folders/creation-errors/no-params-io-init/www');
+        }
+
+        expect(failedApp).to.throw('"io.init" function must handle an argument');
+    });
 });
