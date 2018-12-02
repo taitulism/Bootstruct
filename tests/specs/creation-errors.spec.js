@@ -58,4 +58,20 @@ describe('Creation errors', function () {
 
         expect(failedApp).to.throw('"io.init" function must handle an argument');
     });
+
+    it('throws an exception when an `io_init` hook is not a function', function () {
+        function failedApp () {
+            bts('./tests/app-folders/creation-errors/io-init-must-be-function/www');
+        }
+
+        expect(failedApp).to.throw('"io_init" expected to be a function');
+    });
+
+    it('throws an exception when an `io_exit` hook is not a function', function () {
+        function failedApp () {
+            bts('./tests/app-folders/creation-errors/io-exit-must-be-function/www');
+        }
+
+        expect(failedApp).to.throw('"io_exit" expected to be a function');
+    });
 });
