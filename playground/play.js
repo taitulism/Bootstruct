@@ -1,5 +1,7 @@
+/* eslint-disable */
+
 const http = require('http');
-	
+
 const bts = require('../');
 const app = bts('www');
 
