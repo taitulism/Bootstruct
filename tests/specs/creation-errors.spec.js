@@ -74,4 +74,12 @@ describe('Creation errors', function () {
 
         expect(failedApp).to.throw('"io_exit" expected to be a function');
     });
+
+    it('throws an exception when `shared_ctrl` hook is not a folder', function () {
+        function failedApp () {
+            bts('./tests/app-folders/creation-errors/shared-ctrl-not-folder/www');
+        }
+
+        expect(failedApp).to.throw('Controllers must be folders');
+    });
 });
