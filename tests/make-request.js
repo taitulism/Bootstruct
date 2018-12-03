@@ -13,7 +13,7 @@ function makeRequest (url, expectRes, done, server, verb) {
 			return;
 		}
 
-		expect(body).to.eql(expectRes);
+		expect(body).to.equal(expectRes);
 
 		done && done();
 	});
