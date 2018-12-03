@@ -4,21 +4,29 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+		{
+			"name": "Debug Tests",
+			"type": "node",
+			"request": "launch",
+			"program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
+			"args": [
+				"--timeout",
+				"999999",
+				"--colors",
+				"${workspaceFolder}/tests"
+			],
+			"internalConsoleOptions": "openOnSessionStart"
+		},
         {
+            "name": "Debug Playground",
             "type": "node",
             "request": "launch",
-            "name": "Launch Program",
             "program": "${workspaceFolder}/playground/play.js",
             "cwd": "${workspaceFolder}/playground",
             "windows": {
                 "program": "${workspaceFolder}\\playground\\play.js",
                 "cwd": "${workspaceFolder}\\playground"
             }
-		}, {
-			"type": "node",
-			"request": "attach",
-			"name": "Debug Test",
-			"processId": "${command:PickProcess}"
 		}
     ]
 }
