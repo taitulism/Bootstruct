@@ -12,7 +12,9 @@
     "dev": "npm test -- --watch --reporter nyan",
     "test": "mocha --inspect ./tests/bootstruct.spec.js",
     "lint": "eslint index.js lib tests",
-    "playground": "node ./playground/play.js"
+	"playground": "node ./playground/play.js",
+	"preversion": "npm run lint && npm test",
+    "postversion": "git push && git push --tags"
   },
   "keywords": [
     "bootstruct",
