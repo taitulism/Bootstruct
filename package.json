@@ -1,6 +1,6 @@
 {
   "name": "bootstruct",
-  "version": "1.6.1",
+  "version": "1.6.5",
   "description": "Routing by structure. A name-convention web framework for Node.js.",
   "main": "index.js",
   "author": "Taitu Lizenbaum taitulism@gmail.com",
@@ -12,8 +12,8 @@
     "dev": "npm test -- --watch --reporter nyan",
     "test": "mocha --inspect ./tests/bootstruct.spec.js",
     "lint": "eslint index.js lib tests",
-	"playground": "node ./playground/play.js",
-	"preversion": "npm run lint && npm test",
+    "playground": "node ./playground/play.js",
+    "preversion": "npm run lint && npm test",
     "postversion": "git push && git push --tags"
   },
   "keywords": [
