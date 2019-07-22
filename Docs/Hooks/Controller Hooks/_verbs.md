@@ -1,9 +1,9 @@
-$verbs
+_verbs
 ------
 
->**NOTE**: If you're using the `$verbs` folder, any duplicate \<verbs> outside it will override the ones inside.
+>**NOTE**: If you're using the `_verbs` folder, any duplicate \<verbs> outside it will override the ones inside.
 
-`$verbs` is a reserved entry name but it doesn't stand for a method like the others. `$verbs` acts only as a namespace entry to hold the different verb files.
+`_verbs` is a reserved entry name but it doesn't stand for a method like the others. `_verbs` acts only as a namespace entry to hold the different verb files.
 
 Using all verb types and having multiple sub-controllers/methods can hurt your eyes:
 ```
@@ -14,12 +14,12 @@ Using all verb types and having multiple sub-controllers/methods can hurt your e
 │   ├── about.js    <── method
 │   ├── index.js    <── verbs ("index" synonym)
 │   ├── contact.js  <── method
-│   ├── $delete.js  <── verb
-│   ├── $get.js     <── verb
-│   ├── $post.js    <── verb
-│   └── $put.js     <── verb
+│   ├── _delete.js  <── verb
+│   ├── _get.js     <── verb
+│   ├── _post.js    <── verb
+│   └── _put.js     <── verb
 ```
-For the sake of your eyes, you can use a `$verbs` folder, just as a namespace to contain the verbs entries:
+For the sake of your eyes, you can use a `_verbs` folder, just as a namespace to contain the verbs entries:
 ```
 ├── www
 │   ├── [blog]
@@ -27,7 +27,7 @@ For the sake of your eyes, you can use a `$verbs` folder, just as a namespace to
 │   ├── [profile]
 │   ├── about.js
 │   ├── contact.js
-│   └── $verbs          <──
+│   └── _verbs          <──
 │       ├── index.js
 │       ├── get.js
 │       ├── post.js
@@ -35,9 +35,9 @@ For the sake of your eyes, you can use a `$verbs` folder, just as a namespace to
 │       └── delete.js
 ```
 
->**NOTE**: Under `$verbs` namespace (file or folder), you won't be needing the $ sign for your verbs (e.g. $get, $post etc.)
+>**NOTE**: Under `_verbs` namespace (file or folder), you won't be needing the `_` sign for your verbs (e.g. _get, _post etc.)
 
-You can also use a `$verbs.js` file to export your verbs methods from an object:
+You can also use a `_verbs.js` file to export your verbs methods from an object:
 ```
 ├── www
 │   ├── [blog]
@@ -45,11 +45,11 @@ You can also use a `$verbs.js` file to export your verbs methods from an object:
 │   ├── [profile]
 │   ├── about.js
 │   ├── contact.js
-│   └── $verbs.js       <──
+│   └── _verbs.js       <──
 ```
 
 ```js
-// $verbs.js
+// _verbs.js
 module.exports = {
 	get: function (io) {
 

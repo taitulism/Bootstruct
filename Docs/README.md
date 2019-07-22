@@ -41,7 +41,7 @@ Learning Bootstruct is more about understanding how it behaves based on your fil
 
 Bootstruct is based on a mix of two quite close conventions: a folder structure convention and a filename convention. 
 
-When Bootstruct is initialized it parses your web-root folder recursively. Basically, folders become URL-controllers and files become their methods. Certain names (start with a `$` sign) are parsed into specific kinds of methods, whether they are files or folders. Eventually, your web-root folder and its sub-folders are translated into a root-controller, a nested structure of controllers and their sub-controllers. This Root-Controller (`RC` from now on) is your Bootstruct app's core object.
+When Bootstruct is initialized it parses your web-root folder recursively. Basically, folders become URL-controllers and files become their methods. Certain names (start with a `_` sign) are parsed into specific kinds of methods, whether they are files or folders. Eventually, your web-root folder and its sub-folders are translated into a root-controller, a nested structure of controllers and their sub-controllers. This Root-Controller (`RC` from now on) is your Bootstruct app's core object.
 
 >**NOTE**: Bootstruct ignores files and folders that their names start with a dot or an underscore like `.ignored` or `_ignored`).
 
@@ -103,15 +103,15 @@ The following image describes these chains: The method-chain is on the right, th
 
 >**NOTE**: Those are NOT all of Bootstruct's reserved names.
 
-All of the three chains start with `$in` and end with `$out` methods. These are the very first and last methods a controller (who has them) would call, regardless of its role per request.
+All of the three chains start with `_in` and end with `_out` methods. These are the very first and last methods a controller (who has them) would call, regardless of its role per request.
 
 The principle is pretty simple: **each chain has a center, which is its main point, and you can run some code before and after that main point.**
 
 The target-chain is all about the verbs (GET, POST, PUT, DELETE). They are for controllers' core functionality (see wiki: [CRUD](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete)). 
 
-You can run some code before or after the verb method. A "verb method" would be the exported function from a `$post.js` file or a `$post` folder for example. `$before_verb` is a synonym of `index`, mentioned in the [Get started](https://github.com/taitulism/Bootstruct/blob/master/Docs/Get%20Started.md) page. Their exported function gets called "before" any \<verb>.
+You can run some code before or after the verb method. A "verb method" would be the exported function from a `_post.js` file or a `_post` folder for example. `_before_verb` is a synonym of `index`, mentioned in the [Get started](https://github.com/taitulism/Bootstruct/blob/master/Docs/Get%20Started.md) page. Their exported function gets called "before" any \<verb>.
 
-As `$before_verb` and `$after_verb` run in the target-chain before and after any verb method does, `$pre_method` and `$post_method` will run in the method-chain before and after any user \<method> (e.g. `C.js`) and `$pre_sub`/`$post_sub` (parent-chain) will run before and after any \<sub-controller> ("pre" = before, "post" = after, not to be confused with the `$post` HTTP verb).
+As `_before_verb` and `_after_verb` run in the target-chain before and after any verb method does, `_pre_method` and `_post_method` will run in the method-chain before and after any user \<method> (e.g. `C.js`) and `_pre_sub`/`_post_sub` (parent-chain) will run before and after any \<sub-controller> ("pre" = before, "post" = after, not to be confused with the `_post` HTTP verb).
 
 The \<sub-ctrl> part is where the recursion happens, where an `io` checks in and out at controllers, parent -> child -> parent. The child, a controller itself, has its own chains and child-controllers (sub-controllers).
 
@@ -163,25 +163,25 @@ Consider this structure for example:
 ├── www
 │   └── friends
 │       ├── index.js
-│       ├── $get.js
-│       └── $post.js
+│       ├── _get.js
+│       └── _post.js
 ```
-`index`, `$get` and `$post` are all reserved names for target-chain methods.
+`index`, `_get` and `_post` are all reserved names for target-chain methods.
 
-Let's say we have a user's "/friends" page in our social network app. Our `index` checks for authentication before both verbs. Our `$get` method is pretty simple, it gets the user's friends list and sends it back to the client. Our `$post` method, from the other hand, is quite messy: it has a lot of dependencies, it validates, sends an email, etc. In this case it would be better to turn the `$post.js` file into a `$post` folder:
+Let's say we have a user's "/friends" page in our social network app. Our `index` checks for authentication before both verbs. Our `_get` method is pretty simple, it gets the user's friends list and sends it back to the client. Our `_post` method, from the other hand, is quite messy: it has a lot of dependencies, it validates, sends an email, etc. In this case it would be better to turn the `_post.js` file into a `_post` folder:
 ```
 ├── www
 │   └── friends
 │       ├── index.js   // reserved name `index`
-│       ├── $get.js
-│       └── $post
-│           ├── index.js     // = $post.js
+│       ├── _get.js
+│       └── _post
+│           ├── index.js     // = _post.js
 │           ├── validate.js
 │           ├── email.js
 │           └── etc.js
 ```
 
-The `$post` folder does NOT parsed as a controller because of its meaningful name, therefore the `index.js` file inside it is not treated as a reserved name (like `www/friends/index.js` does). It's just what Node is looking for when `require`-ing a folder. Consider: `require('friends/post')`.
+The `_post` folder does NOT parsed as a controller because of its meaningful name, therefore the `index.js` file inside it is not treated as a reserved name (like `www/friends/index.js` does). It's just what Node is looking for when `require`-ing a folder. Consider: `require('friends/post')`.
 
 In another case we have a tiny controller with `index` as its only method:
 ```
@@ -303,7 +303,7 @@ module.exports = function (io, $bookId, $chapter, single) {
 }
 ```
 
-**IMPORTANT NOTE:** The way Bootstruct extracts $params is by calling `.toString()` on your methods and a regular-expression to get the $params. Currently ES6's default value feature is not supported:  
+**IMPORTANT NOTE:** The way Bootstruct extracts $params is by calling `.toString()` on your methods and a regular string match to get the $params. Currently ES6's default value feature is not supported:  
 `function (io, $a, $b = 'default') {...}`
 
 
