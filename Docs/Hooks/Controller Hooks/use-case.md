@@ -2,38 +2,38 @@ Use case example
 ----------------
 ```
 ├── www
-│   ├── $in
+│   ├── _in
 │   │   ├── index.js
 │   │   └── helper.js
 │   ├── index.js
 │   ├── qwe.js
-│   ├── $out.js
+│   ├── _out.js
 │   └── A
-│       ├── $in.js
+│       ├── _in.js
 │       ├── index.js
-│       ├── $pre_sub.js
-│       ├── $post_sub.js
-│       ├── $out.js
+│       ├── _pre_sub.js
+│       ├── _post_sub.js
+│       ├── _out.js
 │       └── B
-│           ├── $in.js
-│           ├── $before_verb
+│           ├── _in.js
+│           ├── _before_verb
 │           │    ├── index.js
 │           │    └── helper.js
-│           ├── $get.js
-│           ├── $no_verb.js
-│           ├── $after_verb.js
-│           ├── $post_sub.js
-│           ├── $pre_sub.js
-│           ├── $out.js
+│           ├── _get.js
+│           ├── _no_verb.js
+│           ├── _after_verb.js
+│           ├── _post_sub.js
+│           ├── _pre_sub.js
+│           ├── _out.js
 │           └── C
-│               ├── $in.js
+│               ├── _in.js
 │               ├── index.js
 │               ├── verbs
 │               │   ├── get.js
 │               │   └── post
 │               │       ├── index.js
 │               │       └── helper.js
-│               └── $out.js
+│               └── _out.js
 ```
 
 Assume all files logs their paths (full path ommited for readability):
@@ -47,83 +47,83 @@ Assume all files logs their paths (full path ommited for readability):
 ```
 request: ALL `/`
 logs:
-	www/$in
+	www/_in
 	www/index
-	www/$out
+	www/_out
 
 request: ALL `/qwe`
 logs:
-	www/$in
+	www/_in
 	www/qwe
-	www/$out
+	www/_out
 
 request: ALL `/A`
 logs:
-	www/$in
-	www/A/$in
+	www/_in
+	www/A/_in
 	www/A/index
-	www/A/$out
-	www/$out
+	www/A/_out
+	www/_out
 
 request: GET `/A/B`
 logs:
-	www/$in
-	www/A/$in
-	www/A/$pre_sub
-	www/A/B/$in
-	www/A/B/$before_verb
+	www/_in
+	www/A/_in
+	www/A/_pre_sub
+	www/A/B/_in
+	www/A/B/_before_verb
 	www/A/B/get
-	www/A/B/$after_verb
-	www/A/B/$out
-	www/A/$post_sub
-	www/A/$out
-	www/$out
+	www/A/B/_after_verb
+	www/A/B/_out
+	www/A/_post_sub
+	www/A/_out
+	www/_out
 
 request: POST `/A/B`
 logs:
-	www/$in
-	www/A/$in
-	www/A/$pre_sub
-	www/A/B/$in
-	www/A/B/$before_verb
+	www/_in
+	www/A/_in
+	www/A/_pre_sub
+	www/A/B/_in
+	www/A/B/_before_verb
 	www/A/B/no_verb
-	www/A/B/$after_verb
-	www/A/B/$out
-	www/A/$post_sub
-	www/A/$out
-	www/$out
+	www/A/B/_after_verb
+	www/A/B/_out
+	www/A/_post_sub
+	www/A/_out
+	www/_out
 
 request: GET | POST `/A/B/C`
 logs:	
-	www/$in
-	www/A/$in
-	www/A/$pre_sub
-	www/A/B/$in
-	www/A/B/$pre_sub
-	www/A/B/C/$in
+	www/_in
+	www/A/_in
+	www/A/_pre_sub
+	www/A/B/_in
+	www/A/B/_pre_sub
+	www/A/B/C/_in
 	www/A/B/C/index
 	www/A/B/C/verbs/get|post (respectively)
-	www/A/B/C/$out
-	www/A/B/$post_sub
-	www/A/B/$out
-	www/A/$post_sub
-	www/A/$out
-	www/$out
+	www/A/B/C/_out
+	www/A/B/_post_sub
+	www/A/B/_out
+	www/A/_post_sub
+	www/A/_out
+	www/_out
 
 request: PUT & DELETE `/A/B/C`
 logs:
-	www/$in
-	www/A/$in
-	www/A/$pre_sub
-	www/A/B/$in
-	www/A/B/$pre_sub
-	www/A/B/C/$in
+	www/_in
+	www/A/_in
+	www/A/_pre_sub
+	www/A/B/_in
+	www/A/B/_pre_sub
+	www/A/B/C/_in
 	www/A/B/C/index
 	www/A/B/no_verb    ──> delegated
-	www/A/B/C/$out
-	www/A/B/$post_sub
-	www/A/B/$out
-	www/A/$post_sub
-	www/A/$out
-	www/$out
+	www/A/B/C/_out
+	www/A/B/_post_sub
+	www/A/B/_out
+	www/A/_post_sub
+	www/A/_out
+	www/_out
 ```
