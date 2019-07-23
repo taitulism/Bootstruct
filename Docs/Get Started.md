@@ -107,15 +107,15 @@ Bootstruct takes out this array's first item if it means something (i.e. stands 
 
 >**NOTE**: The first argument is always an `io`.
 
-Now let's create a file named "$in.js":
+Now let's create a file named "_in.js":
 ```
 ├── www
-│   ├── $in.js
+│   ├── _in.js
 │   ├── greet.js
 │   └── index.js
 ```
 
-`www/$in.js` contents:
+`www/_in.js` contents:
 ```js
 module.exports = function (io) {
 	
@@ -130,12 +130,12 @@ Request => Response:
 ```
 /          => in! hello beautiful world
 /whatever  => in! hello beautiful world
-/$in       => in! hello beautiful world
+/_in       => in! hello beautiful world
 /greet     => in! hello everyone
 /greet/you => in! hey you
 ```
 
-`$in` is one of Bootstruct's hooks (reserved names for files and folders). `$in`'s exported function will run before the other two (`index` and `greet`). This is why all the responses start with "in! ". Because `$in` is a reserved name, it won't be parsed as a method like `greet` so requesting `/$in` will be handled by `www/index.js` just like requesting `/whatever`.
+`_in` is one of Bootstruct's hooks (reserved names for files and folders). `_in`'s exported function will run before the other two (`index` and `greet`). This is why all the responses start with "in! ". Because `_in` is a reserved name, it won't be parsed as a method like `greet` so requesting `/_in` will be handled by `www/index.js` just like requesting `/whatever`.
 
 `io.next()` is called to move the `io` forward in the chain. You call it at the end of your methods.
 
