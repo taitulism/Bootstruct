@@ -1,4 +1,4 @@
 module.exports = function (io) {
-    io.res.write('pts1');
-    io.next();
+	io.res.write('pts1');
+	io.next();
 };
