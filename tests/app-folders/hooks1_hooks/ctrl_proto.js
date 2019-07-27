@@ -1,3 +1,3 @@
 module.exports = {
-	qwe: () => 'ctrl_proto'
+	qwe: () => 'ctrl_proto',
 };

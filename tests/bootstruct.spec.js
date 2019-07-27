@@ -1,4 +1,4 @@
-describe('Bootstruct', function() {
+describe('Bootstruct', () => {
 	require('./specs/creation-errors.spec');
 	require('./specs/wrappers.spec');
 	require('./specs/method-chain.spec');

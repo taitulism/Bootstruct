@@ -7,5 +7,5 @@ module.exports = {
 	post (io) {
 		io.res.write('post');
 		io.next();
-	}
+	},
 };

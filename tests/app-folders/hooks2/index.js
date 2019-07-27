@@ -1,3 +1,4 @@
+/* eslint-disable multiline-ternary */
 module.exports = function (io) {
 	let body = '';
 

@@ -1,4 +1,4 @@
-module.exports = function(io){
+module.exports = function (io) {
 	if (typeof io.qwe === 'function') {
 		io.res.write(io.qwe());
 	}
