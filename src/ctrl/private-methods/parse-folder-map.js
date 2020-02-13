@@ -29,7 +29,7 @@ module.exports = function parseFolderMap (ctrl) {
 		if (ctrlHooks[name]) {
 			ctrlHooks[name].call(ctrl, entryMap);
 		}
-		else if (shouldBeIgnored(app, key, name, isFile)) {/* ignoring */}
+		else if (shouldBeIgnored(app, key, name, isFile)) return; // eslint-disable-line
 		else if (isFile || entryMap.entries._METHOD) {
 			const method = require(entryMap.path);
 			const params = extractFnParams(method);

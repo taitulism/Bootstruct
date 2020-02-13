@@ -1,36 +1,37 @@
 {
-  "name": "bootstruct",
-  "version": "1.6.5",
-  "description": "Routing by structure. A name-convention web framework for Node.js.",
-  "main": "index.js",
-  "author": "Taitu Lizenbaum taitulism@gmail.com",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/taitulism/Bootstruct"
-  },
-  "scripts": {
-    "dev": "npm test -- --watch --reporter nyan",
-    "test": "mocha --inspect ./tests/bootstruct.spec.js",
-    "lint": "eslint index.js src tests",
-    "playground": "node ./playground/play.js",
-    "preversion": "npm run lint && npm test",
-    "postversion": "git push && git push --tags"
-  },
-  "keywords": [
-    "bootstruct",
-    "route",
-    "routing",
-    "structure",
-    "folder",
-    "app",
-    "restful",
-    "framework"
-  ],
-  "license": "MIT",
-  "devDependencies": {
-    "chai": "^4.2.0",
-    "eslint": "^5.16.0",
-    "mocha": "^5.2.0",
-    "request": "^2.88.0"
-  }
+	"name": "bootstruct",
+	"version": "1.6.5",
+	"description": "Routing by structure. A name-convention web framework for Node.js.",
+	"main": "index.js",
+	"author": "Taitu Lizenbaum taitulism@gmail.com",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/taitulism/Bootstruct"
+	},
+	"scripts": {
+		"dev": "npm test -- --watch --reporter nyan",
+		"test": "mocha --inspect ./tests/bootstruct.spec.js",
+		"lint": "eslint ./index.js ./src ./tests",
+		"check": "npm run lint && npm test",
+		"play": "node ./playground/play.js",
+		"preversion": "npm run check",
+		"postversion": "git push && git push --tags"
+	},
+	"keywords": [
+		"bootstruct",
+		"route",
+		"routing",
+		"structure",
+		"folder",
+		"app",
+		"restful",
+		"framework"
+	],
+	"license": "MIT",
+	"devDependencies": {
+		"chai": "^4.2.0",
+		"eslint": "^5.16.0",
+		"mocha": "^5.2.0",
+		"request": "^2.88.0"
+	}
 }
