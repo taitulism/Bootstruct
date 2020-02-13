@@ -99,4 +99,4 @@ Start Using Bootstruct
 *******************************************************************************
 Questions, suggestions, criticism, bugs, hugs, typos and kudos are all welcome.
 
-*taitulism(at)gmail(dot)com*
+*taitu.dev (at) gmail dot com*

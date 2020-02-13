@@ -3,7 +3,7 @@
 	"version": "1.6.5",
 	"description": "Routing by structure. A name-convention web framework for Node.js.",
 	"main": "index.js",
-	"author": "Taitu Lizenbaum taitulism@gmail.com",
+	"author": "Taitu Lizenbaum taitu.dev@gmail.com",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/taitulism/Bootstruct"
