@@ -1,6 +1,8 @@
+const {STATUS_CODES} = require('http');
+
 const hasOwnProp = require('./utils/has-own-prop');
 
-const {NOT_FOUND_STATUS_CODE} = require('./constants');
+const NOT_FOUND = 404;
 
 module.exports = function getIoClass () {
 	class IO {
@@ -36,7 +38,7 @@ module.exports = function getIoClass () {
                  | In this case, when no headers nor body have been set,
                  | Bootstruct responds with a "404 not found" by default.
                 */
-				res.writeHead(NOT_FOUND_STATUS_CODE, 'Not Found');
+				res.writeHead(NOT_FOUND, STATUS_CODES[NOT_FOUND]);
 				res.end();
 			}
 		}
