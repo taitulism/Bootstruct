@@ -4,7 +4,7 @@ const {existsSync: exists} = require('fs');
 const ctrlHooksProto = require('../ctrl/hooks');
 const appHooksProto = require('./hooks');
 const createCtrlClass = require('../ctrl');
-const createIOClass = require('../IO');
+const createIOClass = require('../io');
 const error = require('../errors');
 const {ROOT_CTRL_NAME, FOLDER} = require('../constants');
 const {
