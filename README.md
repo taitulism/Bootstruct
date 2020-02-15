@@ -22,7 +22,7 @@ Table of contents
 
 Overview
 --------
-Creating web apps with Node requires wiring up our routes manually: we need to bind different URL paths to their handlers. We usually do that by declerative coding like: `bind('GET', '/api', handler)`.
+Creating web apps with Node requires wiring up our routes, we need to bind different URL paths to their handlers. We usually do that by declerative coding. Something like: `bind('GET', '/api/books', handler)`.
 
 With Bootstruct you don't code your routes. You just export your handler and name the file with its route name.
 
