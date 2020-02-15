@@ -1,7 +1,5 @@
 const {STATUS_CODES} = require('http');
 
-const hasOwnProp = require('./utils/has-own-prop');
-
 const NOT_FOUND = 404;
 
 module.exports = function getIoClass () {
@@ -24,23 +22,12 @@ module.exports = function getIoClass () {
 		exit () {
 			const {res} = this;
 
+			// .finished is depracated since v13.4.0. Use writableFinished/writableEnded.
 			if (res.finished) return;
+			if (res.headersSent) return res.end();
 
-			if (res.headersSent) {
-				res.end();
-			}
-			else if (res._headers === null && !hasOwnProp(res, 'statusCode')) {
-
-                /*
-                 | "res._headers" is "null" until "res.setHeader" is called.
-                 | "res.statusCode" (own property) is "undefined" until "res.write" is called.
-                 | These two checks can tell that the response haven't been "touched" at all.
-                 | In this case, when no headers nor body have been set,
-                 | Bootstruct responds with a "404 not found" by default.
-                */
-				res.writeHead(NOT_FOUND, STATUS_CODES[NOT_FOUND]);
-				res.end();
-			}
+			res.writeHead(NOT_FOUND, STATUS_CODES[NOT_FOUND]);
+			res.end();
 		}
 	}
 
