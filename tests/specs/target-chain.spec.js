@@ -1,4 +1,6 @@
 const http = require('http');
+const {expect}  = require('chai');
+
 const bts  = require('../../');
 const makeRequest = require('../make-request');
 
@@ -14,62 +16,107 @@ describe('Target-chain test', function () {
 	});
 
 	it('should pass', function (done) {
-		makeRequest('/', 'b4getftr', done, 'get');
+		makeRequest('GET', '/', (body) => {
+			expect(body).to.equal('b4getftr');
+			done();
+		});
 	});
 
 	it('should pass', function (done) {
-		makeRequest('/', 'b4ftr', done, 'post');
+		makeRequest('POST', '/', (body) => {
+			expect(body).to.equal('b4ftr');
+			done();
+		});
 	});
 
 	it('should pass', function (done) {
-		makeRequest('/a', 'b41nvaftr1', done, 'get');
+		makeRequest('GET', '/a', (body) => {
+			expect(body).to.equal('b41nvaftr1');
+			done();
+		});
 	});
 
 	it('should pass', function (done) {
-		makeRequest('/a', 'b41postftr1', done, 'post');
+		makeRequest('POST', '/a', (body) => {
+			expect(body).to.equal('b41postftr1');
+			done();
+		});
 	});
 
 	it('should pass', function (done) {
-		makeRequest('/a/b', 'b42nvbftr2', done, 'get');
+		makeRequest('GET', '/a/b', (body) => {
+			expect(body).to.equal('b42nvbftr2');
+			done();
+		});
 	});
 
 	it('should pass', function (done) {
-		makeRequest('/a/b', 'b42putftr2', done, 'put');
+		makeRequest('PUT', '/a/b', (body) => {
+			expect(body).to.equal('b42putftr2');
+			done();
+		});
 	});
 
 	it('should pass', function (done) {
-		makeRequest('/a/b/c', 'b43nvcftr3', done, 'get');
+		makeRequest('GET', '/a/b/c', (body) => {
+			expect(body).to.equal('b43nvcftr3');
+			done();
+		});
 	});
 
 	it('should pass', function (done) {
-		makeRequest('/a/b/c', 'b43delftr3', done, 'delete');
+		makeRequest('DELETE', '/a/b/c', (body) => {
+			expect(body).to.equal('b43delftr3');
+			done();
+		});
 	});
 
 	it('should pass', function (done) {
-		makeRequest('/a/b/c/d', 'b44getftr4', done, 'get');
+		makeRequest('GET', '/a/b/c/d', (body) => {
+			expect(body).to.equal('b44getftr4');
+			done();
+		});
 	});
 
 	it('should pass', function (done) {
-		makeRequest('/a/b/c/d', 'b44postftr4', done, 'post');
+		makeRequest('POST', '/a/b/c/d', (body) => {
+			expect(body).to.equal('b44postftr4');
+			done();
+		});
 	});
 
 	it('should pass', function (done) {
-		makeRequest('/a/b/c/d', 'b44nvcftr4', done, 'put');
+		makeRequest('PUT', '/a/b/c/d', (body) => {
+			expect(body).to.equal('b44nvcftr4');
+			done();
+		});
 	});
 
 	it('should pass', function (done) {
-		makeRequest('/a/b/c/d/e', 'getftr5', done, 'get');
+		makeRequest('GET', '/a/b/c/d/e', (body) => {
+			expect(body).to.equal('getftr5');
+			done();
+		});
 	});
 
 	it('should pass', function (done) {
-		makeRequest('/a/b/c/d/e', 'postftr5', done, 'post');
+		makeRequest('POST', '/a/b/c/d/e', (body) => {
+			expect(body).to.equal('postftr5');
+			done();
+		});
 	});
 
 	it('should pass', function (done) {
-		makeRequest('/a/b/c/d/e', 'putftr5', done, 'put');
+		makeRequest('PUT', '/a/b/c/d/e', (body) => {
+			expect(body).to.equal('putftr5');
+			done();
+		});
 	});
 
 	it('should pass', function (done) {
-		makeRequest('/a/b/c/d/e', 'nvcftr5', done, 'delete');
+		makeRequest('DELETE', '/a/b/c/d/e', (body) => {
+			expect(body).to.equal('nvcftr5');
+			done();
+		});
 	});
 });

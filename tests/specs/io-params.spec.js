@@ -1,4 +1,6 @@
 const http = require('http');
+const {expect}  = require('chai');
+
 const bts  = require('../../');
 const makeRequest = require('../make-request');
 
@@ -15,6 +17,9 @@ describe('io.params test', function () {
 	});
 
 	it('should pass', function (done) {
-		makeRequest('/a/b/c/d/e', 'a,b,c,d,e|b,c,d,e|c,d,e|c,d,e|c,d,e|c,d,e', done);
+		makeRequest('GET', '/a/b/c/d/e', (body) => {
+			expect(body).to.equal('a,b,c,d,e|b,c,d,e|c,d,e|c,d,e|c,d,e|c,d,e');
+			done();
+		});
 	});
 });

@@ -4,7 +4,6 @@
 	newline-before-return,
 */
 const http = require('http');
-const {expect}  = require('chai');
 
 module.exports = makeRequest;
 
@@ -13,7 +12,7 @@ const options = {
 	port: 8181,
 };
 
-function makeRequest (path, expectRes, done, verb = 'GET') {
+function makeRequest (verb, path, callback) {
 	options.path = path;
 	options.method = verb.toUpperCase();
 
@@ -26,8 +25,7 @@ function makeRequest (path, expectRes, done, verb = 'GET') {
 				body += chunk;
 			})
 			.on('end', () => {
-				expect(body).to.equal(expectRes);
-				done && done();
+				callback(body);
 			});
 	});
 
