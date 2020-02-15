@@ -15,6 +15,6 @@ describe('io.params test', function () {
 	});
 
 	it('should pass', function (done) {
-		makeRequest('/a/b/c/d/e', 'a,b,c,d,e|b,c,d,e|c,d,e|c,d,e|c,d,e|c,d,e', done, server);
+		makeRequest('/a/b/c/d/e', 'a,b,c,d,e|b,c,d,e|c,d,e|c,d,e|c,d,e|c,d,e', done);
 	});
 });

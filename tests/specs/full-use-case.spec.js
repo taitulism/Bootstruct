@@ -16,46 +16,46 @@ describe('Full use case test', function () {
 
 
 	it('should pass', function (done) {
-		makeRequest('/', 'figal', done, server, 'get');
+		makeRequest('/', 'figal', done, 'get');
 	});
 
 	it('should pass', function (done) {
-		makeRequest('/', 'fial', done, server, 'post');
+		makeRequest('/', 'fial', done, 'post');
 	});
 
 	it('should pass', function (done) {
-		makeRequest('/bla', 'fiblaal', done, server, 'post');
+		makeRequest('/bla', 'fiblaal', done, 'post');
 	});
 
 	it('should pass', function (done) {
-		makeRequest('/qwe', 'fprmqweptml', done, server, 'put');
+		makeRequest('/qwe', 'fprmqweptml', done, 'put');
 	});
 
 	it('should pass', function (done) {
-		makeRequest('/a', 'fprsf1i1g1a1l1ptsl', done, server, 'get');
+		makeRequest('/a', 'fprsf1i1g1a1l1ptsl', done, 'get');
 	});
 
 	it('should pass', function (done) {
-		makeRequest('/a', 'fprsf1i1nva1l1ptsl', done, server, 'post');
+		makeRequest('/a', 'fprsf1i1nva1l1ptsl', done, 'post');
 	});
 
 	it('should pass', function (done) {
-		makeRequest('/a/asd', 'fprsf1prm1asdptm1l1ptsl', done, server);
+		makeRequest('/a/asd', 'fprsf1prm1asdptm1l1ptsl', done);
 	});
 
 	it('should pass', function (done) {
-		makeRequest('/a/asd/bla/blu', 'fprsf1prm1asdblabluptm1l1ptsl', done, server);
+		makeRequest('/a/asd/bla/blu', 'fprsf1prm1asdblabluptm1l1ptsl', done);
 	});
 
 	it('should pass', function (done) {
-		makeRequest('/a/b', 'fprsf1prs1f2i2g2a2l2pts1l1ptsl', done, server, 'get');
+		makeRequest('/a/b', 'fprsf1prs1f2i2g2a2l2pts1l1ptsl', done, 'get');
 	});
 
 	it('should pass', function (done) {
-		makeRequest('/a/b', 'fprsf1prs1f2i2nva2l2pts1l1ptsl', done, server, 'post');
+		makeRequest('/a/b', 'fprsf1prs1f2i2nva2l2pts1l1ptsl', done, 'post');
 	});
 
 	it('should pass', function (done) {
-		makeRequest('/a/b/zxc', 'fprsf1prs1f2prm2zxcptm2l2pts1l1ptsl', done, server);
+		makeRequest('/a/b/zxc', 'fprsf1prs1f2prm2zxcptm2l2pts1l1ptsl', done);
 	});
 });

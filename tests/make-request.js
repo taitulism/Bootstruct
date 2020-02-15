@@ -3,26 +3,37 @@
 	max-params,
 	newline-before-return,
 */
-const request = require('request');
+const http = require('http');
 const {expect}  = require('chai');
 
 module.exports = makeRequest;
 
-function makeRequest (url, expectRes, done, server, verb) {
-	verb = verb || 'get';
+const options = {
+	hostname: '127.0.0.1',
+	port: 8181,
+};
 
-	request[verb](`http://localhost:8181${url}`, function (err, response, body) {
-		if (err) {
-			requestErr(err);
-			return;
-		}
+function makeRequest (path, expectRes, done, verb = 'GET') {
+	options.path = path;
+	options.method = verb.toUpperCase();
 
-		expect(body).to.equal(expectRes);
+	const req = http.request(options, (response) => {
+		let body = '';
 
-		done && done();
+		response
+			.setEncoding('utf8')
+			.on('data', (chunk) => {
+				body += chunk;
+			})
+			.on('end', () => {
+				expect(body).to.equal(expectRes);
+				done && done();
+			});
 	});
-}
 
-function requestErr (err) {
-	console.log('request-module ERROR:\n', err);
+	req.on('error', (err) => {
+		console.log('makeRequest ERROR:\n', err);
+	});
+
+	req.end();
 }

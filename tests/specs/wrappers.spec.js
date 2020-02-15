@@ -16,14 +16,14 @@ describe('Wrappers test', function () {
 
 
 	it('should pass', function (done) {
-		makeRequest('/', 'fl', done, server);
+		makeRequest('/', 'fl', done);
 	});
 
 	it('should pass', function (done) {
-		makeRequest('/a', 'ff1l1l', done, server);
+		makeRequest('/a', 'ff1l1l', done);
 	});
 
 	it('should pass', function (done) {
-		makeRequest('/a/b', 'ff1f2l2l1l', done, server);
+		makeRequest('/a/b', 'ff1f2l2l1l', done);
 	});
 });

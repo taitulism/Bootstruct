@@ -16,14 +16,14 @@ describe('Parent-chain test', function () {
 
 
 	it('should pass', function (done) {
-		makeRequest('/a/b1', 'prebpost', done, server);
+		makeRequest('/a/b1', 'prebpost', done);
 	});
 
 	it('should pass', function (done) {
-		makeRequest('/a/b/c1', 'prepre1cpost1post', done, server);
+		makeRequest('/a/b/c1', 'prepre1cpost1post', done);
 	});
 
 	it('should pass', function (done) {
-		makeRequest('/a/b/c/d1', 'prepre1pre2dpost2post1post', done, server);
+		makeRequest('/a/b/c/d1', 'prepre1pre2dpost2post1post', done);
 	});
 });

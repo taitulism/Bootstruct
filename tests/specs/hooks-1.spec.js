@@ -18,34 +18,34 @@ describe('hooks 1 test', function() {
 
 
     it('should pass ignore test', function (done) {
-        makeRequest('/ignored', '', done, server);
+        makeRequest('/ignored', '', done);
     });
 
     it('should pass io_init test', function (done) {
-        makeRequest('/io_init', 'io_init', done, server);
+        makeRequest('/io_init', 'io_init', done);
     });
 
     it('should pass io_exit test', function (done) {
-        makeRequest('/io_exit', 'io_exit', done, server);
+        makeRequest('/io_exit', 'io_exit', done);
     });
 
     it('should pass ctrl_proto test', function (done) {
-        makeRequest('/ctrl_proto', 'ctrl_proto', done, server);
+        makeRequest('/ctrl_proto', 'ctrl_proto', done);
     });
 
     it('should pass io_proto test', function (done) {
-        makeRequest('/io_proto', 'io_proto', done, server);
+        makeRequest('/io_proto', 'io_proto', done);
     });
 
     it('should pass ctrl_hooks test', function (done) {
-        makeRequest('/ctrl_hooks', 'public', done, server);
+        makeRequest('/ctrl_hooks', 'public', done);
     });
 
     it('should pass shared_methods test', function (done) {
-        makeRequest('/a_shared_method', 'shared_methods', done, server);
+        makeRequest('/a_shared_method', 'shared_methods', done);
     });
 
     it('should pass item test', function (done) {
-        makeRequest('/item', 'item', done, server);
+        makeRequest('/item', 'item', done);
     });
 });
