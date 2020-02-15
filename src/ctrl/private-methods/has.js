@@ -1,6 +1,5 @@
 const isEmpty = require('../../utils/is-empty');
 
-
 /*
   ┌──────────────────────────────────────────────────────────────
   │ "delegate" means that when "noVerb" found for a ctrl, all of

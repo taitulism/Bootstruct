@@ -4,8 +4,8 @@
  │     ctrl.id = "parent.id + / + own name"
  │ id is unique, name isn't.
  │ examples:
- │     name: 'foo'  │ 'bar'      │ 'foo'
- │     id:   '/foo' │ '/foo/bar' │ '/foo/bar/foo'
+ │     id:  '/A' │ '/A/B' │ '/A/B/A'
+ │     name: 'A' │  'B'   │ 'A'
 */
 module.exports = function setId (ctrl) {
 	if (ctrl.isRootCtrl) return '/';
