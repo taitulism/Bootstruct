@@ -15,8 +15,7 @@ const {
 
 class App {
 	constructor (folderName, debug) {
-		folderName = folderName || 'www';
-
+		if (!folderName) throw error.webRootFolderNotFound(folderName);
 		const webRootFolderPath = resolve(folderName);
 
 		if (!exists(webRootFolderPath)) {
