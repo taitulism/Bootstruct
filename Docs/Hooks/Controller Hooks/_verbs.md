@@ -12,7 +12,7 @@ Using all verb types and having multiple sub-controllers/methods can hurt your e
 │   ├── [messages]  <── controller
 │   ├── [profile]   <── controller
 │   ├── about.js    <── method
-│   ├── index.js    <── verbs ("index" synonym)
+│   ├── index.js    <── verbs ("index" alias)
 │   ├── contact.js  <── method
 │   ├── _delete.js  <── verb
 │   ├── _get.js     <── verb

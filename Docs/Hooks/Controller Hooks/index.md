@@ -5,7 +5,7 @@ index
 
 >**NOTE**: `index` is the only reserved name that doesn't start with a `_` sign.
 
-`index` is a reserved entry name (and so are its synonyms). Its exported function gets mounted on the target-chain of the controller it's in. The `index` method gets called when its controller is the request target-controller, for **all** HTTP verbs.
+`index` is a reserved entry name (and so are its aliases). Its exported function gets mounted on the target-chain of the controller it's in. The `index` method gets called when its controller is the request target-controller, for **all** HTTP verbs.
 
 Example structure:
 ```

@@ -16,7 +16,7 @@ Example structure:
 │       └── _post.js  ──> POST requests to '/A'
 ```
 
-If you have an `index` method as well, it will get called **before** any verb does. That's why `index` has `_before_verb` as a synonym.
+If you have an `index` method as well, it will get called **before** any verb does. That's why `index` has `_before_verb` as an alias.
 
 >**NOTE**: There's also an `_after_verb` method.
 

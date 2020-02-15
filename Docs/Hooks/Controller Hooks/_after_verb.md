@@ -3,7 +3,7 @@ _after_verb
 **Chain**: Target.  
 **Synonym**: `_after-verb`
 
-`_after_verb`, like `_before_verb` (`index` synonym), will run for **any** request type in the **target**-controller but **after** the \<verb> method.
+`_after_verb`, like `_before_verb` (`index` alias), will run for **any** request type in the **target**-controller but **after** the \<verb> method.
 ```
 ├── www
 │   ├── _before_verb.js

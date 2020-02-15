@@ -109,7 +109,7 @@ The principle is pretty simple: **each chain has a center, which is its main poi
 
 The target-chain is all about the verbs (GET, POST, PUT, DELETE). They are for controllers' core functionality (see wiki: [CRUD](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete)). 
 
-You can run some code before or after the verb method. A "verb method" would be the exported function from a `_post.js` file or a `_post` folder for example. `_before_verb` is a synonym of `index`, mentioned in the [Get started](https://github.com/taitulism/Bootstruct/blob/master/Docs/Get%20Started.md) page. Their exported function gets called "before" any \<verb>.
+You can run some code before or after the verb method. A "verb method" would be the exported function from a `_post.js` file or a `_post` folder for example. `_before_verb` is an alias of `index`, mentioned in the [Get started](https://github.com/taitulism/Bootstruct/blob/master/Docs/Get%20Started.md) page. Their exported function gets called "before" any \<verb>.
 
 As `_before_verb` and `_after_verb` run in the target-chain before and after any verb method does, `_pre_method` and `_post_method` will run in the method-chain before and after any user \<method> (e.g. `C.js`) and `_pre_sub`/`_post_sub` (parent-chain) will run before and after any \<sub-controller> ("pre" = before, "post" = after, not to be confused with the `_post` HTTP verb).
 

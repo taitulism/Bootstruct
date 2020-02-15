@@ -20,7 +20,7 @@ they all must eventually export a single function that handles a single argument
 
 One exception is the `_verbs` name.
 
->**NOTE**: Reserved names with under_scores have a dash-version as synonym e.g. `_no_verb`/`_no-verb`.
+>**NOTE**: Reserved names with under_scores have a dash-version as aliases e.g. `_no_verb`/`_no-verb`.
 
 The following image describes a controller's chains (explained in the 
 [docs main page](https://github.com/taitulism/Bootstruct/blob/master/README.md#controllers-flow)): 
