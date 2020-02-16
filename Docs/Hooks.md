@@ -4,7 +4,7 @@ Bootstruct provides you with hooks to some key points in its architecture. It wo
 Bootstruct's components. Not sure? read the following paragraph or go back to [docs main page](https://github.com/taitulism/Bootstruct/blob/master/README.md).
 
 In short:  
-* The `www` folder is an office building with departments (`controllers`) and sub-departments. 
+* The `api` folder is an office building with departments (`controllers`) and sub-departments. 
 * Visitors (`io`) check in and out at this office. 
 * All departments have access to the building infrastructure (the `app` object).
 
@@ -13,15 +13,15 @@ In short:
 
 The App Hooks Folder
 --------------------
-Up until now it was all about the web-root folder, `www`. Bootstruct app level hooks are put in another folder. On init Bootstruct looks for a 
-folder whose name is like your web-root folder's name with a trailing: "**_hooks**" in its name. If your web-root folder is `www`, Bootstruct will 
-look for a folder named `www_hooks`:
+Up until now it was all about the web-root folder, `api`. Bootstruct app level hooks are put in another folder. On init Bootstruct looks for a 
+folder whose name is like your web-root folder's name with a trailing: "**_hooks**" in its name. If your web-root folder is `api`, Bootstruct will 
+look for a folder named `api_hooks`:
 ```
 ├── myProject
 │   ├── node_modules
 │   ├── server-index.js
-│   ├── www
-│   └── www_hooks   <──
+│   ├── api
+│   └── api_hooks   <──
 ```
 
 
@@ -37,7 +37,7 @@ extension (`.js`) will be ommited from the prop name:
 ``` js
 	// this is kind of what's going on behind the scenes:
 	app = {
-		WhatEver: require('www_hooks/WhatEver');
+		WhatEver: require('api_hooks/WhatEver');
 	}
 ```
 
@@ -46,8 +46,8 @@ If the entry is a folder, make sure to include an `index.js` file within.
 ├── myProject
 │   ├── node_modules
 │   ├── server-index.js
-│   ├── www
-│   └── www_hooks
+│   ├── api
+│   └── api_hooks
 │       └── WhatEver     <──
 │           └── index.js
 ```

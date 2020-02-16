@@ -7,7 +7,7 @@ When Bootstruct is initialized it parses the web-root folder. User folders becom
 
 An example would be:
 ```
-├── www
+├── api
 │   ├── _myModules     <── ignored by parser
 │   │   ├── helper1.js
 │   │   ├── helper2.js
@@ -23,8 +23,8 @@ You can add "myModules" (without the underscore) to the parser's ignore list. Yo
 ├── myProject
 │   ├── node_modules
 │   ├── server-index.js
-│   ├── www
-│   └── www_hooks
+│   ├── api
+│   └── api_hooks
 │       └── ignore.js   <──
 ```
 

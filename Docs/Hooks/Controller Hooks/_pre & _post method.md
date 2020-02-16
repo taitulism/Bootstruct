@@ -5,7 +5,7 @@ _pre_method & _post_method
 
 These reserved methods will run before and after the target-method (pre=before, post=after).
 ```
-├── www
+├── api
 │   ├── _in.js
 │   ├── index.js
 │   ├── _pre_method.js    <── runs before methods
@@ -19,24 +19,24 @@ Assume all files log their names and calling `io.next()`:
 ```
 request: /
 logs:
-	www/_in
-	www/index
-	www/_out
+	api/_in
+	api/index
+	api/_out
 (no method was called)
 
 request: /a
 logs:
-	www/_in
-	www/_pre_method   <──
-	www/A.js
-	www/_post_method  <──
-	www/_out
+	api/_in
+	api/_pre_method   <──
+	api/A.js
+	api/_post_method  <──
+	api/_out
 
 request: /b
 logs:
-	www/_in
-	www/_pre_method   <──
-	www/B.js
-	www/_post_method  <──
-	www/_out
+	api/_in
+	api/_pre_method   <──
+	api/B.js
+	api/_post_method  <──
+	api/_out
 ```

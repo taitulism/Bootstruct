@@ -16,8 +16,8 @@ To create a shared controller, create in your [hooks folder](https://github.com/
 ├── myProject
 │   ├── node_modules
 │   ├── server-index.js
-│   ├── www
-│   └── www_hooks
+│   ├── api
+│   └── api_hooks
 │       └── shared_ctrls  <──
 │           └── test
 ```

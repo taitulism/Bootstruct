@@ -18,8 +18,8 @@ To create a shared method, create in your [hooks folder](https://github.com/tait
 ├── myProject
 │   ├── node_modules
 │   ├── server-index.js
-│   ├── www
-│   └── www_hooks
+│   ├── api
+│   └── api_hooks
 │       └── shared_methods.js  <──
 ```
 When using a file it should export an object of named function:
@@ -35,8 +35,8 @@ When using a file it should export an object of named function:
 ├── myProject
 │   ├── node_modules
 │   ├── server-index.js
-│   ├── www
-│   └── www_hooks
+│   ├── api
+│   └── api_hooks
 │       └── shared_methods  <──
 │           └── help.js
 ```

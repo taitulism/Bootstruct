@@ -3,7 +3,7 @@ Bootstruct Hooks
 Bootstruct has some reserved names for files and folders ("entries", for short) that on parsing stage (app initialization) have a 
 special meaning.
 
-Bootstruct parses two folders on init: the web-root folder (e.g. `www`) and its related hooks folder (e.g. `www_hooks`, optional). 
+Bootstruct parses two folders on init: the web-root folder (e.g. `api`) and its related hooks folder (e.g. `api_hooks`, optional). 
 Each has its own parser with its reserved names for entries (files and folders) and each entry with a reserved name plays its own role in 
 your app's play.
 

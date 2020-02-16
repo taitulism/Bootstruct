@@ -1,7 +1,7 @@
 Use case example
 ----------------
 ```
-├── www
+├── api
 │   ├── _in
 │   │   ├── index.js
 │   │   └── helper.js
@@ -47,83 +47,83 @@ Assume all files logs their paths (full path ommited for readability):
 ```
 request: ALL `/`
 logs:
-	www/_in
-	www/index
-	www/_out
+	api/_in
+	api/index
+	api/_out
 
 request: ALL `/qwe`
 logs:
-	www/_in
-	www/qwe
-	www/_out
+	api/_in
+	api/qwe
+	api/_out
 
 request: ALL `/A`
 logs:
-	www/_in
-	www/A/_in
-	www/A/index
-	www/A/_out
-	www/_out
+	api/_in
+	api/A/_in
+	api/A/index
+	api/A/_out
+	api/_out
 
 request: GET `/A/B`
 logs:
-	www/_in
-	www/A/_in
-	www/A/_pre_sub
-	www/A/B/_in
-	www/A/B/_before_verb
-	www/A/B/get
-	www/A/B/_after_verb
-	www/A/B/_out
-	www/A/_post_sub
-	www/A/_out
-	www/_out
+	api/_in
+	api/A/_in
+	api/A/_pre_sub
+	api/A/B/_in
+	api/A/B/_before_verb
+	api/A/B/get
+	api/A/B/_after_verb
+	api/A/B/_out
+	api/A/_post_sub
+	api/A/_out
+	api/_out
 
 request: POST `/A/B`
 logs:
-	www/_in
-	www/A/_in
-	www/A/_pre_sub
-	www/A/B/_in
-	www/A/B/_before_verb
-	www/A/B/no_verb
-	www/A/B/_after_verb
-	www/A/B/_out
-	www/A/_post_sub
-	www/A/_out
-	www/_out
+	api/_in
+	api/A/_in
+	api/A/_pre_sub
+	api/A/B/_in
+	api/A/B/_before_verb
+	api/A/B/no_verb
+	api/A/B/_after_verb
+	api/A/B/_out
+	api/A/_post_sub
+	api/A/_out
+	api/_out
 
 request: GET | POST `/A/B/C`
 logs:	
-	www/_in
-	www/A/_in
-	www/A/_pre_sub
-	www/A/B/_in
-	www/A/B/_pre_sub
-	www/A/B/C/_in
-	www/A/B/C/index
-	www/A/B/C/verbs/get|post (respectively)
-	www/A/B/C/_out
-	www/A/B/_post_sub
-	www/A/B/_out
-	www/A/_post_sub
-	www/A/_out
-	www/_out
+	api/_in
+	api/A/_in
+	api/A/_pre_sub
+	api/A/B/_in
+	api/A/B/_pre_sub
+	api/A/B/C/_in
+	api/A/B/C/index
+	api/A/B/C/verbs/get|post (respectively)
+	api/A/B/C/_out
+	api/A/B/_post_sub
+	api/A/B/_out
+	api/A/_post_sub
+	api/A/_out
+	api/_out
 
 request: PUT & DELETE `/A/B/C`
 logs:
-	www/_in
-	www/A/_in
-	www/A/_pre_sub
-	www/A/B/_in
-	www/A/B/_pre_sub
-	www/A/B/C/_in
-	www/A/B/C/index
-	www/A/B/no_verb    ──> delegated
-	www/A/B/C/_out
-	www/A/B/_post_sub
-	www/A/B/_out
-	www/A/_post_sub
-	www/A/_out
-	www/_out
+	api/_in
+	api/A/_in
+	api/A/_pre_sub
+	api/A/B/_in
+	api/A/B/_pre_sub
+	api/A/B/C/_in
+	api/A/B/C/index
+	api/A/B/no_verb    ──> delegated
+	api/A/B/C/_out
+	api/A/B/_post_sub
+	api/A/B/_out
+	api/A/_post_sub
+	api/A/_out
+	api/_out
 ```

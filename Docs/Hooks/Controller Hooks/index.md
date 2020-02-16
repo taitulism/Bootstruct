@@ -9,7 +9,7 @@ index
 
 Example structure:
 ```
-├── www   (RC)
+├── api   (RC)
 │   ├── index.js      ──> handles requests to /
 │   └── A
 │       └── index.js  ──> handles requests to /A
@@ -20,14 +20,14 @@ If a controller has no sub-controllers and has only an `index` method, like "A" 
 
 Before:
 ```
-├── www
+├── api
 │   ├── index.js
 │   └── A          ──> folder
 │       └── index.js
 ```
 After:
 ```
-├── www
+├── api
 │   ├── index.js
 │   └── A.js       ──> file
 ```

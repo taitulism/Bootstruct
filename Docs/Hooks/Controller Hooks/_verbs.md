@@ -7,7 +7,7 @@ _verbs
 
 Using all verb types and having multiple sub-controllers/methods can hurt your eyes:
 ```
-├── www
+├── api
 │   ├── [blog]      <── controller
 │   ├── [messages]  <── controller
 │   ├── [profile]   <── controller
@@ -21,7 +21,7 @@ Using all verb types and having multiple sub-controllers/methods can hurt your e
 ```
 For the sake of your eyes, you can use a `_verbs` folder, just as a namespace to contain the verbs entries:
 ```
-├── www
+├── api
 │   ├── [blog]
 │   ├── [messages]
 │   ├── [profile]
@@ -39,7 +39,7 @@ For the sake of your eyes, you can use a `_verbs` folder, just as a namespace to
 
 You can also use a `_verbs.js` file to export your verbs methods from an object:
 ```
-├── www
+├── api
 │   ├── [blog]
 │   ├── [messages]
 │   ├── [profile]

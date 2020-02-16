@@ -16,8 +16,8 @@ To extend the `IO` prototype, create in your [hooks folder](https://github.com/t
 ├── myProject
 │   ├── node_modules
 │   ├── server-index.js
-│   ├── www
-│   └── www_hooks
+│   ├── api
+│   └── api_hooks
 │       └── io_proto.js  <──
 ```
 When using a file it should export an object:
@@ -33,8 +33,8 @@ When using a file it should export an object:
 ├── myProject
 │   ├── node_modules
 │   ├── server-index.js
-│   ├── www
-│   └── www_hooks
+│   ├── api
+│   └── api_hooks
 │       └── io_proto  <──
 │           └── parseQryStr.js
 ```

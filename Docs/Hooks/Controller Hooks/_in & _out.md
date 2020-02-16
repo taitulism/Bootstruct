@@ -7,7 +7,7 @@ They get called for **any** request to the controller they are in.
 
 Assume:
 ```
-├── www
+├── api
 │   ├── _in.js
 │   ├── index.js
 │   ├── _out.js
@@ -28,23 +28,23 @@ The following shows the logs we'll get for different requests:
 
 **request**: `/`  
 **logs**:  
- &nbsp; path/to/www/_in.js  
- &nbsp; path/to/www/index.js  
- &nbsp; path/to/www/_out.js
+ &nbsp; path/to/api/_in.js  
+ &nbsp; path/to/api/index.js  
+ &nbsp; path/to/api/_out.js
 
 **request**: `/A`  
 **logs**:  
- &nbsp; path/to/www/_in.js  
- &nbsp; path/to/www/A/_in.js  
- &nbsp; path/to/www/A/index.js  
- &nbsp; path/to/www/A/_out.js  
- &nbsp; path/to/www/_out.js
+ &nbsp; path/to/api/_in.js  
+ &nbsp; path/to/api/A/_in.js  
+ &nbsp; path/to/api/A/index.js  
+ &nbsp; path/to/api/A/_out.js  
+ &nbsp; path/to/api/_out.js
 
 `_in` and `_out` always get called. `index` runs only in the target-controller. 
 
 Now with verbs:
 ```
-├── www
+├── api
 │   ├── _in.js
 │   ├── _before_verb.js  ("index" alias)
 │   ├── _get.js     <──
@@ -58,38 +58,38 @@ Now with verbs:
 │       └── _out.js
 ```
 
->**NOTE**: The full path to the `www` folder and file extensions (.js) were removed from log for readability:
+>**NOTE**: The full path to the `api` folder and file extensions (.js) were removed from log for readability:
 
 ```
 request: GET `/`
 logs:
-	www/_in
-	www/index
-	www/_get
-	www/_out
+	api/_in
+	api/index
+	api/_get
+	api/_out
 
 request: POST `/`
 logs:
-	www/_in
-	www/index
-	www/_post
-	www/_out
+	api/_in
+	api/index
+	api/_post
+	api/_out
 
 request: GET `/A`
 logs:
-	www/_in
-	www/A/_in
-	www/A/index
-	www/A/_get
-	www/A/_out
-	www/_out
+	api/_in
+	api/A/_in
+	api/A/index
+	api/A/_get
+	api/A/_out
+	api/_out
 
 request: POST `/A`
 logs:
-	www/_in
-	www/A/_in
-	www/A/index
-	www/A/_post
-	www/A/_out
-	www/_out
+	api/_in
+	api/A/_in
+	api/A/index
+	api/A/_post
+	api/A/_out
+	api/_out
 ```

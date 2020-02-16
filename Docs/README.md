@@ -56,7 +56,7 @@ On request, a new `io` object "checks-in" at your `RC`. It does its way in throu
 
 As mention at the [overview](https://github.com/taitulism/Bootstruct/blob/master/README.md) on the main page, with this structure:
 ```
-├── www (RC)
+├── api (RC)
 │   └── A
 │       └── B
 ```
@@ -84,7 +84,7 @@ Controller's Flow
 -----------------
 Every request has a target-controller. A request's target-controller is the last existing controller whose name found in the URL. A controller can act as the request's target-controller or as one of the target-controller's parents. For example:
 ```
-├── www
+├── api
 │   └── A
 │       └── B
 │           └── C.js
@@ -160,7 +160,7 @@ As said, Bootstruct translates user folders to controllers and user files to met
 
 Consider this structure for example:
 ```
-├── www
+├── api
 │   └── friends
 │       ├── index.js
 │       ├── _get.js
@@ -170,7 +170,7 @@ Consider this structure for example:
 
 Let's say we have a user's "/friends" page in our social network app. Our `index` checks for authentication before both verbs. Our `_get` method is pretty simple, it gets the user's friends list and sends it back to the client. Our `_post` method, from the other hand, is quite messy: it has a lot of dependencies, it validates, sends an email, etc. In this case it would be better to turn the `_post.js` file into a `_post` folder:
 ```
-├── www
+├── api
 │   └── friends
 │       ├── index.js   // reserved name `index`
 │       ├── _get.js
@@ -181,24 +181,24 @@ Let's say we have a user's "/friends" page in our social network app. Our `index
 │           └── etc.js
 ```
 
-The `_post` folder does NOT parsed as a controller because of its meaningful name, therefore the `index.js` file inside it is not treated as a reserved name (like `www/friends/index.js` does). It's just what Node is looking for when `require`-ing a folder. Consider: `require('friends/post')`.
+The `_post` folder does NOT parsed as a controller because of its meaningful name, therefore the `index.js` file inside it is not treated as a reserved name (like `api/friends/index.js` does). It's just what Node is looking for when `require`-ing a folder. Consider: `require('friends/post')`.
 
 In another case we have a tiny controller with `index` as its only method:
 ```
-├── www               ──> controller
+├── api               ──> controller
 │   └── home          ──> controller
 │       └── index.js  ──> method
 ```
 Here it would be wise to cut the overhead of a controller and turn it into a method (a file):
 ```
-├── www          ──> controller
+├── api          ──> controller
 │   └── home.js  ──> method
 ```
 Both handle requests to `/home` but now instead of having two controllers and a method we have only one controller with a single method.
 
 Generally folders become controllers but let's say we want a `home` method but due to its complexity we would like to turn it into a folder. In this case, we can put a flag entry named **_METHOD** inside the `home` folder and it won't be parsed as a controller but as a method.
 ```
-├── www
+├── api
 │   └── home               ──> becomes a method
 │       ├── index.js
 │       ├── dependency.js
@@ -207,7 +207,7 @@ Generally folders become controllers but let's say we want a `home` method but d
 
 If you want a certain entry to be ignored by the parser, add a preceding underscore or a dot to its name:
 ```
-├── www
+├── api
 │   ├── _myModules      <── 
 │   │   ├── helper1.js
 │   │   └── helper2.js
@@ -241,11 +241,11 @@ etc.
 
 Controllers (with the `RC` as an exception) remove their names from the array (always the first item) so your target-controller's methods are only left with the params that doesn't stand for a controller or a method (e.g. `['whatever']`).
 ```
-www      ──>  io.params = [A,B,whatever]
-www/A    ──>  io.params = [B,whatever]
-www/A/B  ──>  io.params = [whatever]
-www/A    ──>  io.params = [whatever]
-www      ──>  io.params = [whatever]
+api      ──>  io.params = [A,B,whatever]
+api/A    ──>  io.params = [B,whatever]
+api/A/B  ──>  io.params = [whatever]
+api/A    ──>  io.params = [whatever]
+api      ──>  io.params = [whatever]
 ```
 
 Methods always get called with `io` as their first argument. The rest of the arguments are the items in `io.params` (if any). On request to `/A/B/whatever` your methods in "B" controller's will get called with `io` as the first argument, and `whatever` as the second one so you can use named params in addition to the `io.params`:

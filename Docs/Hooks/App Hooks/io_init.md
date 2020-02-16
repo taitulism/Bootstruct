@@ -14,8 +14,8 @@ To do that, create in your [hooks folder](https://github.com/taitulism/Bootstruc
 ├── myProject
 │   ├── node_modules
 │   ├── server-index.js
-│   ├── www
-│   └── www_hooks
+│   ├── api
+│   └── api_hooks
 │       └── io_init.js  <──
 ```
 When using a file it should export an object:
@@ -31,8 +31,8 @@ If your `io_init` gets too big for a single file, turn it into a folder and expo
 ├── myProject
 │   ├── node_modules
 │   ├── server-index.js
-│   ├── www
-│   └── www_hooks
+│   ├── api
+│   └── api_hooks
 │       └── io_init  <──
 │           └── index.js
 ```

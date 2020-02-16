@@ -13,7 +13,7 @@ An "entry handler" is a named function. The name is for the parser to match with
 
 Let's say you want to read and cache some static resources or precompile some views (templates) in your different controllers. You can add the parser with a `views` handler or a `public` handler to run when it "hits" these names in your controllers. For example:
 ```
-├── www (RC)
+├── api (RC)
 │   ├── blogPost
 │   │    ├── get.js
 │   │    ├── post.js
@@ -28,8 +28,8 @@ To create controller-hooks, create in your [hooks folder](https://github.com/tai
 ├── myProject
 │   ├── node_modules
 │   ├── server-index.js
-│   ├── www
-│   └── www_hooks
+│   ├── api
+│   └── api_hooks
 │       └── ctrl_hooks.js  <──
 ```
 When using a file it should export an object of named functions like:
@@ -46,8 +46,8 @@ When using a file it should export an object of named functions like:
 ├── myProject
 │   ├── node_modules
 │   ├── server-index.js
-│   ├── www
-│   └── www_hooks
+│   ├── api
+│   └── api_hooks
 │       └── ctrl_hooks  <──
 │           ├── views
 │           └── public.js
@@ -69,7 +69,7 @@ The only argument passed to your handler functions is an object called `entryMap
 
 This object is a map of the parsed entry (e.g. `Public`, `Views`). It has two or three properties: 
 
-* `path` (string) - The absolute path to the entry (e.g. `'c:/www/blogPost/views'`)
+* `path` (string) - The absolute path to the entry (e.g. `'c:/api/blogPost/views'`)
 
 * `type` (number) - The type of the entry. `0` for folders and `1` for files (symlinks, junctions or any other types are currently not supported).
 
@@ -94,7 +94,7 @@ A generic example:
 Example
 -------
 ```
-├── www
+├── api
 │   ├── index.js
 │   └── Views
 │       ├── home.jade
@@ -106,7 +106,7 @@ Let's say we want the parser to do something every time it hits a `Views` folder
 
 The `views` entry handler file could look like this:
 ```js
-	// www_hooks/ctrl_hooks/views.js
+	// api_hooks/ctrl_hooks/views.js
 	var fs   = require('fs');
 	var jade = require('jade');
 
@@ -116,15 +116,15 @@ The `views` entry handler file could look like this:
 		 |
 		 |	"entryMap" object contains:
 		 |  {
-		 |		path: 'path/to/www/Views',
+		 |		path: 'path/to/api/Views',
 		 |		type: 0,
 		 |		entries: {
 		 |			'home.jade': {
-		 |				path: 'path/to/www/Views/home.jade',
+		 |				path: 'path/to/api/Views/home.jade',
 		 |				type: 1
 		 |			},
 		 |			'contactForm.jade': {
-		 |				path: 'path/to/www/Views/contactForm.jade',
+		 |				path: 'path/to/api/Views/contactForm.jade',
 		 |				type: 1
 		 |			}
 		 |		}
@@ -153,9 +153,9 @@ The `views` entry handler file could look like this:
 	};
 ```
 
-To serve the compiled templates (HTML) you can use `this.views[tplName]` from your `www/index.js` file.
+To serve the compiled templates (HTML) you can use `this.views[tplName]` from your `api/index.js` file.
 ```js
-	// www/index.js
+	// api/index.js
 	module.exports = function (io, action) {
 		if (action == 'contactUs') { // request: '/contactUs'
 			io.res.end( this.views['contactForm']() );

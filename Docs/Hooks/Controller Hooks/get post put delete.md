@@ -8,7 +8,7 @@ These 4 HTTP verbs are **currently** the only supported HTTP verbs in Bootstruct
 
 Example structure:
 ```
-├── www
+├── api
 │   ├── _get.js       ──> GET requests to '/'
 │   ├── _post.js      ──> POST requests to '/'
 │   └── A
@@ -21,7 +21,7 @@ If you have an `index` method as well, it will get called **before** any verb do
 >**NOTE**: There's also an `_after_verb` method.
 
 ```
-├── www
+├── api
 │   ├── index.js      <── ALL  requests to '/'
 │   ├── _get.js        <── GET  requests to '/'
 │   ├── _post.js       <── POST requests to '/'
@@ -33,14 +33,14 @@ If you have an `index` method as well, it will get called **before** any verb do
 
 You'll have to call `io.next()` to make the `io` move on from the `index` method to the verb method.
 
-A `www/index.js` file like:
+A `api/index.js` file like:
 ```js
 	module.exports = function (io) {
 		console.log(__filename);
 		io.next();
 	};
 ```
-and a `www/get.js` file like:
+and a `api/get.js` file like:
 ```js
 	module.exports = function (io) {
 		console.log(__filename);
@@ -48,8 +48,8 @@ and a `www/get.js` file like:
 	};
 ```
 will log (on a GET request):  
- &nbsp; path/to/www/index.js  
- &nbsp; path/to/www/_get.js
+ &nbsp; path/to/api/index.js  
+ &nbsp; path/to/api/_get.js
 
 If **any** reserved name file gets bigger, you can turn it into a folder.  
 

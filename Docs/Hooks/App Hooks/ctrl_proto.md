@@ -16,8 +16,8 @@ To extend the `Ctrl` prototype, create in your [hooks folder](https://github.com
 ├── myProject
 │   ├── node_modules
 │   ├── server-index.js
-│   ├── www
-│   └── www_hooks
+│   ├── api
+│   └── api_hooks
 │       └── ctrl_proto.js  <──
 ```
 When using a file it should export an object:
@@ -33,8 +33,8 @@ When using a file it should export an object:
 ├── myProject
 │   ├── node_modules
 │   ├── server-index.js
-│   ├── www
-│   └── www_hooks
+│   ├── api
+│   └── api_hooks
 │       └── ctrl_proto  <──
 │           └── log2file.js
 ```
