@@ -25,7 +25,7 @@ One exception is the `_verbs` name.
 The following image describes a controller's chains (explained in the 
 [docs main page](https://github.com/taitulism/Bootstruct/blob/master/README.md#controllers-flow)): 
 The target-chain is in the middle, the parent-chain is on the left and the method-chain is on the right.
-[Controller Chart-Flow](https://raw.githubusercontent.com/taitulism/Bootstruct/master/Docs/controller-flowchart.png)
+![Controller Chart-Flow](https://raw.githubusercontent.com/taitulism/Bootstruct/master/Docs/controller-flowchart.png)
 
 
 
