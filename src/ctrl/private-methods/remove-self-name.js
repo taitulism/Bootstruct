@@ -1,6 +1,5 @@
 const getLoweredFirstParam = require('./get-lowered-first-param');
 
-
 /*
   ┌──────────────────────────────────────
   │ example:
@@ -15,7 +14,7 @@ module.exports = function removeSelfName (ctrl, io) {
 	const first = getLoweredFirstParam(io);
 
 	if (first && first === ctrl.name) {
-    	// remove first item
+		// remove first item
 		io.params.shift();
 	}
 };
