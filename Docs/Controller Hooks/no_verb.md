@@ -1,7 +1,7 @@
 _no_verb
 --------
 **Chain**: Target.  
-**Synonym**: `_no-verb`.
+**Alias**: `_no-verb`.
 
 The `_no_verb` method will get called for request type that the target-controller doesn't have a <verb> for, like a POST request to a controller without a `_post.js` file.
 

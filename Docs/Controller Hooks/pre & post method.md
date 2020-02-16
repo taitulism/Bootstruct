@@ -1,7 +1,7 @@
 _pre_method & _post_method
 --------------------------
 **Chain**: Method.  
-**Synonyms**: `_pre_method`, `_post_method` (respectively).
+**Aliass**: `_pre_method`, `_post_method` (respectively).
 
 These reserved methods will run before and after the target-method (pre=before, post=after).
 ```

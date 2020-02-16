@@ -14,10 +14,9 @@ Table of Contents
 	* [Files and Folders](#files-and-folders)
 	* [URL parameters](#url-parameters)
 	* [Argument Smart Matching](#argument-smart-matching)
-	* [Extend Bootstruct](#extend-bootstruct)
 * More Docs
-	* [Hooks](./Hooks/README.md)
-	* [Extending Bootstruct](./Hooks.md)
+	* [Controller Hooks](./Controller%20Hooks.md)
+	* [Extend Bootstruct](./Extending%20Bootstruct.md)
 
 
 
@@ -308,31 +307,3 @@ module.exports = function (io, $bookId, $chapter, single) {
 
 **IMPORTANT NOTE:** The way Bootstruct extracts $params is by calling `.toString()` on your methods and a regular string match to get the $params. Currently ES6's default value feature is not supported:  
 `function (io, $a, $b = 'default') {...}`
-
-
-
-
-Extend Bootstruct
------------------
-Bootstruct's three main classes are `App`, `Ctrl` and `IO`.
-
-Controllers are nested inside each other and they all have a reference to the app object. The `io`s check in and out at this structure.
-
-Bootstruct provides you with hooks to these classes and other main parts in its architecture. These hooks allow you to create your own API over Bootstruct's infrastructure.
-
-* You can add methods to the `Ctrl`'s prototype and the `IO` prototype. Create a `this.kick(io)` or a `io.getIP()` methods.
-
-* You can load your own stuff on the `app` object (`this.app` A.K.A the `app` instance) and access them from your controllers and methods. A database connection, a reference to the server, a log-to-file function or whatever.
-
-* You can add your own [Hooks](https://github.com/taitulism/Bootstruct/blob/master/Docs/Hooks/README.md) on the parser and handle them. Cache the files when a "public" folder is found, precompile a "views" folder etc.
-
-* You can create shared methods and shared controllers instead of copy-pasting the same files in every folder (when you need the same functionality in more than one place). A shared `test` method/controller will allow: `/anyController/test`).
-
-* You can run some code on `io` initialization. This is the very first thing to run on each request, before the `io` checks-in at your app. Set some request related props like `io.ip` or `io.isLoggedIn` ready for use in your methods. You can create methods on the `io.prototype` (another hook) and invoke them on `io` initialization.
-
-* You can run some code when the `io` checks-out from your app and choose what to do at the end of the request cycle (end the response? log it? pass it to another framework?).
-
-With these hooks you can create yourself your own set of tools and use Bootstruct as a platform or infrastructure with your own syntax.
-
-Read more about [Bootstruct Hooks](https://github.com/taitulism/Bootstruct/blob/master/Docs/Hooks.md).
-

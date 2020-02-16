@@ -1,7 +1,7 @@
 _after_verb
 -----------
 **Chain**: Target.  
-**Synonym**: `_after-verb`
+**Alias**: `_after-verb`
 
 `_after_verb`, like `_before_verb` (`index` alias), will run for **any** request type in the **target**-controller but **after** the \<verb> method.
 ```

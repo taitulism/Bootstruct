@@ -1,7 +1,7 @@
 index
 -----
 **Chain**: Target.  
-**Synonyms**: `_before_verb`, `_before-verb`.
+**Aliass**: `_before_verb`, `_before-verb`.
 
 >**NOTE**: `index` is the only reserved name that doesn't start with a `_` sign.
 

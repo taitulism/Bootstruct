@@ -1,7 +1,7 @@
 _pre_sub & _post_sub
 --------------------
 **Chain**: Parent.  
-**Synonyms**: `_pre-sub`, `_post-sub` (respectively).
+**Aliass**: `_pre-sub`, `_post-sub` (respectively).
 
 These reserved methods will run before and after a child-controller (sub-ctrl) (pre=before, post=after).
 
