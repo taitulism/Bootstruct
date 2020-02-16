@@ -3,7 +3,7 @@ Bootstruct Hooks
 Bootstruct has some reserved names for files and folders ("entries", for short) that on parsing stage (app initialization) have a 
 special meaning.
 
-Bootstruct parses two folders on init: the web-root folder (e.g. `api`) and its related hooks folder (e.g. `api_hooks`, optional). 
+Bootstruct parses two folders on init: the web root folder (e.g. `api`) and its related hooks folder (e.g. `api_hooks`, optional). 
 Each has its own parser with its reserved names for entries (files and folders) and each entry with a reserved name plays its own role in 
 your app's play.
 
@@ -13,9 +13,9 @@ these entries are expected to export a specific type of data (mostly a function)
 
 
 
-Web-root Reserved Names
+web root Reserved Names
 =======================
-The web-root hooks (controller level hooks) become methods in their controller's chains so 
+The web root hooks (controller level hooks) become methods in their controller's chains so 
 they all must eventually export a single function that handles a single argument, the `io`.
 
 One exception is the `_verbs` name.

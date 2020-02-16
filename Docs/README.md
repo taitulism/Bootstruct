@@ -26,9 +26,11 @@ Terminology
 -----------
 Before we start, let's clarify some terms used in these docs:
 
-* **RC**: The Root-Controller. The main controller parsed from the web-root folder.
+* The **web root folder**: Bootstruct turns folders and files into url url handlers. The web root folder is the top most folder Bootstruct parses inside your project. You can give it whatever name you want but in the docs we'll use the name: **"api"**.
 
-* An **Entry**: Either a file or a folder. Folder's **entries** are the files and folders inside it. This term is used because from a certain aspect the type of an entry (a file or a folder) doesn't matter: `require('path/to/entry')`.
+* The **RC**: The Root-Controller. The main controller parsed from the web root folder.
+
+* An **Entry**: Either a file or a folder. Folder's **entries** are the files and folders inside it.
 
 * An HTTP **Verb**: From Google: *"The primary or most-commonly-used HTTP verbs (or methods, as they are properly called) are POST, GET, PUT, and DELETE"*.  
 The word "method" is used in these docs in the context of a function so "HTTP verbs" is used instead of "HTTP methods".
@@ -42,7 +44,7 @@ Learning Bootstruct is more about understanding how it behaves based on your fil
 
 Bootstruct is based on a mix of two quite close conventions: a folder structure convention and a filename convention. 
 
-When Bootstruct is initialized it parses your web-root folder recursively. Basically, folders become URL-controllers and files become their methods. Certain names (start with a `_` sign) are parsed into specific kinds of methods, whether they are files or folders. Eventually, your web-root folder and its sub-folders are translated into a root-controller, a nested structure of controllers and their sub-controllers. This Root-Controller (`RC` from now on) is your Bootstruct app's core object.
+When Bootstruct is initialized it parses your web root folder recursively. Basically, folders become URL-controllers and files become their methods. Certain names (start with a `_` sign) are parsed into specific kinds of methods, whether they are files or folders. Eventually, your web root folder and its sub-folders are translated into a root-controller, a nested structure of controllers and their sub-controllers. This Root-Controller (`RC` from now on) is your Bootstruct app's core object.
 
 >**NOTE**: Bootstruct ignores files and folders that their names start with a dot or an underscore like `.ignored` or `_ignored`).
 

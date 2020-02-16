@@ -3,7 +3,7 @@ Hook: "shared_methods"
 **Entry Type**: both a file or a folder  
 **Exports**: an object of functions (if file) or function files (if folder)
 
-When Bootstruct is initialized it parses the web-root folder. User custom named folders become controllers, and files become methods.
+When Bootstruct is initialized it parses the web root folder. User custom named folders become controllers, and files become methods.
 
 When you need a certain method to be called by more than one controller, you don't want to duplicate the file in each folder you need it.
 

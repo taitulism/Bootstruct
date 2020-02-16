@@ -3,11 +3,11 @@ Hook: "ctrl_hooks"
 **Entry Type**: both a file or a folder  
 **Exports**: an object of functions (if file) or functions files (if folder)
 
-When Bootstruct is initialized it parses the web-root folder. User folders become controllers, user files become methods and reserved name entries become methods in the controllers' chains. 
+When Bootstruct is initialized it parses the web root folder. User folders become controllers, user files become methods and reserved name entries become methods in the controllers' chains. 
 
 You can add your own reserved names and write their parser handlers.
 
-An "entry handler" is a named function. The name is for the parser to match with entries in your web-root different folders (soon to become controllers). The handler, a function, is what should the parser do when it "hits" this name. "ctrl_hooks" are used to do something with a matched entry's contents in the context of the current holding folder/controller.
+An "entry handler" is a named function. The name is for the parser to match with entries in your web root different folders (soon to become controllers). The handler, a function, is what should the parser do when it "hits" this name. "ctrl_hooks" are used to do something with a matched entry's contents in the context of the current holding folder/controller.
 
 >**NOTE**: Bootstruct has an entry handler for each reserved name.
 
@@ -59,7 +59,7 @@ When using a folder, its entry names are the function names and they export the 
 
 Handler Function
 ----------------
-You have the controller in one hand (the context of `this`) and the content on the other hand (the function argument) so in your handler you access the content, parse it according to your needs and set the result as a property on the controller. That happens on init. Later on you could use these props from your web-root methods.
+You have the controller in one hand (the context of `this`) and the content on the other hand (the function argument) so in your handler you access the content, parse it according to your needs and set the result as a property on the controller. That happens on init. Later on you could use these props from your web root methods.
 
 **Context**  
 Inside the handler functions the "this" keyword refers to the current holding controller. In the `views` handler, the "this" keyword will refer to the "blogPost" controller (see above) and in the `public` handler, it will refer to the `RC`.

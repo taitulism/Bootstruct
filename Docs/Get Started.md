@@ -45,7 +45,7 @@ Now let's create our first route.
 
 "Hello World"
 -------------
-Create an `index.js` file in your web-root folder `api`.
+Create an `index.js` file in your web root folder `api`.
 ```
 ├── api
 │   └── index.js

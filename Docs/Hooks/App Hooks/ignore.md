@@ -3,7 +3,7 @@ Hook: "ignore"
 **Entry Type**: file  
 **Exports**: a string or an array of strings
 
-When Bootstruct is initialized it parses the web-root folder. User folders become controllers, user files become methods and reserved name entries become methods in the controllers' chains. When you need an entry (a file or a folder) to be ignored you can give it a name that starts with an underscore or a dot (e.g. `.ignoredEntry` or `_ignoredEntry`).
+When Bootstruct is initialized it parses the web root folder. User folders become controllers, user files become methods and reserved name entries become methods in the controllers' chains. When you need an entry (a file or a folder) to be ignored you can give it a name that starts with an underscore or a dot (e.g. `.ignoredEntry` or `_ignoredEntry`).
 
 An example would be:
 ```

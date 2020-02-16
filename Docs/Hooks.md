@@ -13,8 +13,8 @@ In short:
 
 The App Hooks Folder
 --------------------
-Up until now it was all about the web-root folder, `api`. Bootstruct app level hooks are put in another folder. On init Bootstruct looks for a 
-folder whose name is like your web-root folder's name with a trailing: "**_hooks**" in its name. If your web-root folder is `api`, Bootstruct will 
+Up until now it was all about the web root folder, `api`. Bootstruct app level hooks are put in another folder. On init Bootstruct looks for a 
+folder whose name is like your web root folder's name with a trailing: "**_hooks**" in its name. If your web root folder is `api`, Bootstruct will 
 look for a folder named `api_hooks`:
 ```
 ├── myProject
@@ -28,7 +28,7 @@ look for a folder named `api_hooks`:
 
 Extend your App
 ---------------
-The hooks folder is parsed when Bootstruct is initialized BEFORE the web-root folder. You use hooks by creating entries in the hooks folder and 
+The hooks folder is parsed when Bootstruct is initialized BEFORE the web root folder. You use hooks by creating entries in the hooks folder and 
 naming them with certain names.
 
 By default, any entry in your hooks folder with a non-reserved name (e.g. `WhatEver.js`) will be `require`-d as a property on 
