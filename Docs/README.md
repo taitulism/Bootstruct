@@ -13,6 +13,7 @@ Table of Contents
 	* [Methods](#methods)
 	* [Files and Folders](#files-and-folders)
 	* [URL parameters](#url-parameters)
+	* [Argument Smart Matching](#argument-smart-matching)
 	* [Extend Bootstruct](#extend-bootstruct)
 * More Docs
 	* [Hooks](./Hooks/README.md)
