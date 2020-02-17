@@ -1,6 +1,6 @@
 {
 	"name": "bootstruct",
-	"version": "1.6.5",
+	"version": "1.7.0",
 	"description": "Routing by structure. A name-convention web framework for Node.js.",
 	"main": "index.js",
 	"author": "Taitu Lizenbaum taitu.dev@gmail.com",
