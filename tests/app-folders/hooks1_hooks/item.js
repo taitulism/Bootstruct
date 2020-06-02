@@ -1,1 +1,1 @@
-module.exports = 'item';
+module.exports = 'custom-item';

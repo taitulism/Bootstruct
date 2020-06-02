@@ -1,4 +1,4 @@
 module.exports = function (app) {
-	this.initiated = 'io_init';
+	this.initiated = 'io-initiated';
 	app.checkIn(this);
 };

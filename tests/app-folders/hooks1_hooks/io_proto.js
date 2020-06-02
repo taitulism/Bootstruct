@@ -1,5 +1,5 @@
 module.exports = {
-	qwe () {
+	customMethod () {
 		return 'io_proto';
 	},
 };

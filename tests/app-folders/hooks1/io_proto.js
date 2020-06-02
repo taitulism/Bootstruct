@@ -1,7 +1,7 @@
 module.exports = function (io) {
-	if (typeof io.qwe === 'function') {
-		io.res.write(io.qwe());
+	if (typeof io.customMethod === 'function') {
+		io.res.write(io.customMethod());
 	}
 
-	io.res.end();
+	io.next();
 };
