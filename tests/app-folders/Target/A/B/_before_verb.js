@@ -1,4 +1,4 @@
 module.exports = function (io) {
-	io.res.write('b42');
+	io.res.write('b-before-verb');
 	io.next();
 };

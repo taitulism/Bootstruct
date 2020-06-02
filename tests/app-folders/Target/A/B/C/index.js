@@ -1,4 +1,4 @@
 module.exports = function (io) {
-	io.res.write('b43');
+	io.res.write('c-index');
 	io.next();
 };

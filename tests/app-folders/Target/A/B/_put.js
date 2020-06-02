@@ -1,4 +1,4 @@
 module.exports = function (io) {
-	io.res.write('put');
+	io.res.write('b-put');
 	io.next();
 };

@@ -1,11 +1,11 @@
 module.exports = {
 	GET (io) {
-		io.res.write('get');
+		io.res.write('d-get');
 		io.next();
 	},
 
 	post (io) {
-		io.res.write('post');
+		io.res.write('d-post');
 		io.next();
 	},
 };
