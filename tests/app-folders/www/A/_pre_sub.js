@@ -1,4 +1,4 @@
 module.exports = function (io) {
-	io.res.write('prs1');
+	io.res.write('a-pre-sub');
 	io.next();
 };

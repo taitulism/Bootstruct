@@ -1,4 +1,4 @@
 module.exports = function (io) {
-	io.res.write('ptm1');
+	io.res.write('a-post-method');
 	io.next();
 };

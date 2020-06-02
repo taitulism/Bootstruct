@@ -1,4 +1,4 @@
 module.exports = function (io) {
-	io.res.write('ptm2');
+	io.res.write('b-post-method');
 	io.next();
 };

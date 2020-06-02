@@ -8,40 +8,30 @@ describe('Method-chain test', function () {
 	const app    = bts('./tests/app-folders/Method');
 	const server = http.createServer(app);
 
+	before(() => server.listen(8181, '127.0.0.1'));
+	after(() => server.close());
 
-	beforeEach(function () {
-		server.listen(8181, '127.0.0.1');
-	});
-	afterEach(function () {
-		server.close();
-	});
+	it('GET /method', async () => {
+		const res = await makeRequest('GET', '/method');
 
-
-	it('should pass', function (done) {
-		makeRequest('GET', '/a1', (body) => {
-			expect(body).to.equal('preapost');
-			done();
-		});
+		return expect(res.split('/')).to.eql(['pre-method', 'method', 'post-method']);
 	});
 
-	it('should pass', function (done) {
-		makeRequest('GET', '/a/b1', (body) => {
-			expect(body).to.equal('prebpost');
-			done();
-		});
+	it('GET /A/method', async () => {
+		const res = await makeRequest('GET', '/a/method');
+
+		return expect(res.split('/')).to.eql(['a-pre-method', 'a-method', 'a-post-method']);
 	});
 
-	it('should pass', function (done) {
-		makeRequest('GET', '/a/b/c1', (body) => {
-			expect(body).to.equal('precpost');
-			done();
-		});
+	it('POST /A/B/method', async () => {
+		const res = await makeRequest('POST', '/a/b/method');
+
+		return expect(res.split('/')).to.eql(['b-pre-method', 'b-method', 'b-post-method']);
 	});
 
-	it('_METHOD turns a folder into a method (instead of a controller)', function (done) {
-		makeRequest('GET', '/a/b/a-method', (body) => {
-			expect(body).to.equal('premethodpost');
-			done();
-		});
+	it('_METHOD file turns a folder into a method (instead of a controller)', async () => {
+		const res = await makeRequest('GET', '/a/b/method-folder');
+
+		return expect(res.split('/')).to.eql(['b-pre-method', 'b-method-folder', 'b-post-method']);
 	});
 });

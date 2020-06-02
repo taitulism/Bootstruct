@@ -1,4 +1,5 @@
 module.exports = function (io) {
-	io.res.write('b-after-verb');
+	io.res.write('/b-method-folder');
+
 	io.next();
 };

@@ -1,4 +1,4 @@
 module.exports = function (io) {
-	io.res.write('prm2');
+	io.res.write('b-pre-method');
 	io.next();
 };
