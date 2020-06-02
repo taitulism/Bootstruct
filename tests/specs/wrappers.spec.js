@@ -4,37 +4,36 @@ const {expect}  = require('chai');
 const bts  = require('../../');
 const makeRequest = require('../make-request');
 
-describe('Wrappers test', function () {
+describe('Wrappers test', () => {
 	const app    = bts('./tests/app-folders/Wrappers');
 	const server = http.createServer(app);
 
+	before(() => server.listen(8181, '127.0.0.1'));
+	after(() => server.close());
 
-	beforeEach(function () {
-		server.listen(8181, '127.0.0.1');
-	});
-	afterEach(function () {
-		server.close();
-	});
+	it('GET /', async () => {
+		const res = await makeRequest('GET', '/');
 
-
-	it('should pass', function (done) {
-		makeRequest('GET', '/', (body) => {
-			expect(body).to.equal('fl');
-			done();
-		});
+		return expect(res.split('/')).to.eql(['in', 'out']);
 	});
 
-	it('should pass', function (done) {
-		makeRequest('GET', '/a', (body) => {
-			expect(body).to.equal('ff1l1l');
-			done();
-		});
+	it('GET /A', async () => {
+		const res = await makeRequest('GET', '/a');
+
+		return expect(res.split('/')).to.eql(['in', 'a-in', 'a-out', 'out']);
 	});
 
-	it('should pass', function (done) {
-		makeRequest('GET', '/a/b', (body) => {
-			expect(body).to.equal('ff1f2l2l1l');
-			done();
-		});
+	it('POST /A/B', async () => {
+		const res = await makeRequest('POST', '/a/b');
+		const expected = [
+			'in',
+			'a-in',
+			'b-in',
+			'b-out',
+			'a-out',
+			'out',
+		];
+
+		return expect(res.split('/')).to.eql(expected);
 	});
 });
