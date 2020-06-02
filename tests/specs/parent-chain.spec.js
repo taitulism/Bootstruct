@@ -8,33 +8,45 @@ describe('Parent-chain test', function () {
 	const app    = bts('./tests/app-folders/Parent');
 	const server = http.createServer(app);
 
+	before(() => server.listen(8181, '127.0.0.1'));
+	after(() => server.close());
 
-	beforeEach(function () {
-		server.listen(8181, '127.0.0.1');
-	});
-	afterEach(function () {
-		server.close();
-	});
+	it('GET /A/method', async () => {
+		const res = await makeRequest('GET', '/a/method');
+		const expected = [
+			'pre-sub',
+			'a-method',
+			'post-sub',
+		].join('');
 
-
-	it('should pass', function (done) {
-		makeRequest('GET', '/a/b1', (body) => {
-			expect(body).to.equal('prebpost');
-			done();
-		});
+		return expect(res).to.equal(expected);
 	});
 
-	it('should pass', function (done) {
-		makeRequest('GET', '/a/b/c1', (body) => {
-			expect(body).to.equal('prepre1cpost1post');
-			done();
-		});
+	it('GET /A/B/method', async () => {
+		const res = await makeRequest('GET', '/a/b/method');
+		const expected = [
+			'pre-sub',
+			'a-pre-sub',
+			'b-method',
+			'a-post-sub',
+			'post-sub',
+		].join('');
+
+		return expect(res).to.equal(expected);
 	});
 
-	it('should pass', function (done) {
-		makeRequest('GET', '/a/b/c/d1', (body) => {
-			expect(body).to.equal('prepre1pre2dpost2post1post');
-			done();
-		});
+	it('GET /A/B/C/method', async () => {
+		const res = await makeRequest('GET', '/a/b/c/method');
+		const expected = [
+			'pre-sub',
+			'a-pre-sub',
+			'b-pre-sub',
+			'c-method',
+			'b-post-sub',
+			'a-post-sub',
+			'post-sub',
+		].join('');
+
+		return expect(res).to.equal(expected);
 	});
 });
