@@ -1,3 +1,3 @@
 module.exports = function () {
-	return 'c_pro2';
+	return 'ctrl-proto-method-1';
 };

@@ -1,3 +1,3 @@
 module.exports = function () {
-	return 'io_pro2';
+	return 'proto-method-2';
 };

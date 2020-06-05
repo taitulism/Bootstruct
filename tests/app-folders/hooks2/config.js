@@ -1,4 +1,4 @@
 module.exports = function (io) {
-	io.res.write('shared_m1');
+	io.res.write(this.config);
 	io.next();
 };

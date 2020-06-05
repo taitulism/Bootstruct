@@ -1,3 +1,3 @@
 module.exports = function () {
-	this.public = 'pub';
+	return 'proto-method-1';
 };
