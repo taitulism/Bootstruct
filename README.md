@@ -82,7 +82,6 @@ What Else?
 ----------
 * Create your own hook
 * Handle dynamic url params (e.g. `/A/B/whatever`)
-* 
 * Extend Bootstruct's different prototypes and more.
 
 &nbsp;
