@@ -1,5 +1,5 @@
 module.exports = {
 	customMethod () {
-		return 'io_proto';
+		return 'io-proto';
 	},
 };

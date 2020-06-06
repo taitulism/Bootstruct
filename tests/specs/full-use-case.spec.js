@@ -24,6 +24,20 @@ describe('Full use case test', function () {
 		return expect(res).to.equal(expected);
 	});
 
+	it('ignores: GET /_underscore', async () => {
+		// same as 'GET /'
+		const res = await makeRequest('GET', '/_underscore');
+		const expected = [
+			'in',
+			'index',
+			'get',
+			'after-verb',
+			'out',
+		].join('');
+
+		return expect(res).to.equal(expected);
+	});
+
 	it('POST /', async () => {
 		const res = await makeRequest('POST', '/');
 		const expected = [
