@@ -101,10 +101,10 @@ describe('Hooks - Folders', function () {
 		});
 
 		it('controller folder hook', async () => {
-			const res = await makeRequest('GET', '/configs');
+			const res = await makeRequest('GET', '/ctrl-hook');
 			const expected = [
 				'in',
-				'my-settings-2',
+				'a-string',
 				'out',
 			].join('');
 
