@@ -1,4 +1,4 @@
 module.exports = function (io) {
-	io.res.write('nvc');
+	io.res.write('c-no-verb');
 	io.next();
 };

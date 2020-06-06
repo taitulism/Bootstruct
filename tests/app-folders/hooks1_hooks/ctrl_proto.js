@@ -1,3 +1,3 @@
 module.exports = {
-	qwe: () => 'ctrl_proto',
+	customMethod: () => 'ctrl-proto',
 };

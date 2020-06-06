@@ -8,115 +8,166 @@ describe('Target-chain test', function () {
 	const app    = bts('./tests/app-folders/Target');
 	const server = http.createServer(app);
 
-	beforeEach(function () {
-		server.listen(8181, '127.0.0.1');
-	});
-	afterEach(function () {
-		server.close();
+	before(() => server.listen(8181, '127.0.0.1'));
+	after(() => server.close());
+
+	it('GET /', async () => {
+		const res = await makeRequest('GET', '/');
+		const expected = [
+			'before-verb',
+			'get',
+			'after-verb',
+		].join('');
+
+		expect(res).to.equal(expected);
 	});
 
-	it('should pass', function (done) {
-		makeRequest('GET', '/', (body) => {
-			expect(body).to.equal('b4getftr');
-			done();
-		});
+	it('POST /', async () => {
+		const res = await makeRequest('POST', '/');
+		const expected = [
+			'before-verb',
+			'after-verb',
+		].join('');
+
+		expect(res).to.equal(expected);
 	});
 
-	it('should pass', function (done) {
-		makeRequest('POST', '/', (body) => {
-			expect(body).to.equal('b4ftr');
-			done();
-		});
+	it('GET /A', async () => {
+		const res = await makeRequest('GET', '/a');
+		const expected = [
+			'a-before-verb',
+			'a-no-verb',
+			'a-after-verb',
+		].join('');
+
+		expect(res).to.equal(expected);
 	});
 
-	it('should pass', function (done) {
-		makeRequest('GET', '/a', (body) => {
-			expect(body).to.equal('b41nvaftr1');
-			done();
-		});
+	it('POST /A', async () => {
+		const res = await makeRequest('POST', '/a');
+		const expected = [
+			'a-before-verb',
+			'a-post',
+			'a-after-verb',
+		].join('');
+
+		expect(res).to.equal(expected);
 	});
 
-	it('should pass', function (done) {
-		makeRequest('POST', '/a', (body) => {
-			expect(body).to.equal('b41postftr1');
-			done();
-		});
+	it('GET /A/B', async () => {
+		const res = await makeRequest('GET', '/a/b');
+		const expected = [
+			'b-before-verb',
+			'b-no-verb',
+			'b-after-verb',
+		].join('');
+
+		expect(res).to.equal(expected);
 	});
 
-	it('should pass', function (done) {
-		makeRequest('GET', '/a/b', (body) => {
-			expect(body).to.equal('b42nvbftr2');
-			done();
-		});
+	it('PUT /A/B', async () => {
+		const res = await makeRequest('PUT', '/a/b');
+		const expected = [
+			'b-before-verb',
+			'b-put',
+			'b-after-verb',
+		].join('');
+
+		expect(res).to.equal(expected);
 	});
 
-	it('should pass', function (done) {
-		makeRequest('PUT', '/a/b', (body) => {
-			expect(body).to.equal('b42putftr2');
-			done();
-		});
+	it('GET /A/B/C', async () => {
+		const res = await makeRequest('GET', '/a/b/c');
+		const expected = [
+			'c-index',
+			'c-no-verb',
+			'c-after-verb',
+		].join('');
+
+		expect(res).to.equal(expected);
 	});
 
-	it('should pass', function (done) {
-		makeRequest('GET', '/a/b/c', (body) => {
-			expect(body).to.equal('b43nvcftr3');
-			done();
-		});
+	it('DELETE /A/B/C', async () => {
+		const res = await makeRequest('DELETE', '/a/b/c');
+		const expected = [
+			'c-index',
+			'c-delete',
+			'c-after-verb',
+		].join('');
+
+		expect(res).to.equal(expected);
 	});
 
-	it('should pass', function (done) {
-		makeRequest('DELETE', '/a/b/c', (body) => {
-			expect(body).to.equal('b43delftr3');
-			done();
-		});
+	it('GET /A/B/C/D', async () => {
+		const res = await makeRequest('GET', '/a/b/c/d');
+		const expected = [
+			'd-index',
+			'd-get',
+			'd-after-verb',
+		].join('');
+
+		expect(res).to.equal(expected);
 	});
 
-	it('should pass', function (done) {
-		makeRequest('GET', '/a/b/c/d', (body) => {
-			expect(body).to.equal('b44getftr4');
-			done();
-		});
+	it('POST /A/B/C/D', async () => {
+		const res = await makeRequest('POST', '/a/b/c/d');
+		const expected = [
+			'd-index',
+			'd-post',
+			'd-after-verb',
+		].join('');
+
+		expect(res).to.equal(expected);
 	});
 
-	it('should pass', function (done) {
-		makeRequest('POST', '/a/b/c/d', (body) => {
-			expect(body).to.equal('b44postftr4');
-			done();
-		});
+	it('PUT /A/B/C/D', async () => {
+		const res = await makeRequest('PUT', '/a/b/c/d');
+		const expected = [
+			'd-index',
+			'c-no-verb', // delegated
+			'd-after-verb',
+		].join('');
+
+		expect(res).to.equal(expected);
 	});
 
-	it('should pass', function (done) {
-		makeRequest('PUT', '/a/b/c/d', (body) => {
-			expect(body).to.equal('b44nvcftr4');
-			done();
-		});
+	it('GET /A/B/C/D/E', async () => {
+		const res = await makeRequest('GET', '/a/b/c/d/e');
+		const expected = [
+			'e-get',
+			'e-after-verb',
+		].join('');
+
+		expect(res).to.equal(expected);
 	});
 
-	it('should pass', function (done) {
-		makeRequest('GET', '/a/b/c/d/e', (body) => {
-			expect(body).to.equal('getftr5');
-			done();
-		});
+	it('POST /A/B/C/D/E', async () => {
+		const res = await makeRequest('POST', '/a/b/c/d/e');
+		const expected = [
+			'e-post',
+			'e-after-verb',
+		].join('');
+
+		expect(res).to.equal(expected);
 	});
 
-	it('should pass', function (done) {
-		makeRequest('POST', '/a/b/c/d/e', (body) => {
-			expect(body).to.equal('postftr5');
-			done();
-		});
+	it('PUT /A/B/C/D/E', async () => {
+		const res = await makeRequest('PUT', '/a/b/c/d/e');
+		const expected = [
+			'e-put',
+			'e-after-verb',
+		].join('');
+
+		expect(res).to.equal(expected);
 	});
 
-	it('should pass', function (done) {
-		makeRequest('PUT', '/a/b/c/d/e', (body) => {
-			expect(body).to.equal('putftr5');
-			done();
-		});
-	});
+	it('DELETE /A/B/C/D/E', async () => {
+		const res = await makeRequest('DELETE', '/a/b/c/d/e');
+		const expected = [
+			'c-no-verb',
+			'e-after-verb',
+		].join('');
 
-	it('should pass', function (done) {
-		makeRequest('DELETE', '/a/b/c/d/e', (body) => {
-			expect(body).to.equal('nvcftr5');
-			done();
-		});
+		expect(res).to.equal(expected);
 	});
 });

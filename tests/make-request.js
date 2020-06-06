@@ -16,22 +16,29 @@ function makeRequest (verb, path, callback) {
 	options.path = path;
 	options.method = verb.toUpperCase();
 
-	const req = http.request(options, (response) => {
-		let body = '';
+	return new Promise((resolve, reject) => {
+		const req = http.request(options, (response) => {
+			let body = '';
 
-		response
-			.setEncoding('utf8')
-			.on('data', (chunk) => {
-				body += chunk;
-			})
-			.on('end', () => {
-				callback(body);
-			});
+			response
+				.setEncoding('utf8')
+				.on('data', (chunk) => {
+					body += chunk;
+				})
+				.on('end', () => {
+					return callback
+						? callback(body)
+						: resolve(body)
+					;
+				});
+		});
+
+		req.on('error', (err) => {
+			console.log('makeRequest ERROR:');
+			reject(err);
+		});
+
+		req.end();
 	});
 
-	req.on('error', (err) => {
-		console.log('makeRequest ERROR:\n', err);
-	});
-
-	req.end();
 }

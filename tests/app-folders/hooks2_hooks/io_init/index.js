@@ -1,8 +1,7 @@
 module.exports = function (app) {
-	this.initiated = 'io_init';
+	this.initiated = 'io-initiated';
 
 	setTimeout(() => {
 		app.checkIn(this);
 	}, 0);
-
 };

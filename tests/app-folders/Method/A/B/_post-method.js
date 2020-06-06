@@ -1,4 +1,4 @@
 module.exports = function (io) {
-	io.res.write('post');
+	io.res.write('/b-post-method');
 	io.next();
 };

@@ -1,4 +1,4 @@
 module.exports = function (io) {
-	io.res.write('post1');
+	io.res.write('a-post-sub');
 	io.next();
 };

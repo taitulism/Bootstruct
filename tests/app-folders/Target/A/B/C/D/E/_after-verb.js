@@ -1,4 +1,4 @@
 module.exports = function (io) {
-	io.res.write('ftr5');
+	io.res.write('e-after-verb');
 	io.next();
 };

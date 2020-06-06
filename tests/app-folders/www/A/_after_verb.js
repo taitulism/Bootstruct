@@ -1,4 +1,4 @@
 module.exports = function (io) {
-	io.res.write('a1');
+	io.res.write('a-after-verb');
 	io.next();
 };

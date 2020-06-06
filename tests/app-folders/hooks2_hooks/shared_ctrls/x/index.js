@@ -1,6 +1,6 @@
 module.exports = function (io) {
 
-	io.res.write('X2');
+	io.res.write('x-index');
 
 	io.next();
 

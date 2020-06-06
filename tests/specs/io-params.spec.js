@@ -8,18 +8,34 @@ describe('io.params test', function () {
 	const app    = bts('./tests/app-folders/Params');
 	const server = http.createServer(app);
 
+	before(() => server.listen(8181, '127.0.0.1'));
+	after(() => server.close());
 
-	beforeEach(function () {
-		server.listen(8181, '127.0.0.1');
-	});
-	afterEach(function () {
-		server.close();
+	it('each controller removes its name from params', async () => {
+		const res = await makeRequest('GET', '/a/b/c/d');
+
+		expect(res).to.equal('a,b,c,d|b,c,d|c,d|c,d|c,d|c,d');
 	});
 
-	it('should pass', function (done) {
-		makeRequest('GET', '/a/b/c/d/e', (body) => {
-			expect(body).to.equal('a,b,c,d,e|b,c,d,e|c,d,e|c,d,e|c,d,e|c,d,e');
-			done();
-		});
+	it('handles regular params', async () => {
+		const res = await makeRequest('GET', '/regular-params/season/3/episode/9');
+		const expected = [
+			'regular-params,season,3,episode,9|',
+			'season,3,episode,9',
+			'season,3,episode,9',
+		].join('');
+
+		expect(res).to.equal(expected);
+	});
+
+	it('handles smart params', async () => {
+		const res = await makeRequest('GET', '/smart-params/season/3/episode/9');
+		const expected = [
+			'smart-params,season,3,episode,9|',
+			'season:3,episode:9',
+			'season,3,episode,9',
+		].join('');
+
+		expect(res).to.equal(expected);
 	});
 });

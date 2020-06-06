@@ -1,4 +1,4 @@
 module.exports = function (io) {
-	io.res.write('get');
+	io.res.write('e-get');
 	io.next();
 };

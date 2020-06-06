@@ -9,8 +9,8 @@
 		"url": "https://github.com/taitulism/Bootstruct"
 	},
 	"scripts": {
-		"dev": "npm test -- --watch --reporter nyan",
-		"test": "mocha --inspect ./tests/bootstruct.spec.js",
+		"dev": "mocha --inspect ./tests/bootstruct.spec.js --watch",
+		"test": "mocha --inspect ./tests/bootstruct.spec.js --reporter landing",
 		"lint": "eslint ./index.js ./src ./tests",
 		"check": "npm run lint && npm test",
 		"play": "node ./playground/play.js",

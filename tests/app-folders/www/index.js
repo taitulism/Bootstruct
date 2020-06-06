@@ -1,7 +1,7 @@
 module.exports = function (io) {
-	io.res.write('i');
+	io.res.write('index');
 
-	if (io.params[0] === 'bla') io.res.write('bla');
+	if (io.params[0] === 'whatever') io.res.write('whatever');
 
 	io.next();
 };
