@@ -13,49 +13,49 @@ describe('Hooks - Files', function() {
     before(() => server.listen(8181, '127.0.0.1'));
 	after(() => server.close());
 
-	describe('app.item hook', () => {
+	describe('Hook: app.item', () => {
 		it('loads props on the `app` instance', async () => {
 			const res = await makeRequest('GET', '/item');
 			return expect(res).to.equal('custom-item');
 		});
 	});
 
-	describe('ignore hook', () => {
+	describe('Hook: ignore', () => {
 		it('ignores entries with given name', async () => {
 			const res = await makeRequest('GET', '/ignored');
 			return expect(res).to.equal('');
 		});
 	});
 
-	describe('io_init hook', () => {
+	describe('Hook: io_init', () => {
 		it('runs code on io init', async () => {
 			const res = await makeRequest('GET', '/io-init');
 			return expect(res).to.equal('io-initiated');
 		});
     });
 
-	describe('io_exit hook', () => {
+	describe('Hook: io_exit', () => {
 		it('runs code on io exit', async () => {
 			const res = await makeRequest('GET', '/io-exit');
 			return expect(res).to.equal('io-exit');
 		});
     });
 
-	describe('ctrl_proto hook', () => {
+	describe('Hook: ctrl_proto', () => {
 		it('extends the ctrl prototype', async () => {
 			const res = await makeRequest('GET', '/ctrl-proto');
 			return expect(res).to.equal('ctrl-proto');
 		});
     });
 
-	describe('io_proto hook', () => {
+	describe('Hook: io_proto', () => {
 		it('extends the io prototype', async () => {
 			const res = await makeRequest('GET', '/io-proto');
 			return expect(res).to.equal('io-proto');
 		});
 	});
 
-	describe('ctrl_hooks hook', () => {
+	describe('Hook: ctrl_hooks', () => {
 		it('is a file hook on the controller', async () => {
 			const res = await makeRequest('GET', '/ctrl-hooks');
 			const expected = [
@@ -67,7 +67,7 @@ describe('Hooks - Files', function() {
 		});
 	});
 
-	describe('a_shared_method hook', () => {
+	describe('Hook: a_shared_method', () => {
 		it('adds a shared method to all controllers', async () => {
 			const res = await makeRequest('GET', '/a-shared-method');
 			expect(res).to.equal('shared-method');

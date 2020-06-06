@@ -37,8 +37,13 @@ describe('Hooks - Folders', function () {
 	describe('Hook: io_init', () => {
 		it('called before first controller', async () => {
 			const res = await makeRequest('GET', '/io-init');
+			const expected = [
+				'in',
+				'io-initiated',
+				'out',
+			].join('');
 
-			expect(res).to.equal('io-initiated');
+			expect(res).to.equal(expected);
 		});
 	});
 
@@ -53,6 +58,19 @@ describe('Hooks - Folders', function () {
 			].join('');
 
 			expect(res).to.equal(expected);
+		});
+	});
+
+	describe('Hook: io_exit', () => {
+		it('runs code on io exit', async () => {
+			const res = await makeRequest('GET', '/io-exit');
+			const expected = [
+				'in',
+				'out',
+				'io-exit',
+			].join('');
+
+			return expect(res).to.equal(expected);
 		});
 	});
 
