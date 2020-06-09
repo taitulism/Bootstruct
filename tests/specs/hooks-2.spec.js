@@ -11,17 +11,6 @@ describe('Hooks - Folders', function () {
 	before(() => server.listen(8181, '127.0.0.1'));
 	after(() => server.close());
 
-	// describe('a_shared_method hook', () => {
-	// 	it('should pass all tests', async () => {
-	// 		const res = await makeRequest('GET', '/');
-	// 		const expected = [
-	// 			'io-initiated',
-	// 		].join('');
-
-	// 		expect(res).to.equal('[io_init-c_pro1-c_pro2-io_pro1-io_pro2-pub-view-item]exit');
-	// 	});
-	// });
-
 	describe('Hook: ignore', () => {
 		it('ignores entries with given names', async () => {
 			const res = await makeRequest('GET', '/ignored');
@@ -75,7 +64,7 @@ describe('Hooks - Folders', function () {
 	});
 
 	describe('Hook: ctrl_proto', () => {
-		it('loads methods on the io prototype', async () => {
+		it('loads methods on the Ctrl prototype', async () => {
 			const res = await makeRequest('GET', '/ctrl-proto');
 			const expected = [
 				'in',
