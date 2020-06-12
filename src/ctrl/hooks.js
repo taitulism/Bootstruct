@@ -104,7 +104,7 @@ const ctrlHooks = {
 				const [isVerbOk, isNoVerbOk] = validateVerbName(this, verbName);
 
 				if (isVerbOk || isNoVerbOk) {
-					verbName = remove$(verbName);
+					verbName = removeUnderscore(verbName);
 					ctrlHooks[`_${verbName}`].call(this, verbMap);
 				}
 			});
@@ -135,7 +135,7 @@ const ctrlHooks = {
 };
 
 function validateVerbName (ctrl, verbName) {
-	verbName = remove$(verbName);
+	verbName = removeUnderscore(verbName);
 
 	const isVerbOk   = isVerb(verbName) && !ctrl.verbs[verbName];
 	const isNoVerbOk = isNoVerb(verbName) && !ctrl.noVerb;
@@ -143,7 +143,7 @@ function validateVerbName (ctrl, verbName) {
 	return [isVerbOk, isNoVerbOk];
 }
 
-function remove$ (verb) {
+function removeUnderscore (verb) {
 	if (verb[0] === '_') {
 		verb = verb.substr(1);
 	}

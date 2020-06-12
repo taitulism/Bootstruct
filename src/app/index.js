@@ -3,8 +3,8 @@ const {existsSync: exists} = require('fs');
 
 const ctrlHooksProto = require('../ctrl/hooks');
 const appHooksProto = require('./hooks');
-const createCtrlClass = require('../ctrl');
-const createIOClass = require('../io');
+const getCtrlClass = require('../ctrl');
+const getIOClass = require('../io');
 const error = require('../errors');
 const {ROOT_CTRL_NAME, FOLDER} = require('../constants');
 const {
@@ -14,7 +14,7 @@ const {
 } = require('../utils');
 
 class App {
-	constructor (folderName, debug) {
+	constructor (folderName, isDebugMode) {
 		if (!folderName) throw error.webRootFolderNotFound(folderName);
 		const webRootFolderPath = resolve(folderName);
 
@@ -28,8 +28,8 @@ class App {
 		this.ignoreStartWith = ['_', '.'];
 		this.ignoreList = [];
 
-		this.Ctrl = createCtrlClass(debug);
-		this.IO = createIOClass();
+		this.Ctrl = getCtrlClass(isDebugMode);
+		this.IO = getIOClass();
 		this.hooks = Object.create(appHooksProto);
 		this.ctrlHooks = Object.create(ctrlHooksProto);
 

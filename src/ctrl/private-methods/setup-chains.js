@@ -5,9 +5,9 @@ const run = require('./run');
 /*
   ┌────────────────────────────────────────────────────────────────
   │ examples:
-  │     0. parentChain = [$in, runSub, $out]
-  │     1. targetChain = [$in, runVerb, $out]
-  │     2. methodChain = [$in, runMethod, $out]
+  │     0. parentChain = [_in, runSub, _out]
+  │     1. targetChain = [_in, runVerb, _out]
+  │     2. methodChain = [_in, runMethod, _out]
   │
   │ "setupChains" fn creates an array of 3 chains (3 arrays) of
   │ methods to run for each case.
@@ -19,12 +19,12 @@ module.exports = function setupChains (ctrl) {
 	const methodChain = [];
 	const parentChain = [];
 
-	const $in = ctrl.in;
+	const _in = ctrl.in;
 
-	if ($in) {
-		targetChain.push($in);
-		methodChain.push($in);
-		parentChain.push($in);
+	if (_in) {
+		targetChain.push(_in);
+		methodChain.push(_in);
+		parentChain.push(_in);
 	}
 
 	// targetChain
@@ -40,12 +40,12 @@ module.exports = function setupChains (ctrl) {
 		setParentChain(ctrl, parentChain);
 	}
 
-	const $out = ctrl.out;
+	const _out = ctrl.out;
 
-	if ($out) {
-		targetChain.push($out);
-		methodChain.push($out);
-		parentChain.push($out);
+	if (_out) {
+		targetChain.push(_out);
+		methodChain.push(_out);
+		parentChain.push(_out);
 	}
 
 	// 0: parentChain
