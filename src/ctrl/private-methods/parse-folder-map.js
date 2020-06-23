@@ -27,7 +27,8 @@ module.exports = function parseFolderMap (ctrl) {
 
 		// if hook exists
 		if (ctrlHooks[name]) {
-			ctrlHooks[name].call(ctrl, entryMap);
+			const hook = ctrlHooks[name].index || ctrlHooks[name];
+			hook.call(ctrl, entryMap);
 		}
 		else if (shouldBeIgnored(app, key, name, isFile)) return; // eslint-disable-line
 		else if (isFile || entryMap.entries._METHOD) {

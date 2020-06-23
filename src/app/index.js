@@ -1,8 +1,10 @@
 const {resolve} = require('path');
 const {existsSync: exists} = require('fs');
+const requireFolder = require('require-folder');
 
 const ctrlHooksProto = require('../ctrl/hooks');
-const appHooksProto = require('./hooks');
+const appHooksProto = require('./new-hooks');
+// const appHooksProto = require('./hooks');
 const getCtrlClass = require('../ctrl');
 const getIOClass = require('../io');
 const error = require('../errors');
@@ -74,6 +76,23 @@ class App {
 	}
 
 	parseAppHooks () {
+		const appHooks = this.hooks;
+		const hooks = requireFolder(this.hooksFolderPath);
+
+		forIn(hooks, (rawName, hook) => {
+			const name = normalizeEntryName(rawName, false);
+
+			if (appHooks[name]) {
+				appHooks[name].call(this, hook);
+			}
+			else {
+				this[name] = hook;
+			}
+		});
+
+	}
+
+	_parseAppHooks () {
 		const appHooks = this.hooks;
 
 		this.hooksMap = f2j(this.hooksFolderPath);

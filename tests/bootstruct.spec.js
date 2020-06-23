@@ -1,5 +1,5 @@
 describe('Bootstruct', () => {
-	require('./specs/creation-errors.spec');
+	// require('./specs/creation-errors.spec');
 	require('./specs/wrappers.spec');
 	require('./specs/method-chain.spec');
 	require('./specs/parent-chain.spec');
