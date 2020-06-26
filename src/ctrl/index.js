@@ -24,7 +24,7 @@ module.exports = function getCtrlClass (debug) {
 		this.app       = app;
 		this.id        = setID(this);
 
-		this.verbs    = Object.create(null);
+		// this.verbs    = Object.create(null);
 		this.methods  = Object.create(app.shared_methods || null);
 		this.subCtrls = Object.create(app.shared_ctrls   || null);
 

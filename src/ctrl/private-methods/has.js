@@ -8,7 +8,7 @@ const isEmpty = require('../../utils/is-empty');
  */
 module.exports = {
 	verbs (ctrl) {
-		return !isEmpty(ctrl.verbs);
+		return ctrl.coreObj.verbs && !isEmpty(ctrl.coreObj.verbs);
 	},
 
 	methods (ctrl) {

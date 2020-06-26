@@ -18,34 +18,35 @@ const {
   |   set as a ctrl's method/subCtrl
  */
 module.exports = function parseFolderMap (ctrl) {
-	const {app} = ctrl;
+	const {coreObj, app} = ctrl;
 	const {ctrlHooks} = app;
 
-	forIn(ctrl.folderMap.entries, (key, entryMap) => {
-		const isFile = entryMap.type === FILE;
-		const name = normalizeEntryName(key, isFile);
+	forIn(coreObj, (key, value) => {
+		// const isFile = entryMap.type === FILE;
+		const name = normalizeEntryName(key, false);
 
 		// if hook exists
-		if (ctrlHooks[name]) {
-			const hook = ctrlHooks[name].index || ctrlHooks[name];
-			hook.call(ctrl, entryMap);
-		}
-		else if (shouldBeIgnored(app, key, name, isFile)) return; // eslint-disable-line
-		else if (isFile || entryMap.entries._METHOD) {
-			const method = require(entryMap.path);
+		// if (ctrlHooks[name]) {
+		// 	const hook = ctrlHooks[name].index || ctrlHooks[name];
+		// 	hook.call(ctrl, value);
+		// }
+		// else
+		if (shouldBeIgnored(app, name)) return;
+		else if (typeof value == 'function') {
+			const method = value;
 			const params = extractFnParams(method);
 
 			if (!params) {
-				throw error.methodsWithNoParams(entryMap.path);
+				throw error.methodsWithNoParams(method);
 			}
 
-			method.path = entryMap.path;
+			// method.path = entryMap.path;
 			method.params = params;
 
 			ctrl.methods[name] = method;
 		}
 		else {
-			ctrl.subCtrls[name] = entryMap;
+			ctrl.subCtrls[name] = value;
 		}
 	});
 
@@ -73,11 +74,9 @@ function extractFnParams (fn) {
 	// remove first param (io)
 	params.shift();
 
-	const $params = params
+	return params
 		// leave only $params
 		.filter(param => param[0] === '$')
 		// remove $
 		.map(param => param.substr(1));
-
-	return $params;
 }

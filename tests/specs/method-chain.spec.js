@@ -29,7 +29,7 @@ describe('Method-chain test', function () {
 		return expect(res.split('/')).to.eql(['b-pre-method', 'b-method', 'b-post-method']);
 	});
 
-	it('_METHOD file turns a folder into a method (instead of a controller)', async () => {
+	it('_INDEX_ONLY file turns a folder into a method (instead of a controller)', async () => {
 		const res = await makeRequest('GET', '/a/b/method-folder');
 
 		return expect(res.split('/')).to.eql(['b-pre-method', 'b-method-folder', 'b-post-method']);

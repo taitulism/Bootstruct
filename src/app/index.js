@@ -1,6 +1,7 @@
 const {resolve} = require('path');
 const {existsSync: exists} = require('fs');
-const requireFolder = require('require-folder');
+// const requireFolder = require('require-folder');
+const requireFolder = require('../../../require-folder');
 
 const ctrlHooksProto = require('../ctrl/hooks');
 const appHooksProto = require('./new-hooks');
@@ -45,10 +46,48 @@ class App {
 
 		this.setRequestHandler();
 
-		const folderMap = f2j(this.webRootFolderPath);
+		// const folderMap = f2j(this.webRootFolderPath);
+		const rootCoreObj = requireFolder(this.webRootFolderPath, {
+			alias: {
+				in: '_in',
+				out: '_out',
+				index: ['_before_verb', '_before-verb'],
+				get: '_get',
+				post: '_post',
+				put: '_put',
+				delete: '_delete',
+				noVerb: ['_no-verb', '_no_verb-verb'],
+				afterVerb: ['_after_verb', '_after-verb'],
+				preMethod: ['_pre_method', '_pre-method'],
+				postMethod: ['_post_method', '_post-method'],
+				preSub: ['_pre_sub', '_pre-sub'],
+				postSub: ['_post_sub', '_post-sub'],
+			},
+			hooks: {
+				_verbs (obj, map) {
+					obj.verbs = requireFolder(map.path);
+				},
+				get (obj, map) {
+					obj.verbs = obj.verbs || {};
+					obj.verbs.get = requireFolder(map.path);
+				},
+				post (obj, map) {
+					obj.verbs = obj.verbs || {};
+					obj.verbs.post = requireFolder(map.path);
+				},
+				put (obj, map) {
+					obj.verbs = obj.verbs || {};
+					obj.verbs.put = requireFolder(map.path);
+				},
+				delete (obj, map) {
+					obj.verbs = obj.verbs || {};
+					obj.verbs.delete = requireFolder(map.path);
+				},
+			}
+		});
 		const parent = null;
 
-		this.RC = new this.Ctrl(ROOT_CTRL_NAME, folderMap, parent, this);
+		this.RC = new this.Ctrl(ROOT_CTRL_NAME, rootCoreObj, parent, this);
 	}
 
 	checkIn (io) {
@@ -77,7 +116,44 @@ class App {
 
 	parseAppHooks () {
 		const appHooks = this.hooks;
-		const hooks = requireFolder(this.hooksFolderPath);
+		const hooks = requireFolder(this.hooksFolderPath, {
+			alias: {
+				in: '_in',
+				out: '_out',
+				index: ['_before_verb', '_before-verb'],
+				get: '_get',
+				post: '_post',
+				put: '_put',
+				delete: '_delete',
+				noVerb: ['_no-verb', '_no_verb-verb'],
+				afterVerb: ['_after_verb', '_after-verb'],
+				preMethod: ['_pre_method', '_pre-method'],
+				postMethod: ['_post_method', '_post-method'],
+				preSub: ['_pre_sub', '_pre-sub'],
+				postSub: ['_post_sub', '_post-sub'],
+			},
+			hooks: {
+				_verbs (obj, map) {
+					obj.verbs = requireFolder(map.path);
+				},
+				get (obj, map) {
+					obj.verbs = obj.verbs || {};
+					obj.verbs.get = requireFolder(map.path);
+				},
+				post (obj, map) {
+					obj.verbs = obj.verbs || {};
+					obj.verbs.post = requireFolder(map.path);
+				},
+				put (obj, map) {
+					obj.verbs = obj.verbs || {};
+					obj.verbs.put = requireFolder(map.path);
+				},
+				delete (obj, map) {
+					obj.verbs = obj.verbs || {};
+					obj.verbs.delete = requireFolder(map.path);
+				},
+			}
+		});
 
 		forIn(hooks, (rawName, hook) => {
 			const name = normalizeEntryName(rawName, false);

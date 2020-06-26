@@ -19,7 +19,7 @@ module.exports = function setupChains (ctrl) {
 	const methodChain = [];
 	const parentChain = [];
 
-	const _in = ctrl.in;
+	const _in = ctrl.coreObj.in;
 
 	if (_in) {
 		targetChain.push(_in);
@@ -40,7 +40,7 @@ module.exports = function setupChains (ctrl) {
 		setParentChain(ctrl, parentChain);
 	}
 
-	const _out = ctrl.out;
+	const _out = ctrl.coreObj.out;
 
 	if (_out) {
 		targetChain.push(_out);
@@ -55,39 +55,39 @@ module.exports = function setupChains (ctrl) {
 };
 
 function setTargetChain (ctrl, chain) {
-	if (ctrl.index) {
-		chain.push(ctrl.index);
+	if (ctrl.coreObj.index) {
+		chain.push(ctrl.coreObj.index);
 	}
 
 	if (has.verbs(ctrl)) {
 		chain.push(run.verb);
 	}
 
-	if (ctrl.afterVerb) {
-		chain.push(ctrl.afterVerb);
+	if (ctrl.coreObj.afterVerb) {
+		chain.push(ctrl.coreObj.afterVerb);
 	}
 }
 
 function setMethodChain (ctrl, chain) {
-	if (ctrl.preMethod) {
-		chain.push(ctrl.preMethod);
+	if (ctrl.coreObj.preMethod) {
+		chain.push(ctrl.coreObj.preMethod);
 	}
 
 	chain.push(run.method);
 
-	if (ctrl.postMethod) {
-		chain.push(ctrl.postMethod);
+	if (ctrl.coreObj.postMethod) {
+		chain.push(ctrl.coreObj.postMethod);
 	}
 }
 
 function setParentChain (ctrl, chain) {
-	if (ctrl.preSub) {
-		chain.push(ctrl.preSub);
+	if (ctrl.coreObj.preSub) {
+		chain.push(ctrl.coreObj.preSub);
 	}
 
 	chain.push(run.subCtrl);
 
-	if (ctrl.postSub) {
-		chain.push(ctrl.postSub);
+	if (ctrl.coreObj.postSub) {
+		chain.push(ctrl.coreObj.postSub);
 	}
 }

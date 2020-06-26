@@ -96,8 +96,6 @@ module.exports = {
 	},
 
 	shared_ctrls (userCtrls) {
-		console.log(2222, userCtrls);
-
 		const shared_ctrls = Object.create(null);
 
 		forIn(userCtrls, (ctrlName, ctrlObj) => {

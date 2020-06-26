@@ -14,13 +14,13 @@ const isFunction		   = require('../../utils/is-function');
 module.exports = {
 	verb (io) {
 		const reqMethod = io.req.method.toLowerCase();
-		const verbFn = this.verbs[reqMethod];
+		const verbFn = this.coreObj.verbs[reqMethod];
 
 		if (isFunction(verbFn)) {
 			verbFn.call(this, io, ...io.params);
 		}
-		else if (isFunction(this.noVerb)) {
-			this.noVerb(io, ...io.params);
+		else if (isFunction(this.coreObj.noVerb)) {
+			this.coreObj.noVerb.call(this, io, ...io.params);
 		}
 		else {
 			this.next(io);

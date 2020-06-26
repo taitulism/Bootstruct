@@ -31,8 +31,8 @@ function isInIgnoreList (app, name) {
 	return false;
 }
 
-module.exports = function shouldBeIgnored (app, name, normalized, isFile) {
-	if (isFile && isNotJs(name)) return true;
+module.exports = function shouldBeIgnored (app, /* name,  */normalized/* , isFile */) {
+	// if (isFile && isNotJs(name)) return true;
 
 	if (matchStartWith(app, normalized)) return true;
 
