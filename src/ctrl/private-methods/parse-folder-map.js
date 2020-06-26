@@ -26,12 +26,11 @@ module.exports = function parseFolderMap (ctrl) {
 		const name = normalizeEntryName(key, false);
 
 		// if hook exists
-		// if (ctrlHooks[name]) {
-		// 	const hook = ctrlHooks[name].index || ctrlHooks[name];
-		// 	hook.call(ctrl, value);
-		// }
-		// else
-		if (shouldBeIgnored(app, name)) return;
+		if (ctrlHooks[name]) {
+			const hook = ctrlHooks[name].index || ctrlHooks[name];
+			hook.call(ctrl, value);
+		}
+		else if (shouldBeIgnored(app, name)) return;
 		else if (typeof value == 'function') {
 			const method = value;
 			const params = extractFnParams(method);

@@ -1,9 +1,11 @@
+/* eslint-disable max-statements */
+
 const {resolve} = require('path');
 const {existsSync: exists} = require('fs');
 // const requireFolder = require('require-folder');
 const requireFolder = require('../../../require-folder');
 
-const ctrlHooksProto = require('../ctrl/hooks');
+// const ctrlHooksProto = require('../ctrl/hooks');
 const appHooksProto = require('./new-hooks');
 // const appHooksProto = require('./hooks');
 const getCtrlClass = require('../ctrl');
@@ -34,7 +36,8 @@ class App {
 		this.Ctrl = getCtrlClass(isDebugMode);
 		this.IO = getIOClass();
 		this.hooks = Object.create(appHooksProto);
-		this.ctrlHooks = Object.create(ctrlHooksProto);
+		// this.ctrlHooks = Object.create(ctrlHooksProto);
+		this.ctrlHooks = Object.create(null);
 
 		const hooksFolderPath = `${webRootFolderPath}_hooks`;
 

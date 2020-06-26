@@ -1,6 +1,6 @@
 module.exports = {
-	public (entryMap) {
-		this.hookArg = entryMap.path && entryMap.type;
+	public (publicExport) {
+		this.hookArg = publicExport === 'PUBLIC';
 		this.hookThis = Object.getPrototypeOf(this).constructor.name === 'Ctrl';
 		this.public = 'public';
 	},

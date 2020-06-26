@@ -1,1 +1,1 @@
-// the presence of this file activates the "public" hook
+module.exports = 'PUBLIC';

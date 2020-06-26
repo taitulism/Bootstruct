@@ -1,3 +1,3 @@
-module.exports = function (entryMap) {
-	this.config = require(entryMap.path);
+module.exports = function (cfg) {
+	this.config = cfg;
 };
