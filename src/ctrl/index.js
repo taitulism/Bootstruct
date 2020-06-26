@@ -12,13 +12,14 @@ const getNextFn      = require('./private-methods/get-next-fn');
 const {ROOT_CTRL_NAME} = require('../constants');
 
 module.exports = function getCtrlClass (debug) {
-	function Ctrl (name, folderMap, parent, app) {
+	function Ctrl (name, coreObj, parent, app) {
 		app = app || parent.app;
 
 		this.isRootCtrl = name === ROOT_CTRL_NAME;
 
 		this.name      = name;
-		this.folderMap = folderMap;
+		this.coreObj   = coreObj;
+		this.folderMap   = coreObj;
 		this.parent    = parent;
 		this.app       = app;
 		this.id        = setID(this);
@@ -37,9 +38,10 @@ module.exports = function getCtrlClass (debug) {
 	Ctrl.prototype = {
 		constructor: Ctrl,
 
+		coreObj: null,
 		folderMap: null,
-		noVerb:    null,
-		chains:    null,
+		noVerb:  null,
+		chains:  null,
 
 		init () {
 			parseFolderMap(this);

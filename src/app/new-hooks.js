@@ -23,6 +23,8 @@ function addToIgnoreList (app, ignoreItem) {
 
 module.exports = {
 	ignore (ignoreHook) {
+		ignoreHook = ignoreHook.index || ignoreHook;
+
 		if (typeof ignoreHook === 'string') {
 			addToIgnoreList(this, ignoreHook);
 		}
@@ -32,17 +34,19 @@ module.exports = {
 					addToIgnoreList(this, item);
 				}
 				else {
-					// throw error.ignoreItemIsNotAString(item);
+					throw error.ignoreItemIsNotAString(item);
 				}
 			});
 		}
 		else {
-			// throw error.ignoreItemIsNotAString(ignoreHook);
+			throw error.ignoreItemIsNotAString(ignoreHook);
 		}
 	},
 
 	io_init (initHook) {
-		if (initHook && (typeof initHook == 'function' || typeof initHook.index == 'function')) {
+		initHook = initHook.index || initHook;
+
+		if (initHook && typeof initHook == 'function') {
 			// check function's arguments count
 			if (initHook.length === 0) {
 				throw error.expectedFunctionArgument();
@@ -52,17 +56,17 @@ module.exports = {
 			this.IO.prototype.init = initHook.index || initHook;
 		}
 		else {
-			console.log(111111, initHook);
 			throw error.ioInitExpectedAFunction(new Error('io_init hook should be a function'));
 		}
 	},
 
 	io_exit (exitHook) {
-		if (exitHook && (typeof exitHook == 'function' || typeof exitHook.index == 'function')) {
+		exitHook = exitHook.index || exitHook;
+
+		if (exitHook && typeof exitHook == 'function') {
 			this.IO.prototype.exit = exitHook.index || exitHook;
 		}
 		else {
-			console.log(222222, exitHook);
 			throw error.ioExitExpectedAFunction(new Error('exitHook hook should be a function'));
 		}
 	},
@@ -70,7 +74,7 @@ module.exports = {
 	io_proto (protoHook) {
 		const ioProto = this.IO.prototype;
 
-		extend(ioProto, protoHook);
+		extend(ioProto, protoHook.index || protoHook);
 	},
 
 	ctrl_proto (protoHook) {
@@ -88,25 +92,22 @@ module.exports = {
 	shared_methods (userMethods) {
 		const sharedMethods = Object.create(null);
 
-		extend(sharedMethods, userMethods);
+		this.shared_methods = extend(sharedMethods, userMethods);
 	},
 
-	shared_ctrls (entryMap) {
-		// if (entryMap.type !== FOLDER) {
-		// 	throw error.sharedCtrlExpectedAFolder(entryMap.path);
-		// }
+	shared_ctrls (userCtrls) {
+		console.log(2222, userCtrls);
 
-		// const shared_ctrls = Object.create(null);
+		const shared_ctrls = Object.create(null);
 
-		// forIn(entryMap.entries, (entryName, _entryMap) => {
-		// 	entryName = normalizeEntryName(entryName, false);
+		forIn(userCtrls, (ctrlName, ctrlObj) => {
+			ctrlName = normalizeEntryName(ctrlName, false);
 
-		// 	shared_ctrls[entryName] = new this.Ctrl(entryName, _entryMap, null, this);
+			shared_ctrls[ctrlName] = new this.Ctrl(ctrlName, ctrlObj, null, this);
+			shared_ctrls[ctrlName].isSharedCtrl = true;
+		});
 
-		// 	shared_ctrls[entryName].isSharedCtrl = true;
-		// });
-
-		// this.shared_ctrls = shared_ctrls;
+		this.shared_ctrls = shared_ctrls;
 	},
 };
 
@@ -153,9 +154,11 @@ function simpleHookFolder (hookName, entryMaps, targetObj) {
 function extend (target, extensions) {
 	forIn(extensions, (key, val) => {
 		if (typeof target[key] == 'undefined') {
-			target[key] = val;
+			target[key] = val.index || val;
 		}
 	});
+
+	return target;
 }
 
 
