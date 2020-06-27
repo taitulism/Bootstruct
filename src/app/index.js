@@ -6,7 +6,7 @@ const {existsSync: exists} = require('fs');
 // const requireFolder = require('require-folder');
 const requireFolder = require('../../../require-folder');
 
-// const ctrlHooksProto = require('../ctrl/hooks');
+const {requireHooks} = require('../ctrl/hooks');
 const appHooksProto = require('./new-hooks');
 // const appHooksProto = require('./hooks');
 const getCtrlClass = require('../ctrl');
@@ -51,65 +51,7 @@ class App {
 		this.setRequestHandler();
 
 		// const folderMap = f2j(this.webRootFolderPath);
-		const rootCoreObj = requireFolder(this.webRootFolderPath, {
-			alias: {
-				in: '_in',
-				out: '_out',
-				index: ['_before_verb', '_before-verb'],
-				get: '_get',
-				post: '_post',
-				put: '_put',
-				delete: '_delete',
-				verbs: '_verbs',
-				noVerb: ['_no-verb', '_no_verb'],
-				afterVerb: ['_after_verb', '_after-verb'],
-				preMethod: ['_pre_method', '_pre-method'],
-				postMethod: ['_post_method', '_post-method'],
-				preSub: ['_pre_sub', '_pre-sub'],
-				postSub: ['_post_sub', '_post-sub'],
-			},
-			hooks: {
-				verbs (obj, map) {
-					const rawVerbs = requireFolder(map.path);
-					const verbs = obj.verbs || Object.create(null);
-
-					forIn(rawVerbs, (key, value) => {
-						let verb = normalizeEntryName(key, false);
-
-						const [isVerbOk, isNoVerbOk] = validateVerbName(this, verb);
-
-						if (isVerbOk || isNoVerbOk) {
-							verb = removeUnderscore(verb);
-							if (!verbs[verb]) {
-								verbs[verb] = value.index || value;
-							}
-						}
-					})
-
-					obj.verbs = verbs;
-				},
-				get (obj, map) {
-					obj.verbs = obj.verbs || Object.create(null);
-					obj.verbs.get = requireFolder(map.path);
-				},
-				post (obj, map) {
-					obj.verbs = obj.verbs || Object.create(null);
-					obj.verbs.post = requireFolder(map.path);
-				},
-				put (obj, map) {
-					obj.verbs = obj.verbs || Object.create(null);
-					obj.verbs.put = requireFolder(map.path);
-				},
-				delete (obj, map) {
-					obj.verbs = obj.verbs || Object.create(null);
-					obj.verbs.delete = requireFolder(map.path);
-				},
-				noVerb (obj, map) {
-					obj.verbs = obj.verbs || Object.create(null);
-					obj.verbs.noVerb = requireFolder(map.path);
-				},
-			}
-		});
+		const rootCoreObj = requireFolder(this.webRootFolderPath, requireHooks);
 		const parent = null;
 
 		this.RC = new this.Ctrl(ROOT_CTRL_NAME, rootCoreObj, parent, this);
@@ -141,65 +83,7 @@ class App {
 
 	parseAppHooks () {
 		const appHooks = this.hooks;
-		const hooks = requireFolder(this.hooksFolderPath, {
-			alias: {
-				in: '_in',
-				out: '_out',
-				index: ['_before_verb', '_before-verb'],
-				get: '_get',
-				post: '_post',
-				put: '_put',
-				delete: '_delete',
-				verbs: '_verbs',
-				noVerb: ['_no-verb', '_no_verb-verb'],
-				afterVerb: ['_after_verb', '_after-verb'],
-				preMethod: ['_pre_method', '_pre-method'],
-				postMethod: ['_post_method', '_post-method'],
-				preSub: ['_pre_sub', '_pre-sub'],
-				postSub: ['_post_sub', '_post-sub'],
-			},
-			hooks: {
-				verbs (obj, map) {
-					const rawVerbs = requireFolder(map.path);
-					const verbs = obj.verbs || Object.create(null);
-
-					forIn(rawVerbs, (key, value) => {
-						let verb = normalizeEntryName(key, false);
-
-						const [isVerbOk, isNoVerbOk] = validateVerbName(this, verb);
-
-						if (isVerbOk || isNoVerbOk) {
-							verb = removeUnderscore(verb);
-							if (!verbs[verb]) {
-								verbs[verb] = value.index || value;
-							}
-						}
-					})
-
-					obj.verbs = verbs;
-				},
-				get (obj, map) {
-					obj.verbs = obj.verbs || Object.create(null);
-					obj.verbs.get = requireFolder(map.path);
-				},
-				post (obj, map) {
-					obj.verbs = obj.verbs || Object.create(null);
-					obj.verbs.post = requireFolder(map.path);
-				},
-				put (obj, map) {
-					obj.verbs = obj.verbs || Object.create(null);
-					obj.verbs.put = requireFolder(map.path);
-				},
-				delete (obj, map) {
-					obj.verbs = obj.verbs || Object.create(null);
-					obj.verbs.delete = requireFolder(map.path);
-				},
-				noVerb (obj, map) {
-					obj.verbs = obj.verbs || Object.create(null);
-					obj.verbs.noVerb = requireFolder(map.path);
-				},
-			}
-		});
+		const hooks = requireFolder(this.hooksFolderPath, requireHooks);
 
 		forIn(hooks, (rawName, hook) => {
 			const name = normalizeEntryName(rawName, false);
@@ -238,39 +122,3 @@ class App {
 
 // ------------------
 module.exports = App;
-
-
-// TODO: move from here
-function validateVerbName (ctrl, verbName) {
-	verbName = removeUnderscore(verbName);
-
-	const isVerbOk   = isVerb(verbName); // && !ctrl.verbs[verbName];
-	const isNoVerbOk = isNoVerb(verbName); // && !ctrl.noVerb;
-
-	return [isVerbOk, isNoVerbOk];
-}
-
-function removeUnderscore (verb) {
-	if (verb[0] === '_') {
-		verb = verb.substr(1);
-	}
-
-	return verb;
-}
-
-const supportedVerbs = [
-	'get',
-	'post',
-	'put',
-	'delete',
-];
-
-const noVerb = ['no-verb', 'no_verb'];
-
-function isVerb (verb) {
-	return supportedVerbs.includes(verb);
-}
-
-function isNoVerb (verb) {
-	return noVerb.includes(verb);
-}

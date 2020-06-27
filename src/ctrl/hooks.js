@@ -1,155 +1,12 @@
 /* eslint-disable camelcase */
 
-const {FILE, FOLDER} = require('../constants');
-const {tryRequireFn, tryRequireObj} = require('../utils/try-require');
+// const requireFolder = require('require-folder');
+const requireFolder = require('../../../require-folder');
+
 const {
 	normalizeEntryName,
 	forIn,
-	isFunction,
 } = require('../utils');
-
-
-const DONT_REMOVE_EXT = false;
-
-const ctrlHooks = {
-	_in (entryMap) {
-		this.in = tryRequireFn(entryMap.path);
-		this.in.path = entryMap.path;
-	},
-	index (entryMap) {
-		this.index = tryRequireFn(entryMap.path);
-		this.index.path = entryMap.path;
-	},
-	_before_verb (entryMap) {
-		this.index = tryRequireFn(entryMap.path);
-		this.index.path = entryMap.path;
-	},
-	'_before-verb' (entryMap) {
-		this.index = tryRequireFn(entryMap.path);
-		this.index.path = entryMap.path;
-	},
-	_get (entryMap) {
-		this.verbs.get = tryRequireFn(entryMap.path);
-		this.verbs.get.path = entryMap.path;
-	},
-	_post (entryMap) {
-		this.verbs.post = tryRequireFn(entryMap.path);
-		this.verbs.post.path = entryMap.path;
-	},
-	_put (entryMap) {
-		this.verbs.put = tryRequireFn(entryMap.path);
-		this.verbs.put.path = entryMap.path;
-	},
-	_delete (entryMap) {
-		this.verbs.delete = tryRequireFn(entryMap.path);
-		this.verbs.delete.path = entryMap.path;
-	},
-	'_no-verb' (entryMap) {
-		this.noVerb = tryRequireFn(entryMap.path);
-		this.noVerb.path = entryMap.path;
-	},
-	_no_verb (entryMap) {
-		this.noVerb = tryRequireFn(entryMap.path);
-		this.noVerb.path = entryMap.path;
-	},
-	_after_verb (entryMap) {
-		this.afterVerb = tryRequireFn(entryMap.path);
-		this.afterVerb.path = entryMap.path;
-	},
-	'_after-verb' (entryMap) {
-		this.afterVerb = tryRequireFn(entryMap.path);
-		this.afterVerb.path = entryMap.path;
-	},
-	_pre_method (entryMap) {
-		this.preMethod = tryRequireFn(entryMap.path);
-		this.preMethod.path = entryMap.path;
-	},
-	'_pre-method' (entryMap) {
-		this.preMethod = tryRequireFn(entryMap.path);
-		this.preMethod.path = entryMap.path;
-	},
-	_post_method (entryMap) {
-		this.postMethod = tryRequireFn(entryMap.path);
-		this.postMethod.path = entryMap.path;
-	},
-	'_post-method' (entryMap) {
-		this.postMethod = tryRequireFn(entryMap.path);
-		this.postMethod.path = entryMap.path;
-	},
-	_pre_sub (entryMap) {
-		this.preSub = tryRequireFn(entryMap.path);
-		this.preSub.path = entryMap.path;
-	},
-	'_pre-sub' (entryMap) {
-		this.preSub = tryRequireFn(entryMap.path);
-		this.preSub.path = entryMap.path;
-	},
-	_post_sub (entryMap) {
-		this.postSub = tryRequireFn(entryMap.path);
-		this.postSub.path = entryMap.path;
-	},
-	'_post-sub' (entryMap) {
-		this.postSub = tryRequireFn(entryMap.path);
-		this.postSub.path = entryMap.path;
-	},
-	_out (entryMap) {
-		this.out = tryRequireFn(entryMap.path);
-		this.out.path = entryMap.path;
-	},
-	_verbs (entryMap) {
-		if (entryMap.type === FOLDER) {
-			forIn(entryMap.entries, (verbName, verbMap) => {
-				verbName = normalizeEntryName(verbName, verbMap.type);
-
-				const [isVerbOk, isNoVerbOk] = validateVerbName(this, verbName);
-
-				if (isVerbOk || isNoVerbOk) {
-					verbName = removeUnderscore(verbName);
-					ctrlHooks[`_${verbName}`].call(this, verbMap);
-				}
-			});
-		}
-		else if (entryMap.type === FILE) {
-			const verbsObj = tryRequireObj(entryMap.path);
-
-			if (verbsObj) {
-				forIn(verbsObj, (verbName, fn) => {
-					if (!isFunction(fn)) return;
-
-					verbName = normalizeEntryName(verbName, DONT_REMOVE_EXT);
-
-					const [isVerbOk, isNoVerbOk] = validateVerbName(this, verbName);
-
-					if (isVerbOk) {
-						this.verbs[verbName] = fn;
-						this.verbs[verbName].path = entryMap.path;
-					}
-					else if (isNoVerbOk) {
-						this.noVerb = fn;
-						this.noVerb.path = entryMap.path;
-					}
-				});
-			}
-		}
-	},
-};
-
-function validateVerbName (ctrl, verbName) {
-	verbName = removeUnderscore(verbName);
-
-	const isVerbOk   = isVerb(verbName) && !ctrl.verbs[verbName];
-	const isNoVerbOk = isNoVerb(verbName) && !ctrl.noVerb;
-
-	return [isVerbOk, isNoVerbOk];
-}
-
-function removeUnderscore (verb) {
-	if (verb[0] === '_') {
-		verb = verb.substr(1);
-	}
-
-	return verb;
-}
 
 const supportedVerbs = [
 	'get',
@@ -157,6 +14,77 @@ const supportedVerbs = [
 	'put',
 	'delete',
 ];
+
+const requireHooks = {
+	alias: {
+		in: '_in',
+		out: '_out',
+		index: ['_before_verb', '_before-verb'],
+		get: '_get',
+		post: '_post',
+		put: '_put',
+		delete: '_delete',
+		verbs: '_verbs',
+		noVerb: ['_no-verb', '_no_verb'],
+		afterVerb: ['_after_verb', '_after-verb'],
+		preMethod: ['_pre_method', '_pre-method'],
+		postMethod: ['_post_method', '_post-method'],
+		preSub: ['_pre_sub', '_pre-sub'],
+		postSub: ['_post_sub', '_post-sub'],
+	},
+	hooks: {
+		verbs (obj, map) {
+			const rawVerbs = requireFolder(map.path);
+			const verbs = obj.verbs || Object.create(null);
+
+			forIn(rawVerbs, (key, value) => {
+				let verb = normalizeEntryName(key, false);
+
+				const [isVerbOk, isNoVerbOk] = validateVerbName(this, verb);
+
+				if (isVerbOk || isNoVerbOk) {
+					if (!verbs[verb]) {
+						verbs[verb] = value.index || value;
+					}
+				}
+			})
+
+			obj.verbs = verbs;
+		},
+		get (obj, map) {
+			obj.verbs = obj.verbs || Object.create(null);
+			obj.verbs.get = requireFolder(map.path);
+		},
+		post (obj, map) {
+			obj.verbs = obj.verbs || Object.create(null);
+			obj.verbs.post = requireFolder(map.path);
+		},
+		put (obj, map) {
+			obj.verbs = obj.verbs || Object.create(null);
+			obj.verbs.put = requireFolder(map.path);
+		},
+		delete (obj, map) {
+			obj.verbs = obj.verbs || Object.create(null);
+			obj.verbs.delete = requireFolder(map.path);
+		},
+		noVerb (obj, map) {
+			obj.verbs = obj.verbs || Object.create(null);
+			obj.verbs.noVerb = requireFolder(map.path);
+		},
+	}
+};
+
+module.exports = {
+	hookNames: getHookNames(),
+	requireHooks,
+}
+
+function validateVerbName (ctrl, verbName) {
+	const isVerbOk   = isVerb(verbName); // && !ctrl.verbs[verbName];
+	const isNoVerbOk = isNoVerb(verbName); // && !ctrl.noVerb;
+
+	return [isVerbOk, isNoVerbOk];
+}
 
 const noVerb = ['no-verb', 'no_verb'];
 
@@ -168,59 +96,12 @@ function isNoVerb (verb) {
 	return noVerb.includes(verb);
 }
 
-module.exports = {
-	alias: {
-		in: '_in',
-		out: '_out',
-		index: ['_before_verb', '_before-verb'],
-		get: '_get',
-		post: '_post',
-		put: '_put',
-		delete: '_delete',
-		noVerb: ['_no-verb', '_no_verb'],
-		afterVerb: ['_after_verb', '_after-verb'],
-		preMethod: ['_pre_method', '_pre-method'],
-		postMethod: ['_post_method', '_post-method'],
-		preSub: ['_pre_sub', '_pre-sub'],
-		postSub: ['_post_sub', '_post-sub'],
-	},
-	hooks: {
-		_verbs (obj, map) {
-			const rawVerbs = requireFolder(map.path);
-			const verbs = Object.create(null);
+function getHookNames () {
+	const allNames = new Set();
 
-			forIn(rawVerbs, (key, value) => {
-				let verb = normalizeEntryName(key, false);
+	forIn(requireHooks.alias, (key) => {
+		allNames.add(key);
+	});
 
-				const [isVerbOk, isNoVerbOk] = validateVerbName(this, verb);
-
-				if (isVerbOk || isNoVerbOk) {
-					verb = removeUnderscore(verb);
-					verbs[verb] = value;
-				}
-			})
-
-			obj.verbs = verbs;
-		},
-		get (obj, map) {
-			obj.verbs = obj.verbs || {};
-			obj.verbs.get = requireFolder(map.path);
-		},
-		post (obj, map) {
-			obj.verbs = obj.verbs || {};
-			obj.verbs.post = requireFolder(map.path);
-		},
-		put (obj, map) {
-			obj.verbs = obj.verbs || {};
-			obj.verbs.put = requireFolder(map.path);
-		},
-		delete (obj, map) {
-			obj.verbs = obj.verbs || {};
-			obj.verbs.delete = requireFolder(map.path);
-		},
-		noVerb (obj, map) {
-			obj.verbs = obj.verbs || {};
-			obj.verbs.noVerb = requireFolder(map.path);
-		},
-	}
-};
+	return allNames;
+}

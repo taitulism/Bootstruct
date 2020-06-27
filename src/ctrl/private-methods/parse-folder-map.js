@@ -1,5 +1,5 @@
 const error = require('../../errors');
-const {FILE} = require('../../constants');
+const {hookNames} = require('../hooks');
 
 const {
 	normalizeEntryName,
@@ -22,7 +22,6 @@ module.exports = function parseFolderMap (ctrl) {
 	const {ctrlHooks} = app;
 
 	forIn(coreObj, (key, value) => {
-		// const isFile = entryMap.type === FILE;
 		const name = normalizeEntryName(key, false);
 
 		// if hook exists
@@ -30,34 +29,14 @@ module.exports = function parseFolderMap (ctrl) {
 			const hook = ctrlHooks[name].index || ctrlHooks[name];
 			hook.call(ctrl, value);
 		}
-		else if ([
-			'in',
-			'out',
-			'index',
-			'verbs',
-			'get',
-			'post',
-			'put',
-			'delete',
-			'noVerb',
-			'afterVerb',
-			'preMethod',
-			'postMethod',
-			'preSub',
-			'postSub',
-		].includes(key)) return;
-		else if (shouldBeIgnored(app, name)) return;
+		else if (hookNames.has(key) || shouldBeIgnored(app, name)) return;
 		else if (typeof value == 'function') {
 			const method = value;
 			const params = extractFnParams(method);
 
-			if (!params) {
-				throw error.methodsWithNoParams(method);
-			}
+			if (!params) throw error.methodsWithNoParams(method);
 
-			// method.path = entryMap.path;
 			method.params = params;
-
 			ctrl.methods[name] = method;
 		}
 		else {

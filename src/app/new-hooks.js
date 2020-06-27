@@ -72,21 +72,15 @@ module.exports = {
 	},
 
 	io_proto (protoHook) {
-		const ioProto = this.IO.prototype;
-
-		extend(ioProto, protoHook.index || protoHook);
+		extend(this.IO.prototype, protoHook.index || protoHook);
 	},
 
 	ctrl_proto (protoHook) {
-		const ctrlProto = this.Ctrl.prototype;
-
-		extend(ctrlProto, protoHook);
+		extend(this.Ctrl.prototype, protoHook);
 	},
 
 	ctrl_hooks (userHooks) {
-		const ctrlHooks = this.ctrlHooks;
-
-		extend(ctrlHooks, userHooks);
+		extend(this.ctrlHooks, userHooks);
 	},
 
 	shared_methods (userMethods) {
