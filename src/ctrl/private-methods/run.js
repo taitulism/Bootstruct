@@ -19,8 +19,8 @@ module.exports = {
 		if (isFunction(verbFn)) {
 			verbFn.call(this, io, ...io.params);
 		}
-		else if (isFunction(this.coreObj.noVerb)) {
-			this.coreObj.noVerb.call(this, io, ...io.params);
+		else if (isFunction(this.coreObj.verbs.noVerb)) {
+			this.coreObj.verbs.noVerb.call(this, io, ...io.params);
 		}
 		else {
 			this.next(io);

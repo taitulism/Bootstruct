@@ -1,3 +1,4 @@
+/* eslint-disable max-lines-per-function */
 /* eslint-disable max-statements */
 
 const {resolve} = require('path');
@@ -59,7 +60,8 @@ class App {
 				post: '_post',
 				put: '_put',
 				delete: '_delete',
-				noVerb: ['_no-verb', '_no_verb-verb'],
+				verbs: '_verbs',
+				noVerb: ['_no-verb', '_no_verb'],
 				afterVerb: ['_after_verb', '_after-verb'],
 				preMethod: ['_pre_method', '_pre-method'],
 				postMethod: ['_post_method', '_post-method'],
@@ -67,24 +69,44 @@ class App {
 				postSub: ['_post_sub', '_post-sub'],
 			},
 			hooks: {
-				_verbs (obj, map) {
-					obj.verbs = requireFolder(map.path);
+				verbs (obj, map) {
+					const rawVerbs = requireFolder(map.path);
+					const verbs = obj.verbs || Object.create(null);
+
+					forIn(rawVerbs, (key, value) => {
+						let verb = normalizeEntryName(key, false);
+
+						const [isVerbOk, isNoVerbOk] = validateVerbName(this, verb);
+
+						if (isVerbOk || isNoVerbOk) {
+							verb = removeUnderscore(verb);
+							if (!verbs[verb]) {
+								verbs[verb] = value.index || value;
+							}
+						}
+					})
+
+					obj.verbs = verbs;
 				},
 				get (obj, map) {
-					obj.verbs = obj.verbs || {};
+					obj.verbs = obj.verbs || Object.create(null);
 					obj.verbs.get = requireFolder(map.path);
 				},
 				post (obj, map) {
-					obj.verbs = obj.verbs || {};
+					obj.verbs = obj.verbs || Object.create(null);
 					obj.verbs.post = requireFolder(map.path);
 				},
 				put (obj, map) {
-					obj.verbs = obj.verbs || {};
+					obj.verbs = obj.verbs || Object.create(null);
 					obj.verbs.put = requireFolder(map.path);
 				},
 				delete (obj, map) {
-					obj.verbs = obj.verbs || {};
+					obj.verbs = obj.verbs || Object.create(null);
 					obj.verbs.delete = requireFolder(map.path);
+				},
+				noVerb (obj, map) {
+					obj.verbs = obj.verbs || Object.create(null);
+					obj.verbs.noVerb = requireFolder(map.path);
 				},
 			}
 		});
@@ -128,6 +150,7 @@ class App {
 				post: '_post',
 				put: '_put',
 				delete: '_delete',
+				verbs: '_verbs',
 				noVerb: ['_no-verb', '_no_verb-verb'],
 				afterVerb: ['_after_verb', '_after-verb'],
 				preMethod: ['_pre_method', '_pre-method'],
@@ -136,24 +159,44 @@ class App {
 				postSub: ['_post_sub', '_post-sub'],
 			},
 			hooks: {
-				_verbs (obj, map) {
-					obj.verbs = requireFolder(map.path);
+				verbs (obj, map) {
+					const rawVerbs = requireFolder(map.path);
+					const verbs = obj.verbs || Object.create(null);
+
+					forIn(rawVerbs, (key, value) => {
+						let verb = normalizeEntryName(key, false);
+
+						const [isVerbOk, isNoVerbOk] = validateVerbName(this, verb);
+
+						if (isVerbOk || isNoVerbOk) {
+							verb = removeUnderscore(verb);
+							if (!verbs[verb]) {
+								verbs[verb] = value.index || value;
+							}
+						}
+					})
+
+					obj.verbs = verbs;
 				},
 				get (obj, map) {
-					obj.verbs = obj.verbs || {};
+					obj.verbs = obj.verbs || Object.create(null);
 					obj.verbs.get = requireFolder(map.path);
 				},
 				post (obj, map) {
-					obj.verbs = obj.verbs || {};
+					obj.verbs = obj.verbs || Object.create(null);
 					obj.verbs.post = requireFolder(map.path);
 				},
 				put (obj, map) {
-					obj.verbs = obj.verbs || {};
+					obj.verbs = obj.verbs || Object.create(null);
 					obj.verbs.put = requireFolder(map.path);
 				},
 				delete (obj, map) {
-					obj.verbs = obj.verbs || {};
+					obj.verbs = obj.verbs || Object.create(null);
 					obj.verbs.delete = requireFolder(map.path);
+				},
+				noVerb (obj, map) {
+					obj.verbs = obj.verbs || Object.create(null);
+					obj.verbs.noVerb = requireFolder(map.path);
 				},
 			}
 		});
@@ -195,3 +238,39 @@ class App {
 
 // ------------------
 module.exports = App;
+
+
+// TODO: move from here
+function validateVerbName (ctrl, verbName) {
+	verbName = removeUnderscore(verbName);
+
+	const isVerbOk   = isVerb(verbName); // && !ctrl.verbs[verbName];
+	const isNoVerbOk = isNoVerb(verbName); // && !ctrl.noVerb;
+
+	return [isVerbOk, isNoVerbOk];
+}
+
+function removeUnderscore (verb) {
+	if (verb[0] === '_') {
+		verb = verb.substr(1);
+	}
+
+	return verb;
+}
+
+const supportedVerbs = [
+	'get',
+	'post',
+	'put',
+	'delete',
+];
+
+const noVerb = ['no-verb', 'no_verb'];
+
+function isVerb (verb) {
+	return supportedVerbs.includes(verb);
+}
+
+function isNoVerb (verb) {
+	return noVerb.includes(verb);
+}

@@ -30,6 +30,22 @@ module.exports = function parseFolderMap (ctrl) {
 			const hook = ctrlHooks[name].index || ctrlHooks[name];
 			hook.call(ctrl, value);
 		}
+		else if ([
+			'in',
+			'out',
+			'index',
+			'verbs',
+			'get',
+			'post',
+			'put',
+			'delete',
+			'noVerb',
+			'afterVerb',
+			'preMethod',
+			'postMethod',
+			'preSub',
+			'postSub',
+		].includes(key)) return;
 		else if (shouldBeIgnored(app, name)) return;
 		else if (typeof value == 'function') {
 			const method = value;

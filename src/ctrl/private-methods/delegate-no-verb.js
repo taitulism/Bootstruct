@@ -5,7 +5,11 @@
   │ unless they have a "noVerb" of their own.
  */
 module.exports = function delegateNoVerb (ctrl) {
-	if (!ctrl.noVerb && ctrl.parent) {
-		ctrl.noVerb = ctrl.parent.noVerb;
+	if (!hasNoVerb(ctrl) && ctrl.parent && hasNoVerb(ctrl.parent)) {
+		ctrl.coreObj.verbs.noVerb = ctrl.parent.coreObj.verbs.noVerb;
 	}
 };
+
+function hasNoVerb (ctrl) {
+	return ctrl.coreObj.verbs && ctrl.coreObj.verbs.noVerb;
+}
